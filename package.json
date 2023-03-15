@@ -1,0 +1,13 @@
+{
+  "name": "software-capstone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "19120508 <hieu.nguyen@southasiaservices.com>",
+  "license": "MIT",
+  "scripts": {
+    "start":  "concurrently \"yarn\" \"cd software-capstone-fe && yarn && yarn start\" \"cd software-capstone-be && yarn && yarn start\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
