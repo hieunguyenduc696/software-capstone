@@ -9,6 +9,7 @@
     "dev": "concurrently \"cd software-capstone-fe && yarn start\" \"cd software-capstone-be && yarn start\""
   },
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "yarn": "^1.22.19"
   }
 }
