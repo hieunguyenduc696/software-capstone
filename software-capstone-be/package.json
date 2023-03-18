@@ -4,9 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "nodemon ./src/app.ts",
+    "start": "node ./build/app.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
   }
 }
