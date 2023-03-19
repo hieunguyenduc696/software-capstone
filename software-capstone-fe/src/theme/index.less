@@ -1,0 +1,17 @@
+// Change Form item label required* to the right
+.ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional) {
+  &::before {
+    content: none;
+  }
+
+  &::after {
+    display: inline-block;
+    margin-right: 4px;
+    color: var(--color-red-r50);
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: '*';
+  }
+}
