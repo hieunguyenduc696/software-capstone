@@ -10,11 +10,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
-        <App />
-      </ApolloProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <ApolloProvider client={apolloClient}>
+      <App />
+    </ApolloProvider>
+  </Provider>
 );
