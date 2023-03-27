@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start":  "concurrently \"yarn\" \"cd software-capstone-fe && yarn && yarn start\" \"cd software-capstone-be && yarn && yarn start\"",
-    "dev": "concurrently \"cd software-capstone-fe && yarn start\" \"cd software-capstone-be && yarn start\""
+    "winstart":  "concurrently \"yarn\" \"cd software-capstone-fe && yarn && yarn winstart\" \"cd software-capstone-be && yarn && yarn start\"",
+    "dev": "concurrently \"cd software-capstone-fe && yarn start\" \"cd software-capstone-be && yarn start\"",
+    "windev": "concurrently \"cd software-capstone-fe && yarn winstart\" \"cd software-capstone-be && yarn start\""
   },
   "dependencies": {
     "concurrently": "^7.6.0",
