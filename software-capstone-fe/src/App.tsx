@@ -4,6 +4,7 @@ import { AuthProvider } from "hooks/useAuth";
 import { SuspenseRouter } from "HOC";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { keycloakClient } from "config/keycloak";
+import "./App.css";
 
 const App: React.FC = () => {
   console.log(window.location.origin + "/silent-check-sso.html");

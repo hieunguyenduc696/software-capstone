@@ -6,13 +6,15 @@ import { Route, Routes } from "react-router";
 import { TRoute } from "types";
 import { withAuthorization, withCustomErrorBoundary } from "HOC";
 import { flatten } from "utils";
+import { PostTestRoutes } from "pages/PostTest";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
   path: "/",
   page: "accessible",
-  children: [...NotFoundRoutes, ...DashboardRoutes],
+  children: [...NotFoundRoutes, ...DashboardRoutes, ...PostTestRoutes],
 };
+
 
 export const routes: TRoute[] = [SignInRoutes, MainLayoutRoutes];
 
@@ -21,7 +23,7 @@ export const flattenRoutes = flatten(routes);
 const renderRoute = (routes: TRoute[]): React.ReactNode[] =>
   routes.map(({ redirectTo, children, component: Component, path }) => {
     const CustomComponent = withCustomErrorBoundary(
-      path !== "*" ? withAuthorization(Component) : Component
+      path !== "*" ? /*withAuthorization(Component)*/ Component : Component
     );
     if (children && children.length > 0) {
       return (
