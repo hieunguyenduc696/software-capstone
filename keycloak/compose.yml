@@ -2,47 +2,41 @@ version: '3.9'
 
 volumes:
   postgres_data_keycloak:
+  config_data_keycloak:
 
 services:
-  keycloak: 
-    image: jboss/keycloak:21.0.1
-    # command: start-dev
-    environment: 
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: admin@database
-      # KC_DB_URL_HOST: keycloak_postgres_database
-      KC_DB_SCHEMA: public
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: Software@capstone
-    ports:
-      - "8080:8080"
-    depends_on:
-      keycloak_postgres_database:
-        condition: service_healthy
-    restart: unless-stopped
-    # networks:
-    #   - keycloak_dev_network
-
-  keycloak_postgres_database:
+  postgres:
+    container_name: keycloak-postgres
     image: postgres:12
-    # command: postgres -c 'max_connections=200'
-    volumes:
-      - postgres_data_keycloak: /var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: admin@database
+    volumes:
+      - postgres_data_keycloak:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - 5432:5432
+    restart: always
+
+  keycloak:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: admin@database
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin@keycloak
+      KEYCLOAK_USER: user
+      KEYCLOAK_PASSWORD: user@keycloak
+      PROXY_ADDRESS_FORWARDING: true
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
     restart: unless-stopped
-    # networks:
-    #   - keycloak_dev_network
-
-
-# networks:
-#   keycloak_dev_network:
-#     driver: bridge
-
+    volumes:
+      - config_data_keycloak:/var/lib/keycloak/data
