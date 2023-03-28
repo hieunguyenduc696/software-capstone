@@ -13,7 +13,7 @@ services:
       DB_DATABASE: keycloak
       DB_USER: keycloak
       DB_PASSWORD: admin@database
-      KC_DB_URL_HOST: keycloak_postgres_database
+      # KC_DB_URL_HOST: keycloak_postgres_database
       KC_DB_SCHEMA: public
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Software@capstone
