@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 
 volumes:
   postgres_data_keycloak:
@@ -7,34 +7,32 @@ volumes:
 services:
   postgres:
     container_name: keycloak-postgres
-    image: postgres:12
+    image: postgres:${POSTGRES_VERSION}
     environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: admin@database
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data_keycloak:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     restart: always
 
   keycloak:
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:${KEYCLOAK_VERSION}
     container_name: keycloak
     environment:
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_SCHEMA: public
-      DB_PASSWORD: admin@database
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin@keycloak
-      KEYCLOAK_USER: user
-      KEYCLOAK_PASSWORD: user@keycloak
-      PROXY_ADDRESS_FORWARDING: true
+      DB_VENDOR: ${KEYCLOAK_DB_VENTOR}
+      DB_ADDR: ${KEYCLOAK_DB_ADDR}
+      DB_DATABASE: ${KEYCLOAK_DB_DATABASE}
+      DB_USER: ${KEYCLOAK_DB_USER}
+      DB_SCHEMA: ${KEYCLOAK_DB_SCHEMA}
+      DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      PROXY_ADDRESS_FORWARDING: ${KEYCLOAK_PROXY_ADDRESS_FORWARDING}
     ports:
-      - 8080:8080
+      - ${KEYCLOAK_PORT}:8080
     depends_on:
       - postgres
     restart: unless-stopped
