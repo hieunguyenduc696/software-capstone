@@ -1,0 +1,14 @@
+.paragraph {
+    font-family: 'Itim', cursive;
+    font-size: 18px;
+}
+
+.paragraph.text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.container {
+    box-sizing: border-box;
+    padding: 0.5rem;
+}

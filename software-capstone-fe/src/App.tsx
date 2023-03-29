@@ -4,7 +4,7 @@ import { AuthProvider } from "hooks/useAuth";
 import { SuspenseRouter } from "HOC";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { keycloakClient } from "config/keycloak";
-import AddingTestPage from "pages/Create/ReadingTest/AddTest";
+import AddingTestPage from "pages/Create/AddTest";
 import "./App.css";
 
 const App: React.FC = () => {
