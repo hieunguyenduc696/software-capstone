@@ -3,6 +3,7 @@ import { AppHeader, UploadImage } from "components"
 import { PreviewTestItem } from "components/PreviewTestItem"
 import { useRef, useState } from "react"
 import styles from "./PostTest.module.css"
+import { useNavigate } from "react-router"
 
 const mockPreviewTestItems = [
     {
@@ -26,6 +27,7 @@ export const PostTest = () => {
     const titleRef = useRef(null);
     const [title, setTitle] = useState<string>("IELTS Recent mock test");
     const [err, setErr] = useState<any>({});
+    const navigate = useNavigate();
 
     const handleTitleChange = (e: any) => {
         const len = e.target.value.length;
@@ -46,6 +48,7 @@ export const PostTest = () => {
 
     const handleAddReadingSectionClick = () => {
         console.log("add reading test");
+        navigate('/add-test');
     }
 
     const handleAddListeningSectionClick = () => {

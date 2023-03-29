@@ -7,12 +7,13 @@ import { TRoute } from "types";
 import { withAuthorization, withCustomErrorBoundary } from "HOC";
 import { flatten } from "utils";
 import { PostTestRoutes } from "pages/PostTest";
+import { AddTestRoutes } from "pages/Create";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
   path: "/",
   page: "accessible",
-  children: [...NotFoundRoutes, ...DashboardRoutes, ...PostTestRoutes],
+  children: [...NotFoundRoutes, ...DashboardRoutes, ...PostTestRoutes, ...AddTestRoutes],
 };
 
 
