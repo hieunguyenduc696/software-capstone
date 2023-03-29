@@ -33,7 +33,7 @@ const UploadImage = () => {
                 borderRadius: '10px',
                 overflow: 'hidden'
             }}>
-                <Image src={selectedFile ? preview : 'default.png'} alt='' style={{ width: 140, height: 130 }} preview={false} />
+                <Image src={selectedFile ? preview : 'default.png'} alt='' style={{ width: 140, height: 120 }} preview={false} />
                 <button
                     style={{
                         position: 'absolute',
