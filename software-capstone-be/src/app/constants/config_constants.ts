@@ -7,9 +7,27 @@ dotenv.config({
     path: ENV_DEFAULT_PATH,
 });
 
+//App configuration
 const DEFAULT_APP_PORT: string = "8088";
 const APP_PORT: string = process.env.APP_PORT ?? DEFAULT_APP_PORT;
 
+//DB configuration
+const DEFAULT_DB_PORT: string = "3306";
+const DEFAULT_DB_CONNECTION_LIMIT: string = "10";
+const DB_PORT: number = +(process.env.DB_PORT?? DEFAULT_DB_PORT); 
+const DB_HOST: string | undefined = process.env.DB_HOST;
+const DB_USER: string | undefined = process.env.DB_USER;
+const DB_PASSWORD: string | undefined = process.env.DB_PASSWORD;
+const DB_NAME: string | undefined = process.env.DB_NAME;
+const DB_CONNECTION_LIMIT: number = +(process.env.DB_CONNECTION_LIMIT?? DEFAULT_DB_CONNECTION_LIMIT);
+
 export {
     APP_PORT,
+
+    DB_PORT,
+    DB_HOST,
+    DB_USER,
+    DB_PASSWORD,
+    DB_NAME,
+    DB_CONNECTION_LIMIT,
 };
