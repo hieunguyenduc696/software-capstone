@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./index.module.css";
 import { Row, Col, Tabs, Typography, message } from "antd";
-import { FloatButton } from 'antd';
+import { FloatButton } from "antd";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 
 import { Divider } from "antd";
@@ -18,18 +18,17 @@ const SectionOne = () => {
 
   const success = () => {
     messageApi.open({
-      type: 'success',
-      content: 'Upload image successfully',
+      type: "success",
+      content: "Upload image successfully",
     });
   };
 
   const error = () => {
     messageApi.open({
-      type: 'error',
-      content: 'Please upload image only',
+      type: "error",
+      content: "Please upload image only",
     });
   };
-
 
   const handleAddFileClick = () => {
     if (inputFileRef.current) {
@@ -71,7 +70,7 @@ const SectionOne = () => {
             >
               <InboxOutlined style={{ fontSize: "45px", color: "#4985CD" }} />
               <p style={{ fontSize: "20px" }}>Click to upload Image</p>
-              
+
               <input
                 type="file"
                 style={{ display: "none" }}
@@ -81,14 +80,13 @@ const SectionOne = () => {
                     const newFile = e.target.files[0];
 
                     if (newFile.type.includes("image")) {
-                        setImage(newFile);
-                        success();
+                      setImage(newFile);
+                      success();
                     } else {
-                        error();
+                      error();
                     }
 
                     console.log(newFile);
-                    
                   }
                 }}
               />
@@ -96,7 +94,7 @@ const SectionOne = () => {
           )}
 
           {image && (
-            <div style={{position: 'relative'}}>
+            <div style={{ position: "relative" }}>
               <img
                 style={{
                   width: "100%",
@@ -106,11 +104,12 @@ const SectionOne = () => {
                 }}
                 src={preview}
               />
-              <FloatButton 
+              <FloatButton
                 tooltip={<div>Upload image</div>}
-                style={{position: 'absolute', top: '90%', right: '0%'}} 
+                style={{ position: "absolute", top: "90%", right: "0%" }}
                 onClick={handleAddFileClick}
-                icon={<UploadOutlined />}/>
+                icon={<UploadOutlined />}
+              />
               <input
                 type="file"
                 style={{ display: "none" }}
@@ -120,14 +119,13 @@ const SectionOne = () => {
                     const newFile = e.target.files[0];
 
                     if (newFile.type.includes("image")) {
-                        setImage(newFile);
-                        success();
+                      setImage(newFile);
+                      success();
                     } else {
-                        error();
+                      error();
                     }
 
                     console.log(newFile);
-                    
                   }
                 }}
               />
@@ -137,30 +135,32 @@ const SectionOne = () => {
       </Row>
 
       <Divider style={{ color: "#000" }} />
-      <Typography.Title
-        className={`${styles.title}`}
-        editable={{
-          icon: <EditOutlined />,
-          tooltip: "Edit title",
-          onChange: setTitle,
-          enterIcon: null,
-        }}
-        level={3}
-        style={{ margin: 0 }}
-      >
-        {title}
-      </Typography.Title>
-      <Typography.Paragraph
-        editable={{
-          icon: <EditOutlined />,
-          tooltip: "click to edit text",
-          onChange: setContent,
-          enterIcon: null,
-        }}
-        className={`${styles.paragraph} ${styles.full}`}
-      >
-        {content}
-      </Typography.Paragraph>
+      <div style={{ padding: "0.5rem" }}>
+        <Typography.Title
+          className={`${styles.title}`}
+          editable={{
+            icon: <EditOutlined />,
+            tooltip: "Edit title",
+            onChange: setTitle,
+            enterIcon: null,
+          }}
+          level={3}
+          style={{ margin: 0, marginBottom: "0.75rem" }}
+        >
+          {title}
+        </Typography.Title>
+        <Typography.Paragraph
+          editable={{
+            icon: <EditOutlined />,
+            tooltip: "click to edit text",
+            onChange: setContent,
+            enterIcon: null,
+          }}
+          className={`${styles.paragraph} ${styles.full}`}
+        >
+          {content}
+        </Typography.Paragraph>
+      </div>
     </>
   );
 };
