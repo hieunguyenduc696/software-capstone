@@ -52,7 +52,7 @@ const AddingTestPage = () => {
         <Col className={`${styles.column} ${styles.right}`} span={12}>
           <Row>
             <Col span={24}>
-              <div className={styles.questionHeader}>Question 1 - 7</div>
+              <div className={styles.questionHeader} style={{ backgroundColor: 'var(--secondaryColor)'}}>Question 1 - 7</div>
             </Col>
           </Row>
 

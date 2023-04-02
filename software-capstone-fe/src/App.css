@@ -9,7 +9,12 @@ body,
   vertical-align: baseline;
   line-height: 1;
 
-  font-family: 'Itim', cursive;
+  font-family: Alata,'Itim', cursive;
+}
+
+:root {
+  --mainColor: #5196A5;
+  --secondaryColor: #2F4561;
 }
 
 
