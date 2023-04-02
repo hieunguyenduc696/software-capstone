@@ -1,0 +1,7 @@
+const PASSAGE_WALLPAPER_FILE_ALLOWED_EXTENSION: string[] = [
+    "jpg", "png",
+];
+
+export {
+    PASSAGE_WALLPAPER_FILE_ALLOWED_EXTENSION,
+};
