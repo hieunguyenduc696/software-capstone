@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./index.module.css";
-import { Select, Typography, Col } from "antd";
+import { Select, Typography, Col, Tooltip } from "antd";
+import Icon from "@ant-design/icons";
 import { EditOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
@@ -45,18 +46,36 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
     >
       <div className={styles.number}>{`${order}`}</div>
       <TrueFalseSelect />
-      <input
-        type="text"
-        required
-        ref={questionRef}
+      <div
         style={{
-          backgroundColor: "transparent",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          width: "75%",
         }}
-        className={`${styles["ip-title"]} ${styles.paragraph}`}
-        value={question}
-        onChange={handleQuestionChange}
-        placeholder="Enter the question"
-      />
+      >
+        <input
+          type="text"
+          required
+          ref={questionRef}
+          style={{
+            backgroundColor: "transparent",
+          }}
+          className={`${styles["ip-title"]} ${styles.paragraph}`}
+          value={question}
+          onChange={handleQuestionChange}
+          placeholder="Enter the question"
+        />
+        <Icon
+          component={() => (
+            <Tooltip title="Add explanation">
+              <img style={{width: "13px"}} src="quotation.png" />
+            </Tooltip>
+          )}
+        />
+      </div>
     </Col>
   );
 };
