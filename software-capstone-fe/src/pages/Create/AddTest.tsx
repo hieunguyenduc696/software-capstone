@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Typography } from "antd";
+import { Row, Col, Tabs } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -9,8 +9,6 @@ import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstructio
 
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
-
-const { Paragraph } = Typography;
 
 const items: TabsProps["items"] = [
   {
@@ -67,31 +65,10 @@ const AddingTestPage = () => {
 
           <Row>
             <TrueFalseInstruction from={1} to={7} />
-
-            {/* <TrueFalseType order={1} />
-            <TrueFalseType order={2} />
-            <TrueFalseType order={3} />
-            <TrueFalseType order={4} />
-            <TrueFalseType order={5} />
-            <TrueFalseType order={6} />
-            <TrueFalseType order={7} /> */}
             <TrueFalseType order={7} />
-{/* 
-            <Col span={24} className={styles.container}>
-              <Paragraph className={`${styles.paragraph}`} >
-                Answer the questions below.
-              </Paragraph>
 
-              <Paragraph className={`${styles.paragraph}`} style={{width: '100%'}}>
-                Choose <span className={`${styles.paragraph} ${styles.important}`}>NO MORE THAN THREE WORDS</span> from the passage for each answer:
-              </Paragraph>
-
-              <Paragraph className={`${styles.paragraph}`}>
-                Write your answers in <span className={`${styles.paragraph} ${styles.limit}`}>boxes 8-13</span> on your answer sheet.
-              </Paragraph>
-            </Col> */}
             <ShortAnswerInstruction from={8} to={13}/>
-            <ShortAnswerType order={7} />
+            <ShortAnswerType order={8} />
           </Row>
         </Col>
       </Row>
