@@ -114,3 +114,26 @@
     outline: none;
     border-bottom: 1px solid black;
 }
+
+.paragraph {
+    font-size: 16px;
+    font-family: 'Alata';
+}
+
+.paragraph.important {
+    font-weight: bold;
+    font-size: 16px;
+    color: red;
+
+}
+
+.paragraph.limit {
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
+}
+
+.container {
+    box-sizing: border-box;
+    padding: 0.5rem;
+}
