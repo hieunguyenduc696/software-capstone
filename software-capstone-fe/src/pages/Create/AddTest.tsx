@@ -52,7 +52,12 @@ const AddingTestPage = () => {
         <Col className={`${styles.column} ${styles.right}`} span={12}>
           <Row>
             <Col span={24}>
-              <div className={styles.questionHeader} style={{ backgroundColor: 'var(--secondaryColor)'}}>Question 1 - 7</div>
+              <div
+                className={styles.questionHeader}
+                style={{ backgroundColor: "var(--secondaryColor)" }}
+              >
+                Question 1 - 7
+              </div>
             </Col>
           </Row>
 
@@ -65,6 +70,14 @@ const AddingTestPage = () => {
             <TrueFalseType order={5} />
             <TrueFalseType order={6} />
             <TrueFalseType order={7} />
+
+            <Col span={24} style={{ boxSizing: "border-box" }} className={`${styles.shortAnswer}`}>
+              <Typography.Paragraph
+                editable
+              >
+                {'Enter the question'}
+              </Typography.Paragraph>
+            </Col>
           </Row>
         </Col>
       </Row>
