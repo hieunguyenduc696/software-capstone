@@ -108,3 +108,9 @@
 
     padding: 0.75rem 0.5rem;
 }
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}

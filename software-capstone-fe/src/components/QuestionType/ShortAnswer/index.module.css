@@ -1,0 +1,30 @@
+.shortAnswer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+
+    padding: 0.75rem 0.5rem;
+}
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.number {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+
+    background-color: #D9D9D9;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    font-weight: bold;
+
+    margin-right: 0.5rem;
+}
