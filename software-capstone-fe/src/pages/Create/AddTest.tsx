@@ -6,7 +6,7 @@ import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType"
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
 import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/TrueFalseInstruction";
 import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstruction/ShortAnswerInstruction";
-
+import QuestionTypeHeader from "components/QuestionTypeHeader";
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import Icon from "@ant-design/icons";
@@ -110,7 +110,7 @@ const AddingTestPage = () => {
           <Row>
             <Col span={24}>
               {/* Question header */}
-              <div
+              {/* <div
                 className={styles.questionHeader}
                 style={{ backgroundColor: "var(--mainColor)" }}
               >
@@ -124,7 +124,8 @@ const AddingTestPage = () => {
                   True False Not Given
                 </div>
                 <UpOutlined />
-              </div>
+              </div> */}
+              <QuestionTypeHeader typeOfQuestion="True False Not Given"/>
             </Col>
           </Row>
 
