@@ -11,6 +11,7 @@ import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import Icon from "@ant-design/icons";
 import QuestionItem from "components/QuestionItem/QuestionItem";
+import { IQuestionItem, TYPE_OF_QUESTION } from "services/animeService/QuestionTypeService";
 
 const items: TabsProps["items"] = [
   {
@@ -76,10 +77,13 @@ const AddingTestPage = () => {
                 }}
               >
                 {/* Question Item */}
-                <QuestionItem icon={"true-false-not-given.png"} firstLine="True False" secondLine="Not Given"/>
-                <QuestionItem icon={"multiple-choice.png"} firstLine="Multiple" secondLine="choice"/>
-                <QuestionItem icon={"mapping.png"} firstLine="Head" secondLine="matching"/>
-                
+                {TYPE_OF_QUESTION.map((item: IQuestionItem) => {
+                  const [firstLine, secondLine] = item.name.split('-');
+                  return (
+                    <QuestionItem icon={item.icon} firstLine={firstLine} secondLine={secondLine}/>
+                  );
+                })}
+
               </div>
             </Col>
           </Row>
