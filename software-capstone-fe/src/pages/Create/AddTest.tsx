@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Divider } from "antd";
+import { Row, Col, Tabs, Divider, InputNumber } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -11,7 +11,12 @@ import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import Icon from "@ant-design/icons";
 import QuestionItem from "components/QuestionItem/QuestionItem";
-import { IQuestionItem, TYPE_OF_QUESTION } from "services/animeService/QuestionTypeService";
+import {
+  IQuestionItem,
+  TYPE_OF_QUESTION,
+} from "services/animeService/QuestionTypeService";
+
+import { UpOutlined } from '@ant-design/icons';
 
 const items: TabsProps["items"] = [
   {
@@ -38,6 +43,10 @@ const AddingTestPage = () => {
     console.log(key);
   };
 
+  const onNumberChange = (value: any) => {
+    console.log(value);
+  };
+
   return (
     <div style={{ background: "#FFF" }}>
       <AppHeader />
@@ -55,7 +64,15 @@ const AddingTestPage = () => {
           </Row>
         </Col>
 
-        <Col className={`${styles.column} ${styles.right}`} span={12}  style={{borderLeft: "2px solid #9F9F9F"}}>
+        <Col
+          className={`${styles.column} ${styles.right}`}
+          span={12}
+          style={{
+            borderLeft: "2px solid #9F9F9F",
+            height: "90vh",
+            maxHeight: "90vh",
+          }}
+        >
           {/* Choose type of question */}
           <Row>
             <Col span={24}>
@@ -73,17 +90,19 @@ const AddingTestPage = () => {
                   justifyContent: "flex-start",
                   alignItems: "center",
 
-                  backgroundColor: "#FFF"
+                  backgroundColor: "#FFF",
                 }}
               >
-                {/* Question Item */}
                 {TYPE_OF_QUESTION.map((item: IQuestionItem) => {
-                  const [firstLine, secondLine] = item.name.split('-');
+                  const [firstLine, secondLine] = item.name.split("-");
                   return (
-                    <QuestionItem icon={item.icon} firstLine={firstLine} secondLine={secondLine}/>
+                    <QuestionItem
+                      icon={item.icon}
+                      firstLine={firstLine}
+                      secondLine={secondLine}
+                    />
                   );
                 })}
-
               </div>
             </Col>
           </Row>
@@ -93,20 +112,30 @@ const AddingTestPage = () => {
               {/* Question header */}
               <div
                 className={styles.questionHeader}
-                style={{ backgroundColor: "var(--secondaryColor)" }}
+                style={{ backgroundColor: "var(--mainColor)" }}
               >
-                Question 1 - 7
+                <div style={{width: "50%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
+                  <InputNumber
+                    defaultValue={3}
+                    onChange={onNumberChange}
+                    className={`${styles["number-input"]}`}
+                    style={{marginRight: "1rem"}}
+                  />
+                  True False Not Given
+                </div>
+                <UpOutlined />
               </div>
             </Col>
           </Row>
 
+          {/* 
           <Row>
             <TrueFalseInstruction from={1} to={7} />
             <TrueFalseType order={7} />
 
             <ShortAnswerInstruction from={8} to={13} />
             <ShortAnswerType order={8} />
-          </Row>
+          </Row> */}
         </Col>
       </Row>
     </div>

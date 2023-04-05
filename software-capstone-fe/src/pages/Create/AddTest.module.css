@@ -1,8 +1,8 @@
 
 .column {
     margin: 0;
-    height: calc(100% - 80px);
-    max-height: calc(100% - 80px);
+    /* height: calc(100% - 80px);
+    max-height: calc(100% - 80px); */
     overflow-y: auto;
 
     box-sizing: border-box;
@@ -14,8 +14,10 @@
 
 .column.right {
     background-color: var(--mainGrayColor);
+    border-left: 2px solid #9F9F9F;
     width: 100%;
     max-width: 100%;
+    /* height: calc(100% - 80px); */
 }
 
 .tabs {
@@ -23,15 +25,7 @@
     font-size: 16px;
 }
 
-.questionHeader {
-    height: '40px';
 
-    font-size: 16px;
-    background-color: #000;
-    color: #FFF;
-
-    padding: 1.25rem 0.5rem;
-}
 
 
 .question {
@@ -159,4 +153,25 @@
     margin-left: 1rem;
 
     cursor: pointer;
+}
+
+.questionHeader {
+    height: '40px';
+    box-sizing: border-box;
+
+    font-size: 16px;
+    background-color: #000;
+    color: #FFF;
+
+    padding: 1.25rem 0.5rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number-input {
+    height: 35px;
+    width: 50px;
 }
