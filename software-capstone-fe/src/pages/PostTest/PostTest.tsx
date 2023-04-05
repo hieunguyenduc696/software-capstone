@@ -1,9 +1,11 @@
-import { Button, Col, Image, Row } from "antd";
-import { AppHeader, UploadImage } from "components";
-import { PreviewTestItem } from "components/PreviewTestItem";
-import { useRef, useState } from "react";
-import styles from "./PostTest.module.css";
-import { useNavigate } from "react-router";
+
+import { Button, Col, Image, Row } from "antd"
+import { AppHeader, UploadImage } from "components"
+import { PreviewTestItem } from "components/PreviewTestItem"
+import { useRef, useState } from "react"
+import styles from "./PostTest.module.css"
+import { useNavigate } from "react-router"
+import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion"
 
 const mockPreviewTestItems = [
   {
@@ -45,10 +47,16 @@ export const PostTest = () => {
     }
   };
 
+
   const handleAddReadingSectionClick = () => {
     console.log("add reading test");
     navigate("/add-test");
-  };
+
+    const [selectedAnswer, setSelectedAnswer] = useState("");
+
+    const handleQuestionChange = (selected: string) => {
+        setSelectedAnswer(selected);
+    };
 
   const handleAddListeningSectionClick = () => {
     console.log("add listening test");
@@ -207,6 +215,13 @@ export const PostTest = () => {
           </Col>
         </Row>
       </div>
+        </div>
+
+        {/* test multiple choice question */}
+        {/* <MultipleChoiceQuestion order={14} question={{
+            text: "What is the capital of France?",
+            choices: ["London", "Paris", "Berlin", "Madrid"],
+        }} /> */}
     </div>
   );
 };
