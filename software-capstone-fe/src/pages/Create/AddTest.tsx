@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs } from "antd";
+import { Row, Col, Tabs, Divider } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -9,6 +9,8 @@ import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstructio
 
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
+import Icon from "@ant-design/icons";
+import QuestionItem from "components/QuestionItem/QuestionItem";
 
 const items: TabsProps["items"] = [
   {
@@ -51,9 +53,40 @@ const AddingTestPage = () => {
             </Col>
           </Row>
         </Col>
-        <Col className={`${styles.column} ${styles.right}`} span={12}>
+
+        <Col className={`${styles.column} ${styles.right}`} span={12}  style={{borderLeft: "2px solid #9F9F9F"}}>
+          {/* Choose type of question */}
           <Row>
             <Col span={24}>
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "100%",
+                  overflowX: "auto",
+
+                  padding: "0.5rem",
+                  marginBottom: "1rem",
+
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+
+                  backgroundColor: "#FFF"
+                }}
+              >
+                {/* Question Item */}
+                <QuestionItem icon={"true-false-not-given.png"} firstLine="True False" secondLine="Not Given"/>
+                <QuestionItem icon={"multiple-choice.png"} firstLine="Multiple" secondLine="choice"/>
+                <QuestionItem icon={"mapping.png"} firstLine="Head" secondLine="matching"/>
+                
+              </div>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              {/* Question header */}
               <div
                 className={styles.questionHeader}
                 style={{ backgroundColor: "var(--secondaryColor)" }}
@@ -67,7 +100,7 @@ const AddingTestPage = () => {
             <TrueFalseInstruction from={1} to={7} />
             <TrueFalseType order={7} />
 
-            <ShortAnswerInstruction from={8} to={13}/>
+            <ShortAnswerInstruction from={8} to={13} />
             <ShortAnswerType order={8} />
           </Row>
         </Col>
