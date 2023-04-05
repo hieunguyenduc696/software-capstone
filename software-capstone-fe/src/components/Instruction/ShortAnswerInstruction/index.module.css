@@ -3,9 +3,17 @@
     font-family: 'Alata';
 }
 
-.paragraph.text {
+.paragraph.important {
     font-weight: bold;
     font-size: 16px;
+    color: red;
+
+}
+
+.paragraph.limit {
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
 }
 
 .container {

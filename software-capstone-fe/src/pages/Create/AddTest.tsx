@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Typography } from "antd";
+import { Row, Col, Tabs } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
+import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
 import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/TrueFalseInstruction";
+import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstruction/ShortAnswerInstruction";
 
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
@@ -52,19 +54,21 @@ const AddingTestPage = () => {
         <Col className={`${styles.column} ${styles.right}`} span={12}>
           <Row>
             <Col span={24}>
-              <div className={styles.questionHeader}>Question 1 - 7</div>
+              <div
+                className={styles.questionHeader}
+                style={{ backgroundColor: "var(--secondaryColor)" }}
+              >
+                Question 1 - 7
+              </div>
             </Col>
           </Row>
 
           <Row>
             <TrueFalseInstruction from={1} to={7} />
-            <TrueFalseType order={1} />
-            <TrueFalseType order={2} />
-            <TrueFalseType order={3} />
-            <TrueFalseType order={4} />
-            <TrueFalseType order={5} />
-            <TrueFalseType order={6} />
             <TrueFalseType order={7} />
+
+            <ShortAnswerInstruction from={8} to={13}/>
+            <ShortAnswerType order={8} />
           </Row>
         </Col>
       </Row>

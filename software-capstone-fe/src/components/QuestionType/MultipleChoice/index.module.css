@@ -48,7 +48,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: bold;
 
     margin-right: 0.5rem;
@@ -57,13 +57,12 @@
 .select {
     height: 30px;
     width: 120px;
-    margin-right: 2rem;
+    margin-right: 1em;
 }
 
 .paragraph {
-    font-family: 'Itim', cursive;
     font-size: 16px;
-    width: 70%;
+    width: 75%;
     padding-top: 0.25rem;
 }
 
@@ -82,4 +81,10 @@
 .input:focus {
     border-bottom: 1px solid #000;
     box-shadow: 0 0 0 2px rgba(255,255,255);
+}
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
 }
