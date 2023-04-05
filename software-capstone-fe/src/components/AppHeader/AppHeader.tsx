@@ -17,7 +17,7 @@ export const AppHeader = () => {
     <Layout.Header className={classes["top-header"]}
       style={{
         backgroundColor: 'var(--mainColor)',
-        borderRadius: '0 0 20px 20px',
+        //borderRadius: '0 0 20px 20px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
