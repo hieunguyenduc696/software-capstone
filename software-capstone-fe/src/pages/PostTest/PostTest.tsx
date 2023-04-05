@@ -4,6 +4,7 @@ import { PreviewTestItem } from "components/PreviewTestItem"
 import { useRef, useState } from "react"
 import styles from "./PostTest.module.css"
 import { useNavigate } from "react-router"
+import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion"
 
 const mockPreviewTestItems = [
     {
@@ -54,6 +55,12 @@ export const PostTest = () => {
     const handleAddListeningSectionClick = () => {
         console.log("add listening test");
     }
+
+    const [selectedAnswer, setSelectedAnswer] = useState("");
+
+    const handleQuestionChange = (selected: string) => {
+        setSelectedAnswer(selected);
+    };
 
     return <div>
         <AppHeader />
@@ -153,5 +160,11 @@ export const PostTest = () => {
                 </Col>
             </Row>
         </div>
+
+        {/* test multiple choice question */}
+        {/* <MultipleChoiceQuestion order={14} question={{
+            text: "What is the capital of France?",
+            choices: ["London", "Paris", "Berlin", "Madrid"],
+        }} /> */}
     </div>
 }
