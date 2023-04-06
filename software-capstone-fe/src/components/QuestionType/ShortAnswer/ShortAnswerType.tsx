@@ -53,7 +53,7 @@ const ShortAnswer = ({ order }: ShortAnswerProps) => {
 
       <Row>
         <Col
-          span={14}
+          span={16}
           style={{
             display: "flex",
             flexDirection: "row",
@@ -61,7 +61,7 @@ const ShortAnswer = ({ order }: ShortAnswerProps) => {
             alignItems: "center",
           }}
         >
-          <div className={styles.number}>{order}</div>
+          <div className={`${styles.number}`}>{`${order}`}</div>
           <input
             type="text"
             required

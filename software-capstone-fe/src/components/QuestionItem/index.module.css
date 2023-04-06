@@ -1,5 +1,6 @@
 
 .question-item {
+    box-sizing: border-box;
     height: 50px;
     width: 120px;
     min-width: 120px;

@@ -5,27 +5,43 @@ import { Row, Col, Tabs, Typography } from "antd";
 const { Paragraph } = Typography;
 
 interface ShortAnswerInstructionProps {
-    from: number;
-    to: number;
+  from: number;
+  to: number;
+  collapsed: boolean;
 }
 
-const ShortAnswerInstruction: React.FC<ShortAnswerInstructionProps> = ({ from, to }: ShortAnswerInstructionProps) => {
+const ShortAnswerInstruction: React.FC<ShortAnswerInstructionProps> = ({
+  from,
+  to,
+  collapsed = false,
+}: ShortAnswerInstructionProps) => {
+  return (
+    <Col
+      span={24}
+      className={styles.container}
+      style={{ display: collapsed ? "none" : "block" }}
+    >
+      <Paragraph className={`${styles.paragraph}`}>
+        Answer the questions below.
+      </Paragraph>
 
-    return (
-        <Col span={24} className={styles.container}>
-              <Paragraph className={`${styles.paragraph}`} >
-                Answer the questions below.
-              </Paragraph>
+      <Paragraph className={`${styles.paragraph}`} style={{ width: "100%" }}>
+        Choose{" "}
+        <span className={`${styles.paragraph} ${styles.important}`}>
+          NO MORE THAN THREE WORDS
+        </span>{" "}
+        from the passage for each answer:
+      </Paragraph>
 
-              <Paragraph className={`${styles.paragraph}`} style={{width: '100%'}}>
-                Choose <span className={`${styles.paragraph} ${styles.important}`}>NO MORE THAN THREE WORDS</span> from the passage for each answer:
-              </Paragraph>
-
-              <Paragraph className={`${styles.paragraph}`}>
-                Write your answers in <span className={`${styles.paragraph} ${styles.limit}`}>boxes {from}-{to}</span> on your answer sheet.
-              </Paragraph>
-            </Col>
-    );
-}
+      <Paragraph className={`${styles.paragraph}`}>
+        Write your answers in{" "}
+        <span className={`${styles.paragraph} ${styles.limit}`}>
+          boxes {from}-{to}
+        </span>{" "}
+        on your answer sheet.
+      </Paragraph>
+    </Col>
+  );
+};
 
 export default ShortAnswerInstruction;

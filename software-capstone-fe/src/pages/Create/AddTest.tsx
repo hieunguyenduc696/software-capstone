@@ -1,17 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Divider } from "antd";
+import { Row, Col, Tabs, Collapse, Typography, message } from "antd";
 import { AppHeader } from "../../components/AppHeader";
-import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
-import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
-import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/TrueFalseInstruction";
-import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstruction/ShortAnswerInstruction";
-
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import Icon from "@ant-design/icons";
 import QuestionItem from "components/QuestionItem/QuestionItem";
-import { IQuestionItem, TYPE_OF_QUESTION } from "services/animeService/QuestionTypeService";
+import {
+  IQuestionItem,
+  TYPE_OF_QUESTION,
+} from "services/animeService/QuestionTypeService";
+
+import { UpOutlined, MehOutlined } from "@ant-design/icons";
+import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotGivenTemplate";
+import ShortAnswerTemplate from "components/QuestionTemplate/ShortAnswerTemplate";
 
 const items: TabsProps["items"] = [
   {
@@ -38,11 +40,41 @@ const AddingTestPage = () => {
     console.log(key);
   };
 
+
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const [questionTemplates, setQuestionTemplates] = useState<string[]>([]);
+  // check 
+  const [totalQuestion, setTotalQuestion] = useState<number>(0);
+
+  const duplicatedTypeOfQuestionError = () => {
+    messageApi.open({
+      type: "error",
+      content: "This type of question has already existed",
+    });
+  };
+
+  const handleQuestionTemplatesUpdate = (typeOfQuestion: string) => {
+    const duplicated = questionTemplates?.includes(typeOfQuestion);
+
+    if (!duplicated) {
+      setQuestionTemplates((prev: any) => {
+        return [...prev, typeOfQuestion];
+      });
+    } else {
+      duplicatedTypeOfQuestionError();
+    }
+  };
+
+  
+
+
   return (
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column} ${styles.left}`} span={12}>
+        <Col className={`${styles.column}`} span={12}>
           <Row>
             <Col span={24}>
               <Tabs
@@ -55,57 +87,60 @@ const AddingTestPage = () => {
           </Row>
         </Col>
 
-        <Col className={`${styles.column} ${styles.right}`} span={12}  style={{borderLeft: "2px solid #9F9F9F"}}>
+        <Col
+          className={`${styles.column} ${styles.right}`}
+          span={12}
+          style={{
+            borderLeft: "2px solid #9F9F9F",
+            height: "90vh",
+            maxHeight: "90vh",
+          }}
+        >
           {/* Choose type of question */}
+          {contextHolder}
           <Row>
             <Col span={24}>
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "100%",
-                  overflowX: "auto",
-
-                  padding: "0.5rem",
-                  marginBottom: "1rem",
-
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-
-                  backgroundColor: "#FFF"
-                }}
-              >
-                {/* Question Item */}
+              <div className={`${styles["type-options"]}`}>
                 {TYPE_OF_QUESTION.map((item: IQuestionItem) => {
-                  const [firstLine, secondLine] = item.name.split('-');
+                  const [firstLine, secondLine] = item.name.split("-");
                   return (
-                    <QuestionItem icon={item.icon} firstLine={firstLine} secondLine={secondLine}/>
+                    <QuestionItem
+                      icon={item.icon}
+                      firstLine={firstLine}
+                      secondLine={secondLine}
+                      type={item.type}
+                      addTemplateCallback={handleQuestionTemplatesUpdate}
+                    />
                   );
                 })}
-
               </div>
             </Col>
           </Row>
 
           <Row>
-            <Col span={24}>
-              {/* Question header */}
-              <div
-                className={styles.questionHeader}
-                style={{ backgroundColor: "var(--secondaryColor)" }}
+            {questionTemplates.length === 0 && (
+              <Col span={24}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+
+                  marginTop: "5rem"
+                }}
               >
-                Question 1 - 7
-              </div>
-            </Col>
-          </Row>
+                <MehOutlined style={{color: "var(--secondaryColor)", fontSize: "30px"}}></MehOutlined>
+                <p style={{color: "var(--secondaryColor)", fontSize: "20px"}}>There's nothing here.</p>
+              </Col>
+            )}
 
-          <Row>
-            <TrueFalseInstruction from={1} to={7} />
-            <TrueFalseType order={7} />
-
-            <ShortAnswerInstruction from={8} to={13} />
-            <ShortAnswerType order={8} />
+            {questionTemplates.length > 0 &&
+              questionTemplates.map((item: any) => {
+                if (item === TYPE_OF_QUESTION[0].type)
+                  return <TrueFalseNotGivenTemplate />;
+                else if (item === TYPE_OF_QUESTION[1].type)
+                  return <ShortAnswerTemplate/>
+              })}
           </Row>
         </Col>
       </Row>

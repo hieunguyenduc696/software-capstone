@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
 import styles from "./index.module.css";
-import { Select, Typography, Col, Tooltip } from "antd";
+import { Select, Typography, Col, Tooltip, Input } from "antd";
 import Icon from "@ant-design/icons";
 import { EditOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
+const { TextArea } = Input;
 
 const TrueFalseSelect = () => {
   const options = [
@@ -13,13 +14,7 @@ const TrueFalseSelect = () => {
     { value: "NG", label: "Not Given" },
   ];
 
-  return (
-    <Select
-      className={`${styles.select}`}
-      defaultValue={options[0].value}
-      options={options}
-    />
-  );
+  return <Select className={`${styles.select}`} options={options} />;
 };
 
 interface TrueFalseTypeProps {
@@ -62,6 +57,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
           ref={questionRef}
           style={{
             backgroundColor: "transparent",
+            marginRight: "0.5rem"
           }}
           className={`${styles["ip-title"]} ${styles.paragraph}`}
           value={question}
@@ -71,7 +67,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
         <Icon
           component={() => (
             <Tooltip title="Add explanation">
-              <img style={{width: "13px"}} src="quotation.png" />
+              <img style={{ width: "13px" }} src="quotation.png" />
             </Tooltip>
           )}
         />
