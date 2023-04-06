@@ -1,34 +1,48 @@
-import React from 'react';
-import { UpOutlined } from '@ant-design/icons';
+import React from "react";
+import { UpOutlined, DownOutlined } from "@ant-design/icons";
 import { InputNumber } from "antd";
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 interface QuestionTypeHeaderProps {
-    typeOfQuestion: string;
+  typeOfQuestion: string;
+  onQuantityUpdateCallback: (value: number | null) => void;
+  onCollapseStatusUpdate: () => void;
+  collapsed: boolean;
 }
 
-const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({ typeOfQuestion }: QuestionTypeHeaderProps) => {
-
-    const onNumberChange = (value: number | null) => {
-        console.log(value);
-    }
-
-    return (
+const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
+  typeOfQuestion,
+  onQuantityUpdateCallback,
+  onCollapseStatusUpdate,
+  collapsed = false
+}: QuestionTypeHeaderProps) => {
+  return (
+    <div
+      className={styles.questionHeader}
+      style={{ backgroundColor: "var(--mainColor)" }}
+    >
       <div
-        className={styles.questionHeader}
-        style={{ backgroundColor: "var(--mainColor)" }}
+        style={{
+          width: "50%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+        }}
       >
-        <div style={{width: "50%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
-          <InputNumber
-            defaultValue={3}
-            onChange={onNumberChange}
-            className={`${styles["number-input"]}`}
-            style={{marginRight: "1rem"}}
-          />
-          <span>{typeOfQuestion}</span>
-        </div>
-        <UpOutlined />
-      </div>);
+        <InputNumber
+          defaultValue={3}
+          onChange={onQuantityUpdateCallback}
+          className={`${styles["number-input"]}`}
+          style={{ marginRight: "1rem" }}
+          min={1}
+        />
+        <span>{typeOfQuestion}</span>
+      </div>
+      { collapsed ? <DownOutlined onClick={onCollapseStatusUpdate}/> : <UpOutlined onClick={onCollapseStatusUpdate} />}
+      
+    </div>
+  );
 };
 
 export default QuestionTypeHeader;

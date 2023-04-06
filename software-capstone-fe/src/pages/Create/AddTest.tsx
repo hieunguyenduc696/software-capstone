@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Divider, InputNumber } from "antd";
+import { Row, Col, Tabs, Collapse } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -16,7 +16,9 @@ import {
   TYPE_OF_QUESTION,
 } from "services/animeService/QuestionTypeService";
 
-import { UpOutlined } from '@ant-design/icons';
+import { UpOutlined } from "@ant-design/icons";
+
+const { Panel } = Collapse;
 
 const items: TabsProps["items"] = [
   {
@@ -43,8 +45,18 @@ const AddingTestPage = () => {
     console.log(key);
   };
 
-  const onNumberChange = (value: any) => {
-    console.log(value);
+  const [questionQuantity, setQuestionQuantity] = useState<number>(3);
+  const [collapse, setCollapse] = useState<boolean>(false);
+
+  const handleCollapseStatusChange = () => {
+    setCollapse((prev: boolean) => !prev);
+  };
+
+  const handleQuestionQuantityUpdate = (value: number | null) => {
+    if (value) {
+      setQuestionQuantity(value);
+      console.log("DEBUG: ", value);
+    }
   };
 
   return (
@@ -109,34 +121,28 @@ const AddingTestPage = () => {
 
           <Row>
             <Col span={24}>
-              {/* Question header */}
-              {/* <div
-                className={styles.questionHeader}
-                style={{ backgroundColor: "var(--mainColor)" }}
-              >
-                <div style={{width: "50%", display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center"}}>
-                  <InputNumber
-                    defaultValue={3}
-                    onChange={onNumberChange}
-                    className={`${styles["number-input"]}`}
-                    style={{marginRight: "1rem"}}
-                  />
-                  True False Not Given
-                </div>
-                <UpOutlined />
-              </div> */}
-              <QuestionTypeHeader typeOfQuestion="True False Not Given"/>
+              <QuestionTypeHeader
+                typeOfQuestion="True False Not Given"
+                onQuantityUpdateCallback={handleQuestionQuantityUpdate}
+                collapsed={collapse}
+                onCollapseStatusUpdate={handleCollapseStatusChange}
+              />
+
+              <TrueFalseInstruction
+                from={1}
+                to={questionQuantity ? questionQuantity : 0}
+                collapsed={collapse}
+              />
+              <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
+                {Array(questionQuantity)
+                  .fill(null)
+                  .map((_, index) => {
+                    return <TrueFalseType order={index + 1} />;
+                  })}
+              </div>
             </Col>
           </Row>
 
-          {/* 
-          <Row>
-            <TrueFalseInstruction from={1} to={7} />
-            <TrueFalseType order={7} />
-
-            <ShortAnswerInstruction from={8} to={13} />
-            <ShortAnswerType order={8} />
-          </Row> */}
         </Col>
       </Row>
     </div>
