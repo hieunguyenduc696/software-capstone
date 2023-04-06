@@ -26,7 +26,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
     <div className={`${styles["question-item"]}`} onClick={handleClick}>
       <Icon
         component={() => (
-          <img style={{ width: "30px", marginRight: "3px" }} src={icon} />
+          <img style={{ width: "30px", height: "30px", marginRight: "3px" }} src={icon} />
         )}
       />
       <div

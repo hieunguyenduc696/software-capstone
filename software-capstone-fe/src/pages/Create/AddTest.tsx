@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Collapse, Typography } from "antd";
+import { Row, Col, Tabs, Collapse, Typography, message } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -18,8 +18,7 @@ import {
 
 import { UpOutlined, MehOutlined } from "@ant-design/icons";
 import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotGivenTemplate";
-
-const { Panel } = Collapse;
+import ShortAnswerTemplate from "components/QuestionTemplate/ShortAnswerTemplate";
 
 const items: TabsProps["items"] = [
   {
@@ -46,21 +45,41 @@ const AddingTestPage = () => {
     console.log(key);
   };
 
-  const [questionTemplates, setQuestionTemplates] = useState<any>([]);
+
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const [questionTemplates, setQuestionTemplates] = useState<string[]>([]);
+  // check 
+  const [totalQuestion, setTotalQuestion] = useState<number>(0);
+
+  const duplicatedTypeOfQuestionError = () => {
+    messageApi.open({
+      type: "error",
+      content: "This type of question has already existed",
+    });
+  };
 
   const handleQuestionTemplatesUpdate = (typeOfQuestion: string) => {
-    if (typeOfQuestion === TYPE_OF_QUESTION[0].type) {
+    const duplicated = questionTemplates?.includes(typeOfQuestion);
+
+    if (!duplicated) {
       setQuestionTemplates((prev: any) => {
         return [...prev, typeOfQuestion];
       });
+    } else {
+      duplicatedTypeOfQuestionError();
     }
   };
+
+  
+
 
   return (
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column} ${styles.left}`} span={12}>
+        <Col className={`${styles.column}`} span={12}>
           <Row>
             <Col span={24}>
               <Tabs
@@ -83,25 +102,10 @@ const AddingTestPage = () => {
           }}
         >
           {/* Choose type of question */}
+          {contextHolder}
           <Row>
             <Col span={24}>
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "100%",
-                  overflowX: "auto",
-
-                  padding: "0.5rem",
-                  marginBottom: "1rem",
-
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-
-                  backgroundColor: "#FFF",
-                }}
-              >
+              <div className={`${styles["type-options"]}`}>
                 {TYPE_OF_QUESTION.map((item: IQuestionItem) => {
                   const [firstLine, secondLine] = item.name.split("-");
                   return (
@@ -141,6 +145,8 @@ const AddingTestPage = () => {
               questionTemplates.map((item: any) => {
                 if (item === TYPE_OF_QUESTION[0].type)
                   return <TrueFalseNotGivenTemplate />;
+                else if (item === TYPE_OF_QUESTION[1].type)
+                  return <ShortAnswerTemplate/>
               })}
           </Row>
         </Col>
