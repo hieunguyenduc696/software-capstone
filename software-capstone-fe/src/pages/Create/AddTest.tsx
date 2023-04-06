@@ -2,11 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
 import { Row, Col, Tabs, Collapse, Typography, message } from "antd";
 import { AppHeader } from "../../components/AppHeader";
-import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
-import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
-import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/TrueFalseInstruction";
-import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstruction/ShortAnswerInstruction";
-import QuestionTypeHeader from "components/QuestionTypeHeader";
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import Icon from "@ant-design/icons";
@@ -123,8 +118,6 @@ const AddingTestPage = () => {
           </Row>
 
           <Row>
-            {/* <TrueFalseNotGivenTemplate/> */}
-
             {questionTemplates.length === 0 && (
               <Col span={24}
                 style={{
