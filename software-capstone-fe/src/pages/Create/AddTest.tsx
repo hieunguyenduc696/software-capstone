@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Collapse } from "antd";
+import { Row, Col, Tabs, Collapse, Typography } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import ShortAnswerType from "components/QuestionType/ShortAnswer/ShortAnswerType";
@@ -16,7 +16,8 @@ import {
   TYPE_OF_QUESTION,
 } from "services/animeService/QuestionTypeService";
 
-import { UpOutlined } from "@ant-design/icons";
+import { UpOutlined, MehOutlined } from "@ant-design/icons";
+import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotGivenTemplate";
 
 const { Panel } = Collapse;
 
@@ -45,17 +46,13 @@ const AddingTestPage = () => {
     console.log(key);
   };
 
-  const [questionQuantity, setQuestionQuantity] = useState<number>(3);
-  const [collapse, setCollapse] = useState<boolean>(false);
+  const [questionTemplates, setQuestionTemplates] = useState<any>([]);
 
-  const handleCollapseStatusChange = () => {
-    setCollapse((prev: boolean) => !prev);
-  };
-
-  const handleQuestionQuantityUpdate = (value: number | null) => {
-    if (value) {
-      setQuestionQuantity(value);
-      console.log("DEBUG: ", value);
+  const handleQuestionTemplatesUpdate = (typeOfQuestion: string) => {
+    if (typeOfQuestion === TYPE_OF_QUESTION[0].type) {
+      setQuestionTemplates((prev: any) => {
+        return [...prev, typeOfQuestion];
+      });
     }
   };
 
@@ -112,6 +109,8 @@ const AddingTestPage = () => {
                       icon={item.icon}
                       firstLine={firstLine}
                       secondLine={secondLine}
+                      type={item.type}
+                      addTemplateCallback={handleQuestionTemplatesUpdate}
                     />
                   );
                 })}
@@ -120,29 +119,30 @@ const AddingTestPage = () => {
           </Row>
 
           <Row>
-            <Col span={24}>
-              <QuestionTypeHeader
-                typeOfQuestion="True False Not Given"
-                onQuantityUpdateCallback={handleQuestionQuantityUpdate}
-                collapsed={collapse}
-                onCollapseStatusUpdate={handleCollapseStatusChange}
-              />
+            {/* <TrueFalseNotGivenTemplate/> */}
 
-              <TrueFalseInstruction
-                from={1}
-                to={questionQuantity ? questionQuantity : 0}
-                collapsed={collapse}
-              />
-              <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
-                {Array(questionQuantity)
-                  .fill(null)
-                  .map((_, index) => {
-                    return <TrueFalseType order={index + 1} />;
-                  })}
-              </div>
-            </Col>
+            {questionTemplates.length === 0 && (
+              <Col span={24}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+
+                  marginTop: "5rem"
+                }}
+              >
+                <MehOutlined style={{color: "var(--secondaryColor)", fontSize: "30px"}}></MehOutlined>
+                <p style={{color: "var(--secondaryColor)", fontSize: "20px"}}>There's nothing here.</p>
+              </Col>
+            )}
+
+            {questionTemplates.length > 0 &&
+              questionTemplates.map((item: any) => {
+                if (item === TYPE_OF_QUESTION[0].type)
+                  return <TrueFalseNotGivenTemplate />;
+              })}
           </Row>
-
         </Col>
       </Row>
     </div>
