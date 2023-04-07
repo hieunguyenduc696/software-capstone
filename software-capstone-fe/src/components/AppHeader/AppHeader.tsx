@@ -21,7 +21,8 @@ export const AppHeader = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '72px'
+        height: '72px',
+        borderBottom: '2px solid var(--mainGrayColor)'
       }}>
       <div style={{
         display: 'flex',

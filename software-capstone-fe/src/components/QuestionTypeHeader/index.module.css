@@ -5,6 +5,7 @@
     font-size: 16px;
     background-color: #000;
     color: #FFF;
+    border: 1px solid (--mainGrayColor);
 
     padding: 1.25rem 1rem;
 
@@ -13,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
 
-    box-shadow: 2px 2px 2px 2px var(--mainGrayColor);
+    box-shadow: 1px 1px 2px 2px var(--mainGrayColor);
 }
 
 
