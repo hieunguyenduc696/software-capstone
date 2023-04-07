@@ -3,9 +3,13 @@ import QuestionTypeHeader from "components/QuestionTypeHeader";
 import ShortAnswerInstruction from "components/Instruction/ShortAnswerInstruction/ShortAnswerInstruction";
 import ShortAnswer from "components/QuestionType/ShortAnswer/ShortAnswerType";
 import { Col } from "antd";
+import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/animeService/QuestionTypeService";
+import TemplateProps from "./TemplateInterface";
 
-const ShortAnswerTemplate: React.FC = () => {
-  const [questionQuantity, setQuestionQuantity] = useState<number>(3);
+const TYPE = TYPE_OF_QUESTION[1].type; // SHORT-ANSWER
+
+const ShortAnswerTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo, updateQuestionGroupInfoCallback}: TemplateProps) => {
+  const [questionQuantity, setQuestionQuantity] = useState<number>(DEFAULT_NUMBER_OF_QUESTION);
   const [collapse, setCollapse] = useState<boolean>(false);
 
   const handleCollapseStatusChange = () => {
@@ -15,7 +19,22 @@ const ShortAnswerTemplate: React.FC = () => {
   const handleQuestionQuantityUpdate = (value: number | null) => {
     if (value) {
       setQuestionQuantity(value);
-      console.log("DEBUG: ", value);
+      updateQuestionGroupInfoCallback((prev: QuestionGroupInfo[]) => {
+
+        const newQuestionGroupInfo = prev.map((item: QuestionGroupInfo) => {
+          if (item.type === TYPE) {
+            const updated = {
+              ...item,
+              to: initialFrom + value - 1,
+            }
+            return updated;
+          }
+          return item;
+        })
+        const updatedQuestionGroupInfo = updateQuestionGroupInfo(newQuestionGroupInfo);
+
+        return updatedQuestionGroupInfo;
+      })
     }
   };
 
@@ -29,15 +48,15 @@ const ShortAnswerTemplate: React.FC = () => {
       />
 
       <ShortAnswerInstruction
-        from={1}
-        to={questionQuantity ? questionQuantity : 0}
+        from={initialFrom}
+        to={initialTo}
         collapsed={collapse}
       />
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
         {Array(questionQuantity)
           .fill(null)
           .map((_, index) => {
-            return <ShortAnswer order={index + 1} />;
+            return <ShortAnswer order={index + initialFrom} />;
           })}
       </div>
     </Col>

@@ -35,7 +35,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
           onChange={onQuantityUpdateCallback}
           className={`${styles["number-input"]}`}
           style={{ marginRight: "1rem" }}
-          min={1}
+          min={2}
         />
         <span>{typeOfQuestion}</span>
       </div>

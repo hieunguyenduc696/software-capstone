@@ -1,4 +1,5 @@
 
+// used to display choice of various question type
 export interface IQuestionItem {
     index: number;
     type: string;
@@ -6,9 +7,56 @@ export interface IQuestionItem {
     name: string;
 }
 
+// used to manage index for each type of question in one section
+// example 
+/* [{
+        type: Short answer,
+        from: 1,
+        to: 3,
+        index: 0
+    },{
+        type: True false,
+        from: 4,
+        to: 9,
+        index: 1
+    }, {
+        type: ABC Multiple Choice,
+        from: 10,
+        to: 18,
+        index: 2
+    }] */
+export interface QuestionGroupInfo {
+    type: string;
+    from: number;
+    to: number;
+    // order of this question type in questionTemplate list in AddTest.tsx
+    index: number;
+}
+
+export const MAX_QUESTION_SECTION_ONE = 18;
+export const DEFAULT_NUMBER_OF_QUESTION = 3;
+
 // name: separated by '-' means firstLine-secondLine when displayed in AddTest.jsx
 export const TYPE_OF_QUESTION: IQuestionItem[] = [
     { index: 1, type: 'TRUE-FALSE-NOT-GIVEN', icon: 'true-false-not-given.png', name: 'True False-Not Given'},
     // { index: 2, type: 'MULTIPLE-CHOICE', icon: 'multiple-choice.png', name: 'Multiple-choice'},
-    { index: 3, type: 'SHORT-ANSWER', icon: 'short-answer.png', name: 'Short-answer'}
+    { index: 2, type: 'SHORT-ANSWER', icon: 'short-answer.png', name: 'Short-answer'},
 ];
+
+export const updateQuestionGroupInfo = (infoList: QuestionGroupInfo[]) => {
+    return infoList.map((info: QuestionGroupInfo, index: number) => {
+        console.log('INDEX: ', index, info);
+        if (index !== 0) {
+            const distance = info.to - info.from;
+            const newStart = infoList[index - 1].to + 1;
+            const newInfo = {
+                ...info,
+                from: newStart,
+                to: newStart + distance
+            }
+            console.log('NEW INFO: ', newInfo);
+            return newInfo;
+        }
+        return info;
+    })
+}
