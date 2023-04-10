@@ -1,4 +1,3 @@
-
 .column {
     margin: 0;
     height: 93vh;
@@ -80,11 +79,20 @@
 
 .input:focus {
     border-bottom: 1px solid #000;
-    box-shadow: 0 0 0 2px rgba(255,255,255);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255);
 }
 
 .ip-title:focus {
     border: none;
     outline: none;
     border-bottom: 1px solid black;
+}
+
+.radio span:last-of-type {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+.radio span:first-of-type {
+    transform: translateY(2px);
 }
