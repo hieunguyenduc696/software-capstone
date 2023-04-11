@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import QuestionTypeHeader from "components/QuestionTypeHeader";
 import { Col } from "antd";
-import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/animeService/QuestionTypeService";
+import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/QuestionTypeService";
 import TemplateProps from "./TemplateInterface";
 import MultipleChoiceInstruction from "components/Instruction/MultipleChoiceInstruction/MultipleChoiceInstruction";
 import MultipleChoiceType from "components/QuestionType/MultipleChoice/MultipleChoiceType";

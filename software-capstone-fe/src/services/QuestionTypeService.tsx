@@ -33,6 +33,30 @@ export interface QuestionGroupInfo {
     index: number;
 }
 
+export interface IReadingSectionLimit {
+    sectionKey: number;
+    start: number;
+    end: number;
+}
+
+export const READING_SECTION_LIMIT: IReadingSectionLimit[] = [
+    {
+        sectionKey: 1,
+        start: 1,
+        end: 13,
+    },
+    {
+        sectionKey: 2,
+        start: 14,
+        end: 26,
+    },
+    {
+        sectionKey: 3,
+        start: 27,
+        end: 40,
+    }
+];
+
 export const MAX_QUESTION_SECTION_ONE = 18;
 export const DEFAULT_NUMBER_OF_QUESTION = 3;
 

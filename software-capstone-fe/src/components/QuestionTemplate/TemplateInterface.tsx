@@ -1,4 +1,4 @@
-import { QuestionGroupInfo } from "services/animeService/QuestionTypeService";
+import { QuestionGroupInfo } from "services/QuestionTypeService";
 
 export default interface TemplateProps {
     // count total questions in one section

@@ -3,7 +3,7 @@ import QuestionTypeHeader from "components/QuestionTypeHeader";
 import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/TrueFalseInstruction";
 import TrueFalseType from "components/QuestionType/MultipleChoice/TrueFalseType";
 import { Col } from "antd";
-import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/animeService/QuestionTypeService";
+import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/QuestionTypeService";
 import TemplateProps from "./TemplateInterface";
 
 const TYPE = TYPE_OF_QUESTION[0].type; // TRUE-FALSE...
