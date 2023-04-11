@@ -34,9 +34,7 @@ function createReadingPassages(
             `INSERT INTO reading_passage (`,
 				`wallpaper`, `title`, `content`,
 			`)`, 
-            'VALUES (',
-				'?,?,?', 
-			')',
+            'VALUES ?',
         ].join(' ');
 
         const binderValues: (string|null)[][] = readingPassageDaos.map(dao => [
