@@ -11,25 +11,7 @@ import ReadingTestContext from "context/ReadingTestContext";
 import { generateReadingQuestionDetails } from "services/QuestionTypeService";
 
 const AddingTestPage = () => {
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: `Section 1`,
-      children: <ReadingParagraph sectionKey={1} />,
-    },
-    {
-      key: "2",
-      label: `Section 2`,
-      children: <ReadingParagraph sectionKey={2} />,
-      // disabled: true,
-    },
-    {
-      key: "3",
-      label: `Section 3`,
-      children: <ReadingParagraph sectionKey={3} />,
-      // disabled: true,
-    },
-  ];
+
 
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [questionDetails, setQuestionDetails] = useState(generateReadingQuestionDetails);
@@ -43,6 +25,24 @@ const AddingTestPage = () => {
     QuestionGroupInfo[]
   >([]);
 
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: `Section 1`,
+      children: <ReadingParagraph sectionKey={1} />,
+    },
+    {
+      key: "2",
+      label: `Section 2`,
+      children: <ReadingParagraph sectionKey={2} />,
+    },
+    {
+      key: "3",
+      label: `Section 3`,
+      children: <ReadingParagraph sectionKey={3} />,
+    },
+  ];
+
   const onSectionChange = (key: string) => {
     setQuestionSectionKey(parseInt(key, 10));
   };
@@ -53,7 +53,7 @@ const AddingTestPage = () => {
 
   useEffect(() => {
     setQuestionDetails(generateReadingQuestionDetails);
-  }, [])
+  }, []);
 
   return (
     <div style={{ background: "#FFF" }}>

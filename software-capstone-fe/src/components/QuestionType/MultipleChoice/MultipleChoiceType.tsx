@@ -208,7 +208,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
                       <Radio
                         value={options[index].value}
                         style={{ width: "80%", alignItems: "center" }}
-                        className={styles["radio"]}
+                        className={`${styles["radio"]}`}
                       >
                         <input
                           name={key}
