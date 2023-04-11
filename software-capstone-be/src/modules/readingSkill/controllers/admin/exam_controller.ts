@@ -13,3 +13,9 @@ export function getExam(request: Request, response: Response): Promise<any> {
     })
 }
 
+export function createExam(request: Request, response: Response): Promise<any> {
+    return new Promise((resolve, reject) => {
+        
+    })
+}
+

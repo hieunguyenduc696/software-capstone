@@ -49,7 +49,7 @@ export function saveFile(
             if (Array.isArray(fileArray)) {
                 fileArray.forEach(file => {
                    
-                    const fileName: string = generateFileName(id);
+                    const fileName: string = `${generateFileName(id)}${path.extname(file.name)}`;
                     const filePath = path.join(dirPath, fileName);
                     fileNames.push([file.name, fileName]);   //Save the original with the new name
 
@@ -60,7 +60,7 @@ export function saveFile(
                 })
             } else {
 
-                const fileName: string = generateFileName(id);
+                const fileName: string = `${generateFileName(id)}${path.extname(fileArray.name)}`;
                 const filePath = path.join(dirPath, fileName);
                 fileNames.push([fileArray.name, fileName]);   //Save the original with the new name
 
@@ -76,7 +76,17 @@ export function saveFile(
         if (errors.length) {
             reject(errors);
         } else {
-            resolve(true);
+
+            //Map the original name of the file to the new name, after saving the file
+            const originalNameMapper: Object[] = [];
+            fileNames.forEach(record => {
+                originalNameMapper.push({
+                    original_name: record[0],
+                    new_name: record[1],
+                });
+            });
+
+            resolve(originalNameMapper);
         }
 
     })

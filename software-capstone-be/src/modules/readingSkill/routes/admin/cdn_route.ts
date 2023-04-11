@@ -5,7 +5,7 @@ import {saveFileToResourcePath} from '../../../../app/controllers/cdn_controller
 import {checkFileSizeLimit, checkFileExtension} from '../../../../app/middlewares/upload_file_middleware'
 import {
     PASSAGE_WALLPAPER_FILE_ALLOWED_EXTENSION,
-    READING_PASSAGE_THUMBNAIL_RESOURCE_PATH
+    READING_PASSAGE_WALLPAPER_RESOURCE_PATH
 } from '../../constants/file_constants';
 
 
@@ -13,11 +13,11 @@ const router: Router = Router();
 const ROOT_URL: string = "";
 
 router.post(
-    '/reading-passage/thumbnail',
+    '/reading-passage/wallpaper',
     fileUpload({createParentPath: true}),
     checkFileSizeLimit,
     checkFileExtension(PASSAGE_WALLPAPER_FILE_ALLOWED_EXTENSION),
-    saveFileToResourcePath(READING_PASSAGE_THUMBNAIL_RESOURCE_PATH),
+    saveFileToResourcePath(READING_PASSAGE_WALLPAPER_RESOURCE_PATH),
 );
 
 export {

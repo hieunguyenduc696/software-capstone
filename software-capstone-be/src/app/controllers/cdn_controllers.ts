@@ -30,12 +30,13 @@ export function saveFileToResourcePath(resourcePath: string) {
         
                         response.status(500).json(responseJson);
                     }
-                ).then(successFlag => {
+                ).then(originalNameMapperData => {
                     const message: string = "The files has been saved successfully";
                     const errorCode: number = BACKEND_UNIVERSAL_SUCCESS_CODE;
                     const responseJson = {
                         message,
                         errorCode,
+                        data: originalNameMapperData,
                     }
                     response.status(200).json(responseJson)
                 });
