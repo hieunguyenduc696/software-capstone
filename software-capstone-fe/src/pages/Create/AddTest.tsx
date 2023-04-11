@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Collapse, Typography, message } from "antd";
+import { Row, Col, Tabs, Collapse, Typography, message, Button } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
@@ -129,8 +129,8 @@ const AddingTestPage = () => {
           span={12}
           style={{
             borderLeft: "2px solid #9F9F9F",
-            height: "90vh",
-            maxHeight: "90vh",
+            height: "83vh",
+            maxHeight: "83vh",
           }}
         >
           {/* Choose type of question */}
@@ -206,6 +206,32 @@ const AddingTestPage = () => {
           </Row>
         </Col>
       </Row>
+      <div className={`${styles["footer"]}`}>
+        <div className={`${styles["footer-children"]}`}>
+          <img
+            src="default.png"
+            style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
+          />
+          <p style={{ color: "white" }}>IELTS Recent mock test</p>
+        </div>
+
+        <div
+          className={`${styles["footer-children"]} ${styles["button-group"]}`}
+        >
+          <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+            Previous
+          </Button>
+          <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+            Next
+          </Button>
+          <Button
+            icon={<img src="save_icon.png" />}
+            className={`${styles["button"]} ${styles["primary"]}`}
+          >
+            Save
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

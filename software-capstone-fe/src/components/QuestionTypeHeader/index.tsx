@@ -1,5 +1,5 @@
 import React from "react";
-import { UpOutlined, DownOutlined } from "@ant-design/icons";
+import { UpOutlined, DownOutlined, DeleteFilled } from "@ant-design/icons";
 import { InputNumber } from "antd";
 import styles from "./index.module.css";
 
@@ -14,7 +14,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
   typeOfQuestion,
   onQuantityUpdateCallback,
   onCollapseStatusUpdate,
-  collapsed = false
+  collapsed = false,
 }: QuestionTypeHeaderProps) => {
   return (
     <div
@@ -39,8 +39,24 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
         />
         <span>{typeOfQuestion}</span>
       </div>
-      { collapsed ? <DownOutlined onClick={onCollapseStatusUpdate}/> : <UpOutlined onClick={onCollapseStatusUpdate} />}
-      
+
+      <div
+        style={{
+          width: "50%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        <DeleteFilled />
+        {collapsed ? (
+          <DownOutlined onClick={onCollapseStatusUpdate} />
+        ) : (
+          <UpOutlined onClick={onCollapseStatusUpdate} />
+        )}
+      </div>
     </div>
   );
 };
