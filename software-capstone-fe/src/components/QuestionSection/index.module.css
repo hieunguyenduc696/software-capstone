@@ -1,0 +1,15 @@
+.type-options {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: #FFF;
+}

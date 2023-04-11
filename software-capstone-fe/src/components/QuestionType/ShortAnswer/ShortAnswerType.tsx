@@ -1,27 +1,57 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styles from "./index.module.css";
-import { Row, Col, Tabs, Typography, Tooltip } from "antd";
+import { Row, Col, Tooltip } from "antd";
 import Icon from "@ant-design/icons";
+import ReadingTestContext from "context/ReadingTestContext";
+import { IQuestionDetail } from "services/QuestionTypeService";
+
 
 interface ShortAnswerProps {
   order: number;
 }
 
 const ShortAnswer = ({ order }: ShortAnswerProps) => {
-  const [answer, setAnswer] = useState<string>();
-  const [question, setQuestion] = useState<string>();
+
+
+  const { questionDetails, setQuestionDetails } = useContext(ReadingTestContext);
+  console.log('D: ', questionDetails);
+
+  const [answer, setAnswer] = useState<string>(questionDetails?.[order - 1].answer ? questionDetails[order - 1].answer : "");
+  const [question, setQuestion] = useState<string>(questionDetails?.[order - 1].question ? questionDetails[order - 1].question : "");
   const answerRef = useRef<HTMLInputElement>(null);
   const questionRef = useRef<HTMLInputElement>(null);
 
   const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answerRef.current) {
       setAnswer(event.target.value);
+      setQuestionDetails((prev: IQuestionDetail[]) => {
+        return prev?.map((item: IQuestionDetail) => {
+          if (item?.order === order) {
+            return {
+              ...item,
+              answer: event.target.value
+            }
+          }
+          return item;
+        })
+      })
     }
   };
 
   const handleQuestionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (questionRef.current) {
       setQuestion(event.target.value);
+      setQuestionDetails((prev: IQuestionDetail[]) => {
+        return prev?.map((item: IQuestionDetail) => {
+          if (item?.order === order) {
+            return {
+              ...item,
+              question: event.target.value
+            }
+          }
+          return item;
+        })
+      })
     }
   };
 
