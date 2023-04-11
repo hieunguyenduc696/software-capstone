@@ -15,3 +15,54 @@
 
 2. Run the below command to run the build:
    `yarn start`
+
+# API Documentation
+
+## Admin
+
+### Create Exam
+
+#### Send [jpg, png] files for Exam' Reading Passage' Thumbnail
+
+```
+   POST /reading-skill/resource/reading-passage/thumbnail
+```
+
+```javascript
+   POST /reading-skill/resource/reading-passage/thumbnail HTTP/1.1
+   Host: 127.0.0.1:8090
+   Content-Length: 182
+   Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+   ----WebKitFormBoundary7MA4YWxkTrZu0gW
+   Content-Disposition: form-data; name=""; filename="file"
+   Content-Type: <Content-Type header here>
+
+   (data)
+   ----WebKitFormBoundary7MA4YWxkTrZu0gW
+```
+
+##### Success response
+```javascript
+   {
+      "code": 0,
+      "message": "The files has been saved successfully",
+   }
+```
+##### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+
+   {
+      "code": 2,
+      "message": "Upload failed. ${overlimitFiles} ${"are"|"is"} over the file size limit of ${FILE_SIZE_IN_MB} MB",
+   }
+
+   {
+      "code": 3,
+      "message": "Upload failed. Only ${allowedExtensions} files allowed",
+   }
+```

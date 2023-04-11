@@ -40,13 +40,15 @@ export function checkFileSizeLimit(request: Request, response: Response, next: N
         const sentence = 
             `Upload failed. ${overlimitFiles.toString()} ${properVerb} over the file size limit of ${FILE_SIZE_IN_MB} MB`
             .replaceAll(",", ", ");
-        const message = overlimitFiles.length < 3
+
+        const code: number = SAVED_OVERLIMIT_FILE_SIZE_CODE;
+        const message: string = overlimitFiles.length < 3
             ? sentence.replace(",", ", ")   //if there is 2 object => replace the "," with "and"
             : sentence.replace(/,(?=[^,]*$)/, " and") // if else, replace the last "," with "and"
     
         const responseJSON = {
-            code: SAVED_OVERLIMIT_FILE_SIZE_CODE,
-            message: message,
+            code,
+            message
         }
 
         response
@@ -86,13 +88,14 @@ export function checkFileExtension(allowedExtensions: string[]) {
         const allowed = fileExtensions
             .every(extension => allowedExtensions.includes(extension));
         if (!allowed) {
-            const message = 
+            const code: number = SAVED_INVALID_EXTENSIONS_FILE_CODE
+            const message: string = 
                 `Upload failed. Only ${allowedExtensions.toString()} files allowed`
                 .replaceAll(",", ", ");
 
             const responseJson = {
-                code: SAVED_INVALID_EXTENSIONS_FILE_CODE,
-                message: message,
+                code,
+                message
             }
 
             return response

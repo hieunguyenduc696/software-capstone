@@ -12,3 +12,4 @@ export function getExam(request: Request, response: Response): Promise<any> {
         });;
     })
 }
+
