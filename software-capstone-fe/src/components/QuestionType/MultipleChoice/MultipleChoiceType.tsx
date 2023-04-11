@@ -55,7 +55,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
                     alignItems: "center",
                 }}
             >
-                <Avatar size={30} style={{ backgroundColor: '#327846', marginRight: '1rem' }}>{order}</Avatar>
+                <Avatar size={30} className={`${styles.number}`}>{order}</Avatar>
                 <InputNumber
                     defaultValue={3}
                     onChange={(e) => setQualityChoices(e || 3)}
@@ -102,7 +102,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
                                 const key = options[index].value as string;
                                 return (
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Avatar size={24} style={{ backgroundColor: '#DDDDDD', color: 'black', marginRight: '.2rem' }}>{key}</Avatar>
+                                        <Avatar size={24} className={`${styles.number}`} style={{fontSize: "15px"}}>{key}</Avatar>
                                         <Radio value={options[index].value} style={{ width: '80%', alignItems: 'center' }} className={styles["radio"]}>
                                             <input
                                                 name={key}
