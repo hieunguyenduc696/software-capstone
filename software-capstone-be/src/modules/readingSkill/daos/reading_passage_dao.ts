@@ -1,4 +1,5 @@
-import {pool} from '../../../app/configs/database';
+import {pool} from "../../../app/configs/database";
+import {ReadingPassageDao} from "../datatypes/exam";
 
 function getReadingPassageByExamIds(ids: number[]) {
 	return new Promise(function (resolve, reject) {
@@ -22,33 +23,42 @@ function getReadingPassageByExamIds(ids: number[]) {
 }
 
 
-function createReadingPassage(
-        readingPassageDao: {wallpaper: string, title: string, content: string}
-    ): Promise<number> {
+function createReadingPassages(
+        readingPassageDaos: ReadingPassageDao[]
+    ): Promise<number[]> {
     
     return new Promise((resolve, reject) => {
-
-        const {wallpaper, title, content} = readingPassageDao;
 
         const query: string = 
         [
             `INSERT INTO reading_passage (`,
 				`wallpaper`, `title`, `content`,
 			`)`, 
-            'VALUES (',
-				'?,?,?', 
-			')',
+            'VALUES ?',
         ].join(' ');
 
-        pool.query(query, [wallpaper, title, content], (error, result) => {
+        const binderValues: (string|null)[][] = readingPassageDaos.map(dao => [
+            dao?.wallpaper ?? null, 
+            dao?.title ?? null, 
+            dao?.content ?? null
+        ]);
+
+        //User bulk insertion for better optimization
+        pool.query(query, [binderValues], (error, result) => {
             if (error) {
                 reject(error);
                 return;
             }
-
-            //Get the id of the created one
-            const id = result.insertId;
-            resolve(id);
+            
+            //Get the id of the created ones
+            const size: number = result.affectedRows;
+            const firstId: number = result.insertId;
+            const aboveMaxId: number = firstId + size;
+            let ids: number[] = [];
+            for (let i: number = firstId; i < aboveMaxId; i++) {
+                ids.push(i);
+            }
+            resolve(ids);
         });
     })
     
@@ -56,5 +66,5 @@ function createReadingPassage(
 
 export {
     getReadingPassageByExamIds,
-    createReadingPassage,
+    createReadingPassages,
 }
