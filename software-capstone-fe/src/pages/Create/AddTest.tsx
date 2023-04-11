@@ -18,6 +18,7 @@ import {
 import { UpOutlined, MehOutlined } from "@ant-design/icons";
 import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotGivenTemplate";
 import ShortAnswerTemplate from "components/QuestionTemplate/ShortAnswerTemplate";
+import MultipleChoiceTemplate from "components/QuestionTemplate/MultipleChoiceTemplate";
 
 const items: TabsProps["items"] = [
   {
@@ -188,6 +189,14 @@ const AddingTestPage = () => {
                 else if (item === TYPE_OF_QUESTION[1].type)
                   return (
                     <ShortAnswerTemplate
+                      initialFrom={questionGroup[index].from}
+                      initialTo={questionGroup[index].to}
+                      updateQuestionGroupInfoCallback={setQuestionGroup}
+                    />
+                  );
+                else if (item === TYPE_OF_QUESTION[2].type)
+                  return (
+                    <MultipleChoiceTemplate
                       initialFrom={questionGroup[index].from}
                       initialTo={questionGroup[index].to}
                       updateQuestionGroupInfoCallback={setQuestionGroup}

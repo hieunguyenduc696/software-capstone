@@ -8,7 +8,7 @@ import TemplateProps from "./TemplateInterface";
 
 const TYPE = TYPE_OF_QUESTION[1].type; // SHORT-ANSWER
 
-const ShortAnswerTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo, updateQuestionGroupInfoCallback}: TemplateProps) => {
+const ShortAnswerTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, updateQuestionGroupInfoCallback }: TemplateProps) => {
   const [questionQuantity, setQuestionQuantity] = useState<number>(DEFAULT_NUMBER_OF_QUESTION);
   const [collapse, setCollapse] = useState<boolean>(false);
 
