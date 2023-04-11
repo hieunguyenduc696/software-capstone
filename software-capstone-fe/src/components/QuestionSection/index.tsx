@@ -27,7 +27,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
   const [messageApi, contextHolder] = message.useMessage();
   // check
   const [countQuestion, setCountQuestion] = useState<number>(0);
-//   const [questionGroup, setQuestionGroupCallback] = useState<QuestionGroupInfo[]>([]);
+  //   const [questionGroup, setQuestionGroupCallback] = useState<QuestionGroupInfo[]>([]);
 
   const { end: endQuestion, start: startQuestion } = READING_SECTION_LIMIT[sectionKey - 1];
 

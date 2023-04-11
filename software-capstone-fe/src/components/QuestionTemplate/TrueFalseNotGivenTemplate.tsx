@@ -9,8 +9,11 @@ import TemplateProps from "./TemplateInterface";
 const TYPE = TYPE_OF_QUESTION[0].type; // TRUE-FALSE...
 
 const TrueFalseNotGivenTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo, updateQuestionGroupInfoCallback}: TemplateProps) => {
-  const [questionQuantity, setQuestionQuantity] = useState<number>(DEFAULT_NUMBER_OF_QUESTION);
+  const [questionQuantity, setQuestionQuantity] = useState<number>(initialTo - initialFrom + 1);
   const [collapse, setCollapse] = useState<boolean>(false);
+
+  // {order, question, answer}
+  const [templateDetails, setTemplateDetails] = useState<any>([]);
 
   const handleCollapseStatusChange = () => {
     setCollapse((prev: boolean) => !prev);
@@ -44,6 +47,7 @@ const TrueFalseNotGivenTemplate: React.FC<TemplateProps> = ({initialFrom, initia
       <QuestionTypeHeader
         typeOfQuestion="True False Not Given"
         // count its own number of question
+        questionQuantity={questionQuantity}
         onQuantityUpdateCallback={handleQuestionQuantityUpdate}
         collapsed={collapse}
         onCollapseStatusUpdate={handleCollapseStatusChange}

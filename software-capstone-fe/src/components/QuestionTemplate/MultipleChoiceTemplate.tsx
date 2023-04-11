@@ -9,7 +9,7 @@ import MultipleChoiceType from "components/QuestionType/MultipleChoice/MultipleC
 const TYPE = TYPE_OF_QUESTION[2].type; // SHORT-ANSWER
 
 const MultipleChoiceTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, updateQuestionGroupInfoCallback }: TemplateProps) => {
-    const [questionQuantity, setQuestionQuantity] = useState<number>(DEFAULT_NUMBER_OF_QUESTION);
+    const [questionQuantity, setQuestionQuantity] = useState<number>(initialTo - initialFrom + 1);
     const [collapse, setCollapse] = useState<boolean>(false);
 
     const handleCollapseStatusChange = () => {
@@ -43,6 +43,7 @@ const MultipleChoiceTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
             <QuestionTypeHeader
                 typeOfQuestion="Multiple Choice"
                 onQuantityUpdateCallback={handleQuestionQuantityUpdate}
+                questionQuantity={questionQuantity}
                 collapsed={collapse}
                 onCollapseStatusUpdate={handleCollapseStatusChange}
             />

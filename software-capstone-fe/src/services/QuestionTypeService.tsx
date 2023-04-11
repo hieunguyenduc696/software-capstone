@@ -39,6 +39,14 @@ export interface IReadingSectionLimit {
     end: number;
 }
 
+export interface IQuestionDetail {
+    order: number;
+    type: string | null;
+    question: string | null;
+    options: any | null;
+    answer: string | null;
+}
+
 export const READING_SECTION_LIMIT: IReadingSectionLimit[] = [
     {
         sectionKey: 1,
@@ -59,6 +67,7 @@ export const READING_SECTION_LIMIT: IReadingSectionLimit[] = [
 
 export const MAX_QUESTION_SECTION_ONE = 18;
 export const DEFAULT_NUMBER_OF_QUESTION = 3;
+export const MAX_READING_QUESTION = 40;
 
 // name: separated by '-' means firstLine-secondLine when displayed in AddTest.jsx
 export const TYPE_OF_QUESTION: IQuestionItem[] = [
@@ -83,4 +92,22 @@ export const updateQuestionGroupInfo = (infoList: QuestionGroupInfo[]) => {
         }
         return info;
     })
+}
+
+export const generateReadingQuestionDetails = () => {
+
+    const details: IQuestionDetail[] = [];
+
+    for (let i = 0; i < MAX_READING_QUESTION; i++) {
+        const detail: IQuestionDetail = {
+            order: i + 1,
+            type: null,
+            question: null,
+            options: null,
+            answer: null
+        }
+        details.push(detail);
+    }
+
+    return details;
 }

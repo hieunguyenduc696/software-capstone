@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./AddTest.module.css";
-import { Row, Col, Tabs, Collapse, Typography, message, Button } from "antd";
+import { Row, Col, Tabs, Button } from "antd";
 import { AppHeader } from "../../components/AppHeader";
 import type { TabsProps } from "antd";
 
 import ReadingParagraph from "components/ReadingParagraph";
 import QuestionSection from "components/QuestionSection";
 import { QuestionGroupInfo } from "services/QuestionTypeService";
+import ReadingTestContext from "context/ReadingTestContext";
+import { generateReadingQuestionDetails } from "services/QuestionTypeService";
 
 const AddingTestPage = () => {
   const items: TabsProps["items"] = [
@@ -19,15 +21,18 @@ const AddingTestPage = () => {
       key: "2",
       label: `Section 2`,
       children: <ReadingParagraph sectionKey={2} />,
+      // disabled: true,
     },
     {
       key: "3",
       label: `Section 3`,
       children: <ReadingParagraph sectionKey={3} />,
+      // disabled: true,
     },
   ];
 
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
+  const [questionDetails, setQuestionDetails] = useState(generateReadingQuestionDetails);
   const [firstQuestionGroup, setFirstQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
@@ -41,6 +46,14 @@ const AddingTestPage = () => {
   const onSectionChange = (key: string) => {
     setQuestionSectionKey(parseInt(key, 10));
   };
+
+  const handleSubmit = () => {
+    console.log(questionDetails);
+  };
+
+  useEffect(() => {
+    setQuestionDetails(generateReadingQuestionDetails);
+  }, [])
 
   return (
     <div style={{ background: "#FFF" }}>
@@ -68,27 +81,31 @@ const AddingTestPage = () => {
             maxHeight: "83vh",
           }}
         >
-          {questionSectionKey === 1 && (
-            <QuestionSection
-              sectionKey={1}
-              questionGroup={firstQuestionGroup}
-              setQuestionGroupCallback={setFirstQuestionGroup}
-            />
-          )}
-          {questionSectionKey === 2 && (
-            <QuestionSection
-              sectionKey={2}
-              questionGroup={secondQuestionGroup}
-              setQuestionGroupCallback={setSecondQuestionGroup}
-            />
-          )}
-          {questionSectionKey === 3 && (
-            <QuestionSection
-              sectionKey={3}
-              questionGroup={thirdQuestionGroup}
-              setQuestionGroupCallback={setThirdQuestionGroup}
-            />
-          )}
+          <ReadingTestContext.Provider
+            value={{ questionDetails, setQuestionDetails }}
+          >
+            {questionSectionKey === 1 && (
+              <QuestionSection
+                sectionKey={1}
+                questionGroup={firstQuestionGroup}
+                setQuestionGroupCallback={setFirstQuestionGroup}
+              />
+            )}
+            {questionSectionKey === 2 && (
+              <QuestionSection
+                sectionKey={2}
+                questionGroup={secondQuestionGroup}
+                setQuestionGroupCallback={setSecondQuestionGroup}
+              />
+            )}
+            {questionSectionKey === 3 && (
+              <QuestionSection
+                sectionKey={3}
+                questionGroup={thirdQuestionGroup}
+                setQuestionGroupCallback={setThirdQuestionGroup}
+              />
+            )}
+          </ReadingTestContext.Provider>
         </Col>
       </Row>
 
@@ -113,6 +130,7 @@ const AddingTestPage = () => {
           <Button
             icon={<img src="save_icon.png" />}
             className={`${styles["button"]} ${styles["primary"]}`}
+            onClick={handleSubmit}
           >
             Save
           </Button>

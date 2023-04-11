@@ -8,6 +8,7 @@ interface QuestionTypeHeaderProps {
   onQuantityUpdateCallback: (value: number | null) => void;
   onCollapseStatusUpdate: () => void;
   collapsed: boolean;
+  questionQuantity: number;
 }
 
 const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
@@ -15,6 +16,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
   onQuantityUpdateCallback,
   onCollapseStatusUpdate,
   collapsed = false,
+  questionQuantity
 }: QuestionTypeHeaderProps) => {
   return (
     <div
@@ -31,7 +33,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
         }}
       >
         <InputNumber
-          defaultValue={3}
+          defaultValue={questionQuantity}
           onChange={onQuantityUpdateCallback}
           className={`${styles["number-input"]}`}
           style={{ marginRight: "1rem" }}

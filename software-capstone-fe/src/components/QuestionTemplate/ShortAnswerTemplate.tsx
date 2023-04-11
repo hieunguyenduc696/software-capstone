@@ -9,7 +9,7 @@ import TemplateProps from "./TemplateInterface";
 const TYPE = TYPE_OF_QUESTION[1].type; // SHORT-ANSWER
 
 const ShortAnswerTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, updateQuestionGroupInfoCallback }: TemplateProps) => {
-  const [questionQuantity, setQuestionQuantity] = useState<number>(DEFAULT_NUMBER_OF_QUESTION);
+  const [questionQuantity, setQuestionQuantity] = useState<number>(initialTo - initialFrom + 1);
   const [collapse, setCollapse] = useState<boolean>(false);
 
   const handleCollapseStatusChange = () => {
@@ -42,6 +42,7 @@ const ShortAnswerTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, 
     <Col span={24}>
       <QuestionTypeHeader
         typeOfQuestion="Short Answer"
+        questionQuantity={questionQuantity}
         onQuantityUpdateCallback={handleQuestionQuantityUpdate}
         collapsed={collapse}
         onCollapseStatusUpdate={handleCollapseStatusChange}

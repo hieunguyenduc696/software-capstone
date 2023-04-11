@@ -6,4 +6,3 @@ export default interface TemplateProps {
     initialFrom: number;
     initialTo: number;
 }
-  
