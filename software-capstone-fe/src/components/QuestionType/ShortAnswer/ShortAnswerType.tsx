@@ -3,18 +3,17 @@ import styles from "./index.module.css";
 import { Row, Col, Tooltip } from "antd";
 import Icon from "@ant-design/icons";
 import ReadingTestContext from "context/ReadingTestContext";
-import { IQuestionDetail } from "services/QuestionTypeService";
+import { IQuestionDetail, TYPE_OF_QUESTION } from "services/QuestionTypeService";
 
 
 interface ShortAnswerProps {
   order: number;
 }
 
+const TYPE = TYPE_OF_QUESTION[1].type;
+
 const ShortAnswer = ({ order }: ShortAnswerProps) => {
-
-
   const { questionDetails, setQuestionDetails } = useContext(ReadingTestContext);
-  console.log('D: ', questionDetails);
 
   const [answer, setAnswer] = useState<string>(questionDetails?.[order - 1].answer ? questionDetails[order - 1].answer : "");
   const [question, setQuestion] = useState<string>(questionDetails?.[order - 1].question ? questionDetails[order - 1].question : "");
@@ -29,6 +28,7 @@ const ShortAnswer = ({ order }: ShortAnswerProps) => {
           if (item?.order === order) {
             return {
               ...item,
+              type: TYPE,
               answer: event.target.value
             }
           }
@@ -46,6 +46,7 @@ const ShortAnswer = ({ order }: ShortAnswerProps) => {
           if (item?.order === order) {
             return {
               ...item,
+              type: TYPE,
               question: event.target.value
             }
           }

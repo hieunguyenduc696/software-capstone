@@ -6,15 +6,21 @@ import type { TabsProps } from "antd";
 
 import ReadingParagraph from "components/ReadingParagraph";
 import QuestionSection from "components/QuestionSection";
-import { QuestionGroupInfo } from "services/QuestionTypeService";
+import {
+  QuestionGroupInfo,
+  generateReadingQuestionDetails,
+  generateReadingParagraphs,
+  IReadingParagraph,
+} from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
-import { generateReadingQuestionDetails } from "services/QuestionTypeService";
 
 const AddingTestPage = () => {
-
-
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
-  const [questionDetails, setQuestionDetails] = useState(generateReadingQuestionDetails);
+  const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
+  const [questionDetails, setQuestionDetails] = useState(
+    generateReadingQuestionDetails
+  );
+
   const [firstQuestionGroup, setFirstQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
@@ -29,17 +35,17 @@ const AddingTestPage = () => {
     {
       key: "1",
       label: `Section 1`,
-      children: <ReadingParagraph sectionKey={1} />,
+      children: <ReadingParagraph sectionKey={1} setReadingParagraphsCallback={setParagraphs}/>,
     },
     {
       key: "2",
       label: `Section 2`,
-      children: <ReadingParagraph sectionKey={2} />,
+      children: <ReadingParagraph sectionKey={2} setReadingParagraphsCallback={setParagraphs}/>,
     },
     {
       key: "3",
       label: `Section 3`,
-      children: <ReadingParagraph sectionKey={3} />,
+      children: <ReadingParagraph sectionKey={3} setReadingParagraphsCallback={setParagraphs}/>,
     },
   ];
 
@@ -48,11 +54,14 @@ const AddingTestPage = () => {
   };
 
   const handleSubmit = () => {
-    console.log(questionDetails);
+    console.log('PARAGRAPHS: ',paragraphs);
+    console.log('QUESTION DETAILS');
+    console.table(questionDetails);
   };
 
   useEffect(() => {
     setQuestionDetails(generateReadingQuestionDetails);
+    setParagraphs(generateReadingParagraphs);
   }, []);
 
   return (
