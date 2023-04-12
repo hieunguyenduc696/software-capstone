@@ -14,7 +14,7 @@ import {
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
 
-const AddingTestPage = () => {
+const AddingTestPage = () => {  
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
   const [questionDetails, setQuestionDetails] = useState(
@@ -28,6 +28,9 @@ const AddingTestPage = () => {
     QuestionGroupInfo[]
   >([]);
   const [thirdQuestionGroup, setThirdQuestionGroup] = useState<
+    QuestionGroupInfo[]
+  >([]);
+  const [forthQuestionGroup, setForthQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
 
@@ -46,6 +49,11 @@ const AddingTestPage = () => {
       key: "3",
       label: `Section 3`,
       children: <ReadingParagraph sectionKey={3} setReadingParagraphsCallback={setParagraphs}/>,
+    },
+    {
+      key: "4",
+      label: `Section 4`,
+      children: <ReadingParagraph sectionKey={4} setReadingParagraphsCallback={setParagraphs}/>,
     },
   ];
 
@@ -112,6 +120,13 @@ const AddingTestPage = () => {
                 sectionKey={3}
                 questionGroup={thirdQuestionGroup}
                 setQuestionGroupCallback={setThirdQuestionGroup}
+              />
+            )}
+            {questionSectionKey === 4 && (
+              <QuestionSection
+                sectionKey={4}
+                questionGroup={forthQuestionGroup}
+                setQuestionGroupCallback={setForthQuestionGroup}
               />
             )}
           </ReadingTestContext.Provider>

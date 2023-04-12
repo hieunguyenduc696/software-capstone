@@ -21,7 +21,7 @@ const TrueFalseSelect: React.FC<ISelect> = ({ onChange, defaultValue }: ISelect)
     { value: "NG", label: "Not Given" },
   ];
 
-  return <Select className={`${styles.select}`} options={options} onChange={onChange} defaultValue={defaultValue}/>;
+  return <Select className={`${styles.select}`} options={options} onChange={onChange} defaultValue={defaultValue} />;
 };
 
 interface TrueFalseTypeProps {
@@ -80,7 +80,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
       className={styles.question}
     >
       <div className={styles.number}>{`${order}`}</div>
-      <TrueFalseSelect onChange={handleAnswerChange} defaultValue={answer === "" ? null : answer}/>
+      <TrueFalseSelect onChange={handleAnswerChange} defaultValue={answer === "" ? null : answer} />
       <div
         style={{
           boxSizing: "border-box",

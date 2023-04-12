@@ -5,30 +5,28 @@ import { EditOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
-const AlphabetSelect = () => {
-	const options = [];
+interface AlphabetHeadingSelectProps {
+	letterList: { value: string; label: string; }[]
+}
 
-	for (let i = 65; i <= 90; i++) {
-		const letter = String.fromCharCode(i);
-		options.push({ value: letter, label: letter });
-	}
-
+const AlphabetHeadingSelect = ({letterList}: AlphabetHeadingSelectProps) => {
 	return (
 		<Select
 			className={`${styles.select}`}
-			defaultValue={options[0].value}
-			options={options}
+			defaultValue={letterList[0].value}
+			options={letterList}
 		/>
 	);
 };
 
-interface AlphabetTypeProps {
+interface AlphabetHeadingTypeProps {
 	order: number;
+    letterList: { value: string; label: string; }[]
 }
 
-const AlphabetType: React.FC<AlphabetTypeProps> = ({
-	order,
-}: AlphabetTypeProps) => {
+const AlphabetHeadingType: React.FC<AlphabetHeadingTypeProps> = ({
+	order, letterList
+}: AlphabetHeadingTypeProps) => {
 
 	const [question, setQuestion] = useState("Enter your question here....");
 
@@ -39,7 +37,7 @@ const AlphabetType: React.FC<AlphabetTypeProps> = ({
 			className={styles.question}
 		>
 			<div className={styles.number}>{order}</div>
-			<AlphabetSelect />
+			<AlphabetHeadingSelect letterList={letterList}/>
 			<Paragraph
 				editable={{
 					icon: <EditOutlined />,
@@ -55,4 +53,4 @@ const AlphabetType: React.FC<AlphabetTypeProps> = ({
 	);
 };
 
-export default AlphabetType;
+export default AlphabetHeadingType;
