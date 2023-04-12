@@ -76,7 +76,7 @@ const AddingTestPage = () => {
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column}`} span={12}>
+        <Col className={`${styles.column}`} xs={{ span: 24 }} lg={{ span: 12 }}>
           <Row>
             <Col span={24}>
               <Tabs
@@ -91,7 +91,7 @@ const AddingTestPage = () => {
 
         <Col
           className={`${styles.column} ${styles.right}`}
-          span={12}
+          xs={{ span: 24 }} lg={{ span: 12 }}
           style={{
             borderLeft: "2px solid #9F9F9F",
             height: "83vh",
