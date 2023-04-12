@@ -55,6 +55,8 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({ sectionKey }: Readi
         inputFileRef.current.click();
       }
     };
+
+
   
     useEffect(() => {
       if (image) {
@@ -104,8 +106,6 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({ sectionKey }: Readi
                       } else {
                         error();
                       }
-  
-                      console.log(newFile);
                     }
                   }}
                 />
@@ -118,6 +118,7 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({ sectionKey }: Readi
                   style={{
                     width: "100%",
                     height: "auto",
+                    maxHeight: "200px",
                     borderRadius: "10px",
                     border: "1px solid #4985CD",
                   }}
@@ -143,8 +144,6 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({ sectionKey }: Readi
                       } else {
                         error();
                       }
-  
-                      console.log(newFile);
                     }
                   }}
                 />
@@ -168,14 +167,16 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({ sectionKey }: Readi
             className={`${styles["ip-title"]} ${styles.paragraph}`}
             value={title}
             onChange={handleTitleChange}
-            placeholder="Enter paragraph title..."
+            placeholder={`Enter paragraph title for Section ${sectionKey}`}
           />
   
           <TextArea
+            id={"content"}
             className={`${styles.paragraph} ${styles.full}`}
-            placeholder="Enter paragraph content..."
+            placeholder={`Enter paragraph content for Section ${sectionKey}`}
             autoSize={{ minRows: 3 }}
             bordered={false}
+            onChange={e => console.log(e)} 
           />
         </div>
       </>
