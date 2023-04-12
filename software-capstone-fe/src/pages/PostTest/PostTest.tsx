@@ -1,4 +1,4 @@
-import { Button, Col, Image, Row } from "antd";
+import { Button, Col, Image, Row, Space } from "antd";
 import { AppHeader, UploadImage } from "components";
 import { PreviewTestItem } from "components/PreviewTestItem";
 import { useRef, useState } from "react";
@@ -69,7 +69,7 @@ export const PostTest = () => {
           style={{ padding: "1.5rem 0 .5rem 1.5rem", backgroundColor: "white" }}
         >
           {/* left */}
-          <Col span={16}>
+          <Col span={16} xs={{ span: 24 }} lg={{ span: 16 }}>
             {/* title */}
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
               <div>
@@ -80,7 +80,7 @@ export const PostTest = () => {
                   Title:
                 </div>
                 <Row style={{ gap: 5 }}>
-                  <Col span={14}>
+                  <Col span={18}>
                     <input
                       type="text"
                       required
@@ -107,7 +107,7 @@ export const PostTest = () => {
                       </span>
                     }
                   </Col>
-                  <Col span={9}>
+                  <Col span={5}>
                     <Image
                       src="edit.png"
                       style={{
@@ -124,8 +124,8 @@ export const PostTest = () => {
             </div>
 
             {/* buttons */}
-            <Row style={{ padding: "4rem 2rem 0 2rem" }}>
-              <Col span={12}>
+            <Row style={{ padding: "3rem 2rem 1rem 2rem" }}>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} style={{ paddingTop: '1rem' }}>
                 <div
                   style={{
                     display: "flex",
@@ -154,7 +154,7 @@ export const PostTest = () => {
                   </Button>
                 </div>
               </Col>
-              <Col span={12}>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} style={{ paddingTop: '1rem' }}>
                 <div
                   style={{
                     display: "flex",
@@ -188,6 +188,8 @@ export const PostTest = () => {
           {/* right */}
           <Col
             span={8}
+            xs={{ span: 24 }}
+            lg={{ span: 8 }}
             style={{
               backgroundColor: "#F2F2F2",
               padding: "1rem",
