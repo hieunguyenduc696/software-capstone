@@ -15,3 +15,64 @@
 
 2. Run the below command to run the build:
    `yarn start`
+
+# API Documentation
+
+## Admin
+
+### Create Exam
+
+#### Send [jpg, png] files for Exam' Reading Passage' Wallpaper
+
+```
+   POST /reading-skill/resource/reading-passage/wallpaper
+```
+
+```javascript
+   POST /reading-skill/resource/reading-passage/wallpaper HTTP/1.1
+   Host: 127.0.0.1:8090
+   Content-Length: 182
+   Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+   ----WebKitFormBoundary7MA4YWxkTrZu0gW
+   Content-Disposition: form-data; name=""; filename="file"
+   Content-Type: <Content-Type header here>
+
+   (data)
+   ----WebKitFormBoundary7MA4YWxkTrZu0gW
+```
+
+##### Success response
+```javascript
+   {
+      "code": 0,
+      "message": "The files has been saved successfully",
+      "data": [
+        {
+            "original_name": "3.jpg",
+            "new_name": "e471ab5d-38e7-41de-a821-e181e46b9b12.jpg"
+        },
+        {
+            "original_name": "42668_laptop_hp_14s_dq5053tu_6r9m6pa__2_.jpg",
+            "new_name": "6e593590-83c6-48e5-938a-6b3d1e1e3f76.jpg"
+        }
+    ]
+   }
+```
+##### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+
+   {
+      "code": 2,
+      "message": "Upload failed. ${overlimitFiles} ${"are"|"is"} over the file size limit of ${FILE_SIZE_IN_MB} MB",
+   }
+
+   {
+      "code": 3,
+      "message": "Upload failed. Only ${allowedExtensions} files allowed",
+   }
+```
