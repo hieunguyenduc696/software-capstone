@@ -3,3 +3,55 @@
     outline: none;
     border-bottom: 1px solid black;
 }
+
+.footer-children {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.footer-children.button-group {
+    gap: 15px;
+}
+
+.button {
+   text-transform: uppercase;
+   font-weight: 700;
+   box-sizing: border-box;
+   border-radius: 5px;
+   padding: 0.25rem 1.75rem;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   gap: 0.25rem
+}
+
+.button.primary {
+    color: white;
+    background-color: var(--tertiaryColor);
+    border: none;
+}
+
+.button.primary:hover {
+    color: white;
+    background-color: var(--tertiaryColor);
+    border: none;
+}
+
+
+.footer {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--mainColor);
+    padding: 0.75rem 1.5rem;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
