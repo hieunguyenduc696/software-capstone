@@ -7,6 +7,9 @@ import TrueFalseInstruction from "components/Instruction/TrueFalseInstruction/Tr
 
 import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
+import AlphabetType from "components/QuestionType/MultipleChoice/AlphabetType";
+import MappingHeadingInstruction from "components/Instruction/MappingHeadingInstruction/MappingHeadingInstruction";
+import MappingHeadingTable from "components/Instruction/MappingHeadingInstruction/MappingHeadingTable";
 
 const items: TabsProps["items"] = [
   {
@@ -52,7 +55,7 @@ const AddingTestPage = () => {
         <Col className={`${styles.column} ${styles.right}`} span={12}>
           <Row>
             <Col span={24}>
-              <div className={styles.questionHeader} style={{ backgroundColor: 'var(--secondaryColor)'}}>Question 1 - 7</div>
+              <div className={styles.questionHeader} style={{ backgroundColor: 'var(--secondaryColor)' }}>Question 1 - 7</div>
             </Col>
           </Row>
 
@@ -65,6 +68,24 @@ const AddingTestPage = () => {
             <TrueFalseType order={5} />
             <TrueFalseType order={6} />
             <TrueFalseType order={7} />
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              <div className={styles.questionHeader} style={{ backgroundColor: 'var(--secondaryColor)' }}>Question 27 - 33</div>
+            </Col>
+          </Row>
+
+          <Row>
+            <MappingHeadingInstruction letterFrom={"A"} letterTo={"H"} questionFrom={27} questionTo={33} />
+            <AlphabetType order={1} />
+            <AlphabetType order={2} />
+            <AlphabetType order={3} />
+            <AlphabetType order={4} />
+            <AlphabetType order={5} />
+            <AlphabetType order={6} />
+            <AlphabetType order={7} />
+            <MappingHeadingTable />
           </Row>
         </Col>
       </Row>

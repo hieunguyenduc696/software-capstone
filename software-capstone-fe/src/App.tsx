@@ -5,19 +5,20 @@ import { SuspenseRouter } from "HOC";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { keycloakClient } from "config/keycloak";
 import "./App.css";
+import AddingTestPage from "pages/Create/AddTest";
 
 const App: React.FC = () => {
   console.log(window.location.origin + "/silent-check-sso.html");
-  return (
-    <ReactKeycloakProvider authClient={keycloakClient}>
-      <Suspense>
-        <SuspenseRouter>
-          <AuthProvider>{AppRoutes()}</AuthProvider>
-        </SuspenseRouter>
-      </Suspense>
-    </ReactKeycloakProvider>
-  );
-  // return (<AddingTestPage/>);
+  // return (
+  //   <ReactKeycloakProvider authClient={keycloakClient}>
+  //     <Suspense>
+  //       <SuspenseRouter>
+  //         <AuthProvider>{AppRoutes()}</AuthProvider>
+  //       </SuspenseRouter>
+  //     </Suspense>
+  //   </ReactKeycloakProvider>
+  // );
+  return (<AddingTestPage/>);
 };
 
 export default App;
