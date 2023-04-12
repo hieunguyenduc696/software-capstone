@@ -38,6 +38,4 @@ services:
     restart: unless-stopped
     volumes:
       - config_data_keycloak:/var/lib/keycloak/data
-    #   - /script/disable-theme-cache.cli:/opt/jboss/startup-scripts/disable-theme-cache.cli
-      - ./themes/demo:/opt/jboss/keycloak/themes/demo
-      - ./themes/hrsol:/opt/jboss/keycloak/themes/hrsol
+      - ./themes/project-capstones:/opt/jboss/keycloak/themes/project-capstones
