@@ -9,12 +9,14 @@ interface MappingHeadingInstructionProps {
     letterTo: string;
     questionFrom: number;
     questionTo: number;
+    collapsed: boolean;
 }
 const MappingHeadingInstruction: React.FC<MappingHeadingInstructionProps> = ({
     letterFrom,
     letterTo,
     questionFrom,
-    questionTo
+    questionTo,
+    collapsed = false
 }: MappingHeadingInstructionProps) => {
     return (
         <Col span={24} className={`${styles.container}`}>

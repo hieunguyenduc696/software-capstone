@@ -15,11 +15,12 @@ import { MehOutlined } from "@ant-design/icons";
 import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotGivenTemplate";
 import ShortAnswerTemplate from "components/QuestionTemplate/ShortAnswerTemplate";
 import MultipleChoiceTemplate from "components/QuestionTemplate/MultipleChoiceTemplate";
+import MappingHeadingTemplate from "components/QuestionTemplate/MappingHeadingTemplate";
 
 interface QuestionSectionProps {
-    sectionKey: number;
-    questionGroup: QuestionGroupInfo[];
-    setQuestionGroupCallback: (prev: any) => any;
+  sectionKey: number;
+  questionGroup: QuestionGroupInfo[];
+  setQuestionGroupCallback: (prev: any) => any;
 }
 
 const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionGroup, setQuestionGroupCallback }: QuestionSectionProps) => {
@@ -32,10 +33,10 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
   const { end: endQuestion, start: startQuestion } = READING_SECTION_LIMIT[sectionKey - 1];
 
   const duplicatedTypeOfQuestionError = () => {
-      messageApi.open({
-        type: "error",
-        content: "This type of question has already existed",
-      });
+    messageApi.open({
+      type: "error",
+      content: "This type of question has already existed",
+    });
   };
 
   const handleQuestionTemplatesUpdate = (typeOfQuestion: string) => {
@@ -43,7 +44,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
 
     if (!duplicated) {
       setQuestionGroupCallback((prev: QuestionGroupInfo[]) => {
-        if (prev?.length === 0) {      
+        if (prev?.length === 0) {
           return [
             {
               type: typeOfQuestion,
@@ -145,6 +146,14 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
             else if (item === TYPE_OF_QUESTION[2].type)
               return (
                 <MultipleChoiceTemplate
+                  initialFrom={questionGroup[index].from}
+                  initialTo={questionGroup[index].to}
+                  updateQuestionGroupInfoCallback={setQuestionGroupCallback}
+                />
+              );
+            else if (item === TYPE_OF_QUESTION[3].type)
+              return (
+                <MappingHeadingTemplate
                   initialFrom={questionGroup[index].from}
                   initialTo={questionGroup[index].to}
                   updateQuestionGroupInfoCallback={setQuestionGroupCallback}

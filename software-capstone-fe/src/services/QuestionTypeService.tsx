@@ -69,6 +69,11 @@ export const READING_SECTION_LIMIT: IReadingSectionLimit[] = [
         sectionKey: 3,
         start: 27,
         end: 40,
+    },
+    {
+        sectionKey: 4,
+        start: 41,
+        end: 53,
     }
 ];
 
@@ -81,6 +86,7 @@ export const TYPE_OF_QUESTION: IQuestionItem[] = [
     { index: 1, type: 'TRUE-FALSE-NOT-GIVEN', icon: 'true-false-not-given.png', name: 'True False-Not Given' },
     { index: 2, type: 'SHORT-ANSWER', icon: 'short-answer.png', name: 'Short-answer' },
     { index: 3, type: 'MULTIPLE-CHOICE', icon: 'multiple-choice.png', name: 'Multiple-choice' },
+    { index: 4, type: 'MAPPING-HEADING', icon: '', name: 'Mapping-heading' },
 ];
 
 export const updateQuestionGroupInfo = (infoList: QuestionGroupInfo[]) => {

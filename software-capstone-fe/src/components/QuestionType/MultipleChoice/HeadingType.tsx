@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
-import { Select, Typography, Col, Table } from "antd";
+import { Select, Typography, Col, Table, Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { TYPE_OF_QUESTION } from "services/QuestionTypeService";
 
 const { Paragraph } = Typography;
+const { TextArea } = Input;
 
-const HeadingSelect = () => {
+interface ISelect {
+	onChange: (value: string) => void;
+	defaultValue: string | null;
+}
+
+const MappingHeadingSelect: React.FC<ISelect> = ({ onChange, defaultValue }: ISelect) => {
 	const options = [];
 
 	for (let i = 65; i <= 90; i++) {
@@ -25,6 +32,8 @@ const HeadingSelect = () => {
 interface HeadingTypeProps {
 	letter: string;
 }
+
+const TYPE = TYPE_OF_QUESTION[3].type;
 
 const HeadingType: React.FC<HeadingTypeProps> = ({
 	letter,
