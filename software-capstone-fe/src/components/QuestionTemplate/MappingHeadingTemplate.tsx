@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuestionTypeHeader from "components/QuestionTypeHeader";
 import HeadingType from "components/QuestionType/MultipleChoice/HeadingType";
 import MappingHeadingInstruction from "components/Instruction/MappingHeadingInstruction/MappingHeadingInstruction";
-import { Col } from "antd";
+import { Col, InputNumber } from "antd";
 import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/QuestionTypeService";
 import TemplateProps from "./TemplateInterface";
 import AlphabetHeadingType from "components/QuestionType/MultipleChoice/AlphabetHeadingType";
@@ -26,6 +26,7 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
       { value: "H", label: "H" },
     ]
   );
+  const [headingQuantity, setHeadingQuantity] = useState<number>(2);
 
   const handleCollapseStatusChange = () => {
     setCollapse((prev: boolean) => !prev);
@@ -51,6 +52,26 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
         return updatedQuestionGroupInfo;
       })
     }
+  };
+
+  const handleHeadingQuantityChange = (e: any) => {
+    setHeadingQuantity(e || 3);
+    // setQuatityChoices(e || 3);
+    // setQuestionDetails((prev: IQuestionDetail[]) => {
+    //   return prev?.map((item: IQuestionDetail) => {
+    //     if (item?.order === order) {
+    //       return {
+    //         ...item,
+    //         type: TYPE,
+    //         options: {
+    //           ...options,
+    //           quantity: e || 3,
+    //         },
+    //       };
+    //     }
+    //     return item;
+    //   });
+    // });
   };
 
   return (
@@ -81,16 +102,20 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
       </div>
 
       <p style={{ margin: "10px", display: collapse ? "none" : "block" }}>List of Headings</p>
+      <InputNumber
+        defaultValue={3}
+        style={{ margin: "0.5rem" }}
+        min={2}
+        max={26}
+        onChange={handleHeadingQuantityChange}
+      />
 
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
-        <HeadingType letter={"A"} />
-        <HeadingType letter={"B"} />
-        <HeadingType letter={"C"} />
-        <HeadingType letter={"D"} />
-        <HeadingType letter={"E"} />
-        <HeadingType letter={"F"} />
-        <HeadingType letter={"G"} />
-        <HeadingType letter={"H"} />
+        {Array(headingQuantity)
+          .fill(null)
+          .map((_, index) => {
+            return <HeadingType letter={(index + 10).toString(36).toUpperCase()} />;
+          })}
       </div>
     </Col>
   );
