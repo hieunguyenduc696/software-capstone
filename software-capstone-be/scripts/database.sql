@@ -1,18 +1,18 @@
 CREATE DATABASE warrior;
 USE warrior;
 
-CREATE TABLE exam (
-    exam_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE test (
+    test_id INT NOT NULL AUTO_INCREMENT,
 
     title TEXT DEFAULT NULL,
-    exam_type INT DEFAULT NULL,
-    exam_level INT DEFAULT NULL,
-    PRIMARY KEY(exam_id)
+    test_type INT DEFAULT NULL,
+    test_level INT DEFAULT NULL,
+    PRIMARY KEY(test_id)
 );
 
 CREATE TABLE section (
     section_id INT NOT NULL AUTO_INCREMENT,
-    exam_id INT DEFAULT NULL,
+    test_id INT DEFAULT NULL,
     
     section_index INT DEFAULT NULL,
     section_type INT DEFAULT NULL,    
