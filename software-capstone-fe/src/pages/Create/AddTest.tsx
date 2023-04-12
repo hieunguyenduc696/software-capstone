@@ -13,8 +13,10 @@ import {
   IReadingParagraph,
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
+import { useNavigate } from "react-router";
 
 const AddingTestPage = () => {  
+  const navigate = useNavigate();
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
   const [questionDetails, setQuestionDetails] = useState(
@@ -50,11 +52,11 @@ const AddingTestPage = () => {
       label: `Section 3`,
       children: <ReadingParagraph sectionKey={3} setReadingParagraphsCallback={setParagraphs}/>,
     },
-    {
-      key: "4",
-      label: `Section 4`,
-      children: <ReadingParagraph sectionKey={4} setReadingParagraphsCallback={setParagraphs}/>,
-    },
+    // {
+    //   key: "4",
+    //   label: `Section 4`,
+    //   children: <ReadingParagraph sectionKey={4} setReadingParagraphsCallback={setParagraphs}/>,
+    // },
   ];
 
   const onSectionChange = (key: string) => {
@@ -65,6 +67,8 @@ const AddingTestPage = () => {
     console.log('PARAGRAPHS: ',paragraphs);
     console.log('QUESTION DETAILS');
     console.table(questionDetails);
+
+    navigate("/post-test");
   };
 
   useEffect(() => {
@@ -76,7 +80,11 @@ const AddingTestPage = () => {
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column}`} xs={{ span: 24 }} lg={{ span: 12 }}>
+        <Col className={`${styles.column} ${styles.left}`} xs={{ span: 24 }} lg={{ span: 12 }} style={{
+            height: "83vh",
+            maxHeight: "83vh",
+            overflowY: "auto"
+          }}>
           <Row>
             <Col span={24}>
               <Tabs
@@ -96,6 +104,7 @@ const AddingTestPage = () => {
             borderLeft: "2px solid #9F9F9F",
             height: "83vh",
             maxHeight: "83vh",
+            overflowY: "auto"
           }}
         >
           <ReadingTestContext.Provider
