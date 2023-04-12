@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import QuestionTypeHeader from "components/QuestionTypeHeader";
 import HeadingType from "components/QuestionType/MultipleChoice/HeadingType";
 import MappingHeadingInstruction from "components/Instruction/MappingHeadingInstruction/MappingHeadingInstruction";
-import { Col } from "antd";
+import { Col, InputNumber } from "antd";
 import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, updateQuestionGroupInfo } from "services/QuestionTypeService";
 import TemplateProps from "./TemplateInterface";
 import AlphabetHeadingType from "components/QuestionType/MultipleChoice/AlphabetHeadingType";
@@ -26,6 +26,7 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
       { value: "H", label: "H" },
     ]
   );
+  const [headingQuantity, setHeadingQuantity] = useState<number>(2);
 
   const handleCollapseStatusChange = () => {
     setCollapse((prev: boolean) => !prev);
@@ -53,6 +54,10 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
     }
   };
 
+  const handleHeadingQuantityChange = (e: any) => {
+    setHeadingQuantity(e || 3);
+  };
+
   return (
     <Col span={24}>
       <QuestionTypeHeader
@@ -66,7 +71,7 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
 
       <MappingHeadingInstruction
         letterFrom="A"
-        letterTo="H"
+        letterTo={(headingQuantity + 9).toString(36).toUpperCase()}
         questionFrom={initialFrom}
         questionTo={initialTo}
         collapsed={collapse}
@@ -80,17 +85,23 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
           })}
       </div>
 
-      <p style={{ margin: "10px", display: collapse ? "none" : "block" }}>List of Headings</p>
+      <div style={{ margin: "10px", display: collapse ? "none" : "block", fontWeight: "bold", fontSize: "16px" }}>
+        List of Headings
+        <InputNumber
+          defaultValue={3}
+          style={{ margin: "0.5rem", transform: "translateY(-25%)" }}
+          min={2}
+          max={26}
+          onChange={handleHeadingQuantityChange}
+        />
+      </div>
 
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
-        <HeadingType letter={"A"} />
-        <HeadingType letter={"B"} />
-        <HeadingType letter={"C"} />
-        <HeadingType letter={"D"} />
-        <HeadingType letter={"E"} />
-        <HeadingType letter={"F"} />
-        <HeadingType letter={"G"} />
-        <HeadingType letter={"H"} />
+        {Array(headingQuantity)
+          .fill(null)
+          .map((_, index) => {
+            return <HeadingType letter={(index + 10).toString(36).toUpperCase()} />;
+          })}
       </div>
     </Col>
   );
