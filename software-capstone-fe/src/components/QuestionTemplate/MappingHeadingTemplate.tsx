@@ -101,14 +101,16 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
           })}
       </div>
 
-      <p style={{ margin: "10px", display: collapse ? "none" : "block" }}>List of Headings</p>
-      <InputNumber
-        defaultValue={3}
-        style={{ margin: "0.5rem" }}
-        min={2}
-        max={26}
-        onChange={handleHeadingQuantityChange}
-      />
+      <div style={{ margin: "10px", display: collapse ? "none" : "block" }}>
+        List of Headings
+        <InputNumber
+          defaultValue={3}
+          style={{ margin: "0.5rem", transform: "translateY(-25%)" }}
+          min={2}
+          max={26}
+          onChange={handleHeadingQuantityChange}
+        />
+      </div>
 
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
         {Array(headingQuantity)
