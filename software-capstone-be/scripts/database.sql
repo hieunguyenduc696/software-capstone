@@ -47,6 +47,7 @@ CREATE TABLE question (
 
     question_index INT DEFAULT NULL,
     content TEXT DEFAULT NULL,
+    score INT DEFAULT 0,
 
     PRIMARY KEY(question_id)
 );
