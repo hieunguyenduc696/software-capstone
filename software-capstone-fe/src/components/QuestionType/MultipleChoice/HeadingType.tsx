@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
-import { Select, Typography, Col } from "antd";
+import { Select, Typography, Col, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
-const MappingHeadingSelect = () => {
+const HeadingSelect = () => {
 	const options = [];
 
 	for (let i = 65; i <= 90; i++) {
@@ -22,19 +22,18 @@ const MappingHeadingSelect = () => {
 	);
 };
 
-interface MappingHeadingTypeProps {
+interface HeadingTypeProps {
 	letter: string;
 }
 
-const MappingHeadingType: React.FC<MappingHeadingTypeProps> = ({
+const HeadingType: React.FC<HeadingTypeProps> = ({
 	letter,
-}: MappingHeadingTypeProps) => {
+}: HeadingTypeProps) => {
 
-	const [question, setQuestion] = useState("Enter your question here....");
+	const [question, setQuestion] = useState("Enter your statement here....");
 
 	return (
 		<Col
-			span={24}
 			style={{ boxSizing: "border-box" }}
 			className={styles.question}
 		>
@@ -54,4 +53,4 @@ const MappingHeadingType: React.FC<MappingHeadingTypeProps> = ({
 	);
 };
 
-export default MappingHeadingType;
+export default HeadingType;

@@ -9,15 +9,16 @@ import AddingTestPage from "pages/Create/AddTest";
 
 const App: React.FC = () => {
   console.log(window.location.origin + "/silent-check-sso.html");
-  return (
-    <ReactKeycloakProvider authClient={keycloakClient}>
-      <Suspense>
-        <SuspenseRouter>
-          <AuthProvider>{AppRoutes()}</AuthProvider>
-        </SuspenseRouter>
-      </Suspense>
-    </ReactKeycloakProvider>
-  );
+  // return (
+  //   <ReactKeycloakProvider authClient={keycloakClient}>
+  //     <Suspense>
+  //       <SuspenseRouter>
+  //         <AuthProvider>{AppRoutes()}</AuthProvider>
+  //       </SuspenseRouter>
+  //     </Suspense>
+  //   </ReactKeycloakProvider>
+  // );
+  return (<AddingTestPage/>);
 };
 
 export default App;

@@ -9,8 +9,8 @@ import type { TabsProps } from "antd";
 import SectionOne from "components/Section/SectionOne/SectionOne";
 import AlphabetType from "components/QuestionType/MultipleChoice/AlphabetType";
 import MappingHeadingInstruction from "components/Instruction/MappingHeadingInstruction/MappingHeadingInstruction";
-import MappingHeadingTable from "components/Instruction/MappingHeadingInstruction/MappingHeadingTable";
-import MappingHeadingType from "components/QuestionType/MultipleChoice/MappingHeadingType";
+import HeadingType from "components/QuestionType/MultipleChoice/HeadingType";
+import AlphabetHeadingType from "components/QuestionType/MultipleChoice/AlphabetHeadingType";
 
 const items: TabsProps["items"] = [
   {
@@ -33,6 +33,19 @@ const items: TabsProps["items"] = [
 ];
 
 const AddingTestPage = () => {
+  const [letters, setLetters] = useState(
+    [
+      {value: "A", label: "A"},
+      {value: "B", label: "B"},
+      {value: "C", label: "C"},
+      {value: "D", label: "D"},
+      {value: "E", label: "E"},
+      {value: "F", label: "F"},
+      {value: "G", label: "G"},
+      {value: "H", label: "H"},
+    ]
+  );
+
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -79,16 +92,22 @@ const AddingTestPage = () => {
 
           <Row>
             <MappingHeadingInstruction letterFrom={"A"} letterTo={"H"} questionFrom={27} questionTo={33} />
-            <AlphabetType order={1} />
-            <AlphabetType order={2} />
-            <AlphabetType order={3} />
-            <AlphabetType order={4} />
-            <AlphabetType order={5} />
-            <AlphabetType order={6} />
-            <AlphabetType order={7} />  
-            <MappingHeadingType letter={"A"} />
-            <MappingHeadingType letter={"B"} />
-            <MappingHeadingType letter={"C"} />
+            <AlphabetHeadingType order={1} letterList={letters}/>
+            <AlphabetHeadingType order={2} letterList={letters}/>
+            <AlphabetHeadingType order={3} letterList={letters}/>
+            <AlphabetHeadingType order={4} letterList={letters}/>
+            <AlphabetHeadingType order={5} letterList={letters}/>
+            <AlphabetHeadingType order={6} letterList={letters}/>
+            <AlphabetHeadingType order={7} letterList={letters}/> 
+            <p style={{margin: "10px"}}>List of Headings</p> 
+            <HeadingType letter={"A"} />
+            <HeadingType letter={"B"} />
+            <HeadingType letter={"C"} />
+            <HeadingType letter={"D"} />
+            <HeadingType letter={"E"} />
+            <HeadingType letter={"F"} />
+            <HeadingType letter={"G"} />
+            <HeadingType letter={"H"} />
           </Row>
         </Col>
       </Row>

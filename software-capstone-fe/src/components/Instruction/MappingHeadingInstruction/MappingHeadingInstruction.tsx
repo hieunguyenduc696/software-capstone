@@ -10,7 +10,6 @@ interface MappingHeadingInstructionProps {
     questionFrom: number;
     questionTo: number;
 }
-
 const MappingHeadingInstruction: React.FC<MappingHeadingInstructionProps> = ({
     letterFrom,
     letterTo,
@@ -35,5 +34,4 @@ const MappingHeadingInstruction: React.FC<MappingHeadingInstructionProps> = ({
         </Col>
     );
 };
-
 export default MappingHeadingInstruction;
