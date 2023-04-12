@@ -56,22 +56,6 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
 
   const handleHeadingQuantityChange = (e: any) => {
     setHeadingQuantity(e || 3);
-    // setQuatityChoices(e || 3);
-    // setQuestionDetails((prev: IQuestionDetail[]) => {
-    //   return prev?.map((item: IQuestionDetail) => {
-    //     if (item?.order === order) {
-    //       return {
-    //         ...item,
-    //         type: TYPE,
-    //         options: {
-    //           ...options,
-    //           quantity: e || 3,
-    //         },
-    //       };
-    //     }
-    //     return item;
-    //   });
-    // });
   };
 
   return (
@@ -87,7 +71,7 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
 
       <MappingHeadingInstruction
         letterFrom="A"
-        letterTo="H"
+        letterTo={(headingQuantity + 9).toString(36).toUpperCase()}
         questionFrom={initialFrom}
         questionTo={initialTo}
         collapsed={collapse}
@@ -101,7 +85,7 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialT
           })}
       </div>
 
-      <div style={{ margin: "10px", display: collapse ? "none" : "block" }}>
+      <div style={{ margin: "10px", display: collapse ? "none" : "block", fontWeight: "bold", fontSize: "16px" }}>
         List of Headings
         <InputNumber
           defaultValue={3}
