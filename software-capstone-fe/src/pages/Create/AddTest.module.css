@@ -1,17 +1,15 @@
-
 .column {
     margin: 0;
-    height: 93vh;
-    max-height: 93vh;
+    height: calc(100% - 80px);
+    max-height: calc(100% - 80px);
     overflow-y: auto;
-}
 
-.column.left {
-    border-right: 2px solid #9F9F9F;
+    box-sizing: border-box;
 }
 
 .column.right {
-    background-color: #F5F5F5;
+    background-color: var(--mainGrayColor);
+    border-left: 2px solid #9F9F9F;
     width: 100%;
     max-width: 100%;
 }
@@ -21,81 +19,77 @@
     font-size: 16px;
 }
 
-.questionHeader {
-    height: '40px';
+.type-options {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
 
-    font-size: 16px;
-    background-color: #000;
-    color: #FFF;
-
-    padding: 1.25rem 0.5rem;
-}
-
-
-.question {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
 
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
 
-    width: 100%;
-    max-width: 100%;
-    background-color: #fff;
+    background-color: #FFF;
 }
 
-.number {
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
+.footer {
+    width: 100%;
 
-    background-color: #D9D9D9;
-    color: #000;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    font-size: 19px;
-    font-weight: bold;
 
-    margin-right: 0.5rem;
+    background-color: var(--mainColor);
+    padding: 0.75rem 1.5rem;
 }
 
-.select {
-    height: 30px;
-    width: 120px;
-    margin-right: 2rem;
+.footer-children {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.paragraph {
-    font-size: 16px;
-    width: 70%;
+.footer-children.button-group {
+    gap: 15px;
 }
 
-.paragraph.full {
-    width: 100%;
+.button {
+   text-transform: uppercase;
+   font-weight: 700;
+   box-sizing: border-box;
+   border-radius: 5px;
+   padding: 0.25rem 1.75rem;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   gap: 0.25rem
 }
 
-.input {
-    outline: none;
+.button.primary {
+    color: white;
+    background-color: var(--tertiaryColor);
     border: none;
-    border-bottom: 1px solid #000;
-    border-radius: 0;
 }
 
-.input:focus {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 0 0 2px rgba(255,255,255);
+.button.primary:hover {
+    color: white;
+    background-color: var(--tertiaryColor);
+    border: none;
 }
 
-.upload {
-    height: 150px;
-    width: 300px;
+.button.secondary {
+    color: var(--tertiaryColor);
+    background-color: #FFF;
+    border: none;
+}
 
-    display: 'flex';
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+.button.secondary:hover {
+    color: var(--tertiaryColor);
+    background-color: #FFF;
+    border: none;
 }

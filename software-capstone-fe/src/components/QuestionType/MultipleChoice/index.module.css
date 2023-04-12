@@ -1,4 +1,3 @@
-
 .column {
     margin: 0;
     height: 93vh;
@@ -57,12 +56,12 @@
 .select {
     height: 30px;
     width: 120px;
-    margin-right: 2rem;
+    margin-right: 1em;
 }
 
 .paragraph {
     font-size: 16px;
-    width: 70%;
+    width: 75%;
     padding-top: 0.25rem;
 }
 
@@ -80,5 +79,20 @@
 
 .input:focus {
     border-bottom: 1px solid #000;
-    box-shadow: 0 0 0 2px rgba(255,255,255);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255);
+}
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.radio span:last-of-type {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+.radio span:first-of-type {
+    transform: translateY(2px);
 }

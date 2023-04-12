@@ -9,7 +9,10 @@ dotenv.config({
 
 //App configuration
 const DEFAULT_APP_PORT: string = "8088";
+const DEFAULT_APP_HOST: string = "localhost";
+const DEFAULT_RESOURCE_PATH: string = "public/resource";
 const APP_PORT: string = process.env.APP_PORT ?? DEFAULT_APP_PORT;
+const RESOURCE_PATH: string = process.env.RESOURCE_PATH ?? `${__dirname}/../../../${DEFAULT_RESOURCE_PATH}`;
 
 //DB configuration
 const DEFAULT_DB_PORT: string = "3306";
@@ -23,6 +26,7 @@ const DB_CONNECTION_LIMIT: number = +(process.env.DB_CONNECTION_LIMIT?? DEFAULT_
 
 export {
     APP_PORT,
+    RESOURCE_PATH,
 
     DB_PORT,
     DB_HOST,

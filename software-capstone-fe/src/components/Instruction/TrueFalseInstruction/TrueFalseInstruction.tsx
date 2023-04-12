@@ -8,14 +8,16 @@ const { Paragraph, Text } = Typography;
 interface TrueFalseInstructionProps {
   from: number;
   to: number;
+  collapsed: boolean;
 }
 
 const TrueFalseInstruction: React.FC<TrueFalseInstructionProps> = ({
   from,
   to,
+  collapsed = false
 }: TrueFalseInstructionProps) => {
   return (
-    <Col span={24} className={`${styles.container}`}>
+    <Col span={24} className={`${styles.container}`} style={{display: collapsed ? 'none' : 'block'}}>
       <Paragraph className={`${styles.paragraph}`}>
         Do the following statements agree with the information given in Reading
         Passage 1?
