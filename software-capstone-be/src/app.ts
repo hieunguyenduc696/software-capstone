@@ -12,6 +12,7 @@ app.use(express.json());
 
 //Routes registrations
 app.use('/reading-skill/admin', readingRoutes.adminExam.router);
+app.use('/reading-skill/resource', readingRoutes.cdnRoute.router);
 
 app.listen(port, () => {
     console.log(`[Server]: Server is serving at port: ${port}`);
