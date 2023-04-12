@@ -130,12 +130,12 @@ const AddingTestPage = () => {
         <div
           className={`${styles["footer-children"]} ${styles["button-group"]}`}
         >
-          <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+          {/* <Button className={`${styles["button"]} ${styles["secondary"]}`}>
             Previous
           </Button>
           <Button className={`${styles["button"]} ${styles["secondary"]}`}>
             Next
-          </Button>
+          </Button> */}
           <Button
             icon={<img src="save_icon.png" />}
             className={`${styles["button"]} ${styles["primary"]}`}
