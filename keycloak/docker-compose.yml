@@ -39,4 +39,5 @@ services:
     volumes:
       - config_data_keycloak:/var/lib/keycloak/data
     #   - /script/disable-theme-cache.cli:/opt/jboss/startup-scripts/disable-theme-cache.cli
-      - ./themes/demo:/opt/jboss/keycloak/themes/custom
+      - ./themes/demo:/opt/jboss/keycloak/themes/demo
+      - ./themes/hrsol:/opt/jboss/keycloak/themes/hrsol
