@@ -14,7 +14,7 @@ import styles from "./index.module.css";
 import Icon from "@ant-design/icons";
 
 import ReadingTestContext from "context/ReadingTestContext";
-import { IQuestionDetail } from "services/QuestionTypeService";
+import { IQuestionDetail, TYPE_OF_QUESTION } from "services/QuestionTypeService";
 
 const options = [
   { value: "A", label: "A" },
@@ -32,6 +32,8 @@ interface ChoicesType {
 interface MultipleChoiceProps {
   order: number;
 }
+
+const TYPE = TYPE_OF_QUESTION[2].type;
 
 const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
   const { questionDetails, setQuestionDetails } =
@@ -64,6 +66,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
         if (item?.order === order) {
           return {
             ...item,
+            type: TYPE,
             answer: e.target.value || "",
           };
         }
@@ -79,6 +82,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
         if (item?.order === order) {
           return {
             ...item,
+            type: TYPE,
             options: {
               ...options,
               quantity: e || 3,
@@ -122,6 +126,7 @@ const MultipleChoiceType: React.FC<MultipleChoiceProps> = ({ order }) => {
           if (item?.order === order) {
             return {
               ...item,
+              type: TYPE,
               question: event.target.value,
             };
           }

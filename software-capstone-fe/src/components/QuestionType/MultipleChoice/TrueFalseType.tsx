@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import ReadingTestContext from "context/ReadingTestContext";
-import { IQuestionDetail } from "services/QuestionTypeService";
+import { IQuestionDetail, TYPE_OF_QUESTION } from "services/QuestionTypeService";
 import styles from "./index.module.css";
 import { Select, Typography, Col, Tooltip, Input } from "antd";
 import Icon from "@ant-design/icons";
@@ -28,6 +28,8 @@ interface TrueFalseTypeProps {
   order: number;
 }
 
+const TYPE = TYPE_OF_QUESTION[0].type;
+
 const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
   order,
 }: TrueFalseTypeProps) => {
@@ -45,6 +47,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
           if (item?.order === order) {
             return {
               ...item,
+              type: TYPE,
               question: event.target.value
             }
           }
@@ -61,6 +64,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
         if (item?.order === order) {
           return {
             ...item,
+            type: TYPE,
             answer: value
           }
         }

@@ -39,6 +39,13 @@ export interface IReadingSectionLimit {
     end: number;
 }
 
+export interface IReadingParagraph {
+    order: number;
+    title: string | null;
+    content: string | null; // save format html
+    previewImage: string | null;
+}
+
 export interface IQuestionDetail {
     order: number;
     type: string | null;
@@ -110,4 +117,21 @@ export const generateReadingQuestionDetails = () => {
     }
 
     return details;
+}
+
+export const generateReadingParagraphs = () => {
+
+    const paragraphs: IReadingParagraph[] = [];
+
+    for (let i = 0; i < 3; i++) {
+        const newParagraphs: IReadingParagraph = {
+            order: i + 1,
+            title: null,
+            content: null,// save format html
+            previewImage: null,
+        }
+        paragraphs.push(newParagraphs);
+    }
+
+    return paragraphs;
 }
