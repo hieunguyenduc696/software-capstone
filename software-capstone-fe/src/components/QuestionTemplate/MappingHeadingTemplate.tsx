@@ -9,12 +9,23 @@ import AlphabetHeadingType from "components/QuestionType/MultipleChoice/Alphabet
 
 const TYPE = TYPE_OF_QUESTION[0].type; // TRUE-FALSE...
 
-const MappingHeadingTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo, updateQuestionGroupInfoCallback}: TemplateProps) => {
+const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, updateQuestionGroupInfoCallback }: TemplateProps) => {
   const [questionQuantity, setQuestionQuantity] = useState<number>(initialTo - initialFrom + 1);
   const [collapse, setCollapse] = useState<boolean>(false);
 
-  // {order, question, answer}
   const [templateDetails, setTemplateDetails] = useState<any>([]);
+  const [letters, setLetters] = useState(
+    [
+      { value: "A", label: "A" },
+      { value: "B", label: "B" },
+      { value: "C", label: "C" },
+      { value: "D", label: "D" },
+      { value: "E", label: "E" },
+      { value: "F", label: "F" },
+      { value: "G", label: "G" },
+      { value: "H", label: "H" },
+    ]
+  );
 
   const handleCollapseStatusChange = () => {
     setCollapse((prev: boolean) => !prev);
@@ -42,7 +53,6 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo
     }
   };
 
-
   return (
     <Col span={24}>
       <QuestionTypeHeader
@@ -61,16 +71,26 @@ const MappingHeadingTemplate: React.FC<TemplateProps> = ({initialFrom, initialTo
         questionTo={initialTo}
         collapsed={collapse}
       />
+
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
         {Array(questionQuantity)
           .fill(null)
           .map((_, index) => {
-            return <AlphabetHeadingType order={index + initialFrom} letterList={[
-              {value: "A", label: "A"},
-              {value: "B", label: "B"},
-              {value: "C", label: "C"},
-            ]}/>;
+            return <AlphabetHeadingType order={index + initialFrom} letterList={letters} />;
           })}
+      </div>
+
+      <p style={{ margin: "10px", display: collapse ? "none" : "block" }}>List of Headings</p>
+
+      <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
+        <HeadingType letter={"A"} />
+        <HeadingType letter={"B"} />
+        <HeadingType letter={"C"} />
+        <HeadingType letter={"D"} />
+        <HeadingType letter={"E"} />
+        <HeadingType letter={"F"} />
+        <HeadingType letter={"G"} />
+        <HeadingType letter={"H"} />
       </div>
     </Col>
   );

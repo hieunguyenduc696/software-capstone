@@ -151,7 +151,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
                   updateQuestionGroupInfoCallback={setQuestionGroupCallback}
                 />
               );
-            else if (item === TYPE_OF_QUESTION[3].type)
+            else if (item === TYPE_OF_QUESTION[3].type) 
               return (
                 <MappingHeadingTemplate
                   initialFrom={questionGroup[index].from}
