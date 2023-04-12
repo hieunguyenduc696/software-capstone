@@ -7,7 +7,7 @@ import { DEFAULT_NUMBER_OF_QUESTION, TYPE_OF_QUESTION, QuestionGroupInfo, update
 import TemplateProps from "./TemplateInterface";
 import AlphabetHeadingType from "components/QuestionType/MultipleChoice/AlphabetHeadingType";
 
-const TYPE = TYPE_OF_QUESTION[0].type; // TRUE-FALSE...
+const TYPE = TYPE_OF_QUESTION[3].type; // MAPPING-HEADING
 
 const MappingHeadingTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, updateQuestionGroupInfoCallback }: TemplateProps) => {
   const [questionQuantity, setQuestionQuantity] = useState<number>(initialTo - initialFrom + 1);
