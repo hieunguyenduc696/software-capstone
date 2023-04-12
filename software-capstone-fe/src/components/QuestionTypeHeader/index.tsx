@@ -18,6 +18,11 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
   collapsed = false,
   questionQuantity
 }: QuestionTypeHeaderProps) => {
+
+  const handleDeleteIconClick = () => {
+    
+  }
+
   return (
     <div
       className={styles.questionHeader}
@@ -52,7 +57,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
           gap: "10px",
         }}
       >
-        <DeleteFilled />
+        <img style={{ width: "20px" }} src="white-trash.png" className={`${styles["delete-icon"]}`}/>
         {collapsed ? (
           <DownOutlined onClick={onCollapseStatusUpdate} />
         ) : (
