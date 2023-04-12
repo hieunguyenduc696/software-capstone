@@ -10,6 +10,7 @@ import SectionOne from "components/Section/SectionOne/SectionOne";
 import AlphabetType from "components/QuestionType/MultipleChoice/AlphabetType";
 import MappingHeadingInstruction from "components/Instruction/MappingHeadingInstruction/MappingHeadingInstruction";
 import MappingHeadingTable from "components/Instruction/MappingHeadingInstruction/MappingHeadingTable";
+import MappingHeadingType from "components/QuestionType/MultipleChoice/MappingHeadingType";
 
 const items: TabsProps["items"] = [
   {
@@ -84,8 +85,10 @@ const AddingTestPage = () => {
             <AlphabetType order={4} />
             <AlphabetType order={5} />
             <AlphabetType order={6} />
-            <AlphabetType order={7} />
-            <MappingHeadingTable />
+            <AlphabetType order={7} />  
+            <MappingHeadingType letter={"A"} />
+            <MappingHeadingType letter={"B"} />
+            <MappingHeadingType letter={"C"} />
           </Row>
         </Col>
       </Row>
