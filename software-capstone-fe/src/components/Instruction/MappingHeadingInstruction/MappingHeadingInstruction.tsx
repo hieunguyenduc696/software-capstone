@@ -19,7 +19,7 @@ const MappingHeadingInstruction: React.FC<MappingHeadingInstructionProps> = ({
     collapsed = false
 }: MappingHeadingInstructionProps) => {
     return (
-        <Col span={24} className={`${styles.container}`}>
+        <Col span={24} className={`${styles.container}`} style={{display: collapsed ? 'none' : 'block'}}>
             <Paragraph className={`${styles.paragraph}`}>
                 Look at the following people (Questions 27-33) and the list of statements below.
             </Paragraph>
