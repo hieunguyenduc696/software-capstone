@@ -18,6 +18,12 @@
 
 # API Documentation
 
+## Test the DB run correctly API
+
+```
+   GET /reading-skill/admin/test-db
+```
+
 ## Admin
 
 ### Create Exam
