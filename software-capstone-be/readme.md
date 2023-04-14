@@ -28,20 +28,20 @@
    {"insertionIds":[31,32,33,34,35,36,37,38,39,40]} 
 }
 
-Try 'SELECT * FROM reading_passage' for checking the insertion actually work
+Try 'SELECT * FROM paragraph' for checking the insertion actually work
 
 ## Admin
 
-### Create Exam
+### Create Test
 
-#### Send [jpg, png] files for Exam' Reading Passage' Wallpaper
+#### Send [jpg, png] files for Reading Test Paragraph' Wallpaper
 
 ```
-   POST /reading-skill/resource/reading-passage/wallpaper
+   POST /reading-skill/resource/paragraph/wallpaper
 ```
 
 ```javascript
-   POST /reading-skill/resource/reading-passage/wallpaper HTTP/1.1
+   POST /reading-skill/resource/paragraph/wallpaper HTTP/1.1
    Host: 127.0.0.1:8090
    Content-Length: 182
    Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW

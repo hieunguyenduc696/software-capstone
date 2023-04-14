@@ -1,12 +1,12 @@
 import {Router} from 'express';
-import {testCreateReadingPassages} from '../../controllers/admin/exam_controller';
+import {testCreateParagraphs} from '../../controllers/admin/test_controller';
 
 const router: Router = Router();
 const ROOT_URL: string = "";
 
 router.get(
     '/test-db',
-    testCreateReadingPassages
+    testCreateParagraphs
 )
 
 export {
