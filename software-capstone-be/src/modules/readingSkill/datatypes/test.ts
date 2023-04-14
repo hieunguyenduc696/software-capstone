@@ -1,4 +1,6 @@
 type ParagraphDto = {
+    paragraph_id: number | null,
+    section_id: number | null,
     wallpaper: string | null | undefined,
     title: string | null | undefined,
     content: string | null | undefined,
