@@ -11,7 +11,7 @@ const port: string | undefined = APP_PORT;    //default port is 8088
 app.use(express.json()); 
 
 //Routes registrations
-app.use('/reading-skill/admin', readingRoutes.adminExam.router);
+app.use('/reading-skill/admin', readingRoutes.adminTest.router);
 app.use('/reading-skill/resource', readingRoutes.cdnRoute.router);
 
 app.listen(port, () => {
