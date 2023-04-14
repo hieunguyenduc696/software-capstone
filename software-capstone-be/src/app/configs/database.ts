@@ -1,4 +1,4 @@
-import { createPool } from 'mysql';
+import { SqlError, createPool } from 'mariadb';
 import {
   DB_PORT,
   DB_HOST,
@@ -18,14 +18,14 @@ const pool = createPool({
 });
 
 // Attempt to catch disconnects
-pool.on('connection', function (connection) {
+pool.on('connection', connection => {
   console.log('DB Connection established');
 
-  connection.on('error', function (err: any) {
-    console.error(new Date(), 'MySQL error', err.code);
+  connection.on('error', (err: SqlError) => {
+    console.error(new Date(), 'MariaDB error', err.code);
   });
-  connection.on('close', function (err: any) {
-    console.error(new Date(), 'MySQL close', err);
+  connection.on('end', () => {
+    console.error(new Date(), 'MariaDB end');
   });
 });
 

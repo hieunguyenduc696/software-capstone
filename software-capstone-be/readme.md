@@ -18,6 +18,18 @@
 
 # API Documentation
 
+## Test the DB run correctly API
+
+```
+   GET /reading-skill/admin/test-db
+```
+### Success response
+{
+   {"insertionIds":[31,32,33,34,35,36,37,38,39,40]} 
+}
+
+Try 'SELECT * FROM reading_passage' for checking the insertion actually work
+
 ## Admin
 
 ### Create Exam
