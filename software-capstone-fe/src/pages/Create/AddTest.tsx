@@ -13,8 +13,10 @@ import {
   IReadingParagraph,
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
+import { useNavigate } from "react-router";
 
-const AddingTestPage = () => {
+const AddingTestPage = () => {  
+  const navigate = useNavigate();
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
   const [questionDetails, setQuestionDetails] = useState(
@@ -28,6 +30,9 @@ const AddingTestPage = () => {
     QuestionGroupInfo[]
   >([]);
   const [thirdQuestionGroup, setThirdQuestionGroup] = useState<
+    QuestionGroupInfo[]
+  >([]);
+  const [forthQuestionGroup, setForthQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
 
@@ -47,6 +52,11 @@ const AddingTestPage = () => {
       label: `Section 3`,
       children: <ReadingParagraph sectionKey={3} setReadingParagraphsCallback={setParagraphs}/>,
     },
+    // {
+    //   key: "4",
+    //   label: `Section 4`,
+    //   children: <ReadingParagraph sectionKey={4} setReadingParagraphsCallback={setParagraphs}/>,
+    // },
   ];
 
   const onSectionChange = (key: string) => {
@@ -57,6 +67,8 @@ const AddingTestPage = () => {
     console.log('PARAGRAPHS: ',paragraphs);
     console.log('QUESTION DETAILS');
     console.table(questionDetails);
+
+    navigate("/post-test");
   };
 
   useEffect(() => {
@@ -68,7 +80,11 @@ const AddingTestPage = () => {
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column}`} span={12}>
+        <Col className={`${styles.column} ${styles.left}`} xs={{ span: 24 }} lg={{ span: 12 }} style={{
+            height: "83vh",
+            maxHeight: "83vh",
+            overflowY: "auto"
+          }}>
           <Row>
             <Col span={24}>
               <Tabs
@@ -83,11 +99,12 @@ const AddingTestPage = () => {
 
         <Col
           className={`${styles.column} ${styles.right}`}
-          span={12}
+          xs={{ span: 24 }} lg={{ span: 12 }}
           style={{
             borderLeft: "2px solid #9F9F9F",
             height: "83vh",
             maxHeight: "83vh",
+            overflowY: "auto"
           }}
         >
           <ReadingTestContext.Provider
@@ -114,6 +131,13 @@ const AddingTestPage = () => {
                 setQuestionGroupCallback={setThirdQuestionGroup}
               />
             )}
+            {questionSectionKey === 4 && (
+              <QuestionSection
+                sectionKey={4}
+                questionGroup={forthQuestionGroup}
+                setQuestionGroupCallback={setForthQuestionGroup}
+              />
+            )}
           </ReadingTestContext.Provider>
         </Col>
       </Row>
@@ -130,12 +154,12 @@ const AddingTestPage = () => {
         <div
           className={`${styles["footer-children"]} ${styles["button-group"]}`}
         >
-          <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+          {/* <Button className={`${styles["button"]} ${styles["secondary"]}`}>
             Previous
           </Button>
           <Button className={`${styles["button"]} ${styles["secondary"]}`}>
             Next
-          </Button>
+          </Button> */}
           <Button
             icon={<img src="save_icon.png" />}
             className={`${styles["button"]} ${styles["primary"]}`}

@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import styles from "./index.module.css";
-import { Select, Typography, Col } from "antd";
+import { Select, Typography, Col, Table, Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { TYPE_OF_QUESTION } from "services/QuestionTypeService";
 
 const { Paragraph } = Typography;
+const { TextArea } = Input;
 
-const AlphabetSelect = () => {
+interface ISelect {
+	onChange: (value: string) => void;
+	defaultValue: string | null;
+}
+
+const MappingHeadingSelect: React.FC<ISelect> = ({ onChange, defaultValue }: ISelect) => {
 	const options = [];
 
 	for (let i = 65; i <= 90; i++) {
@@ -22,24 +29,24 @@ const AlphabetSelect = () => {
 	);
 };
 
-interface AlphabetTypeProps {
-	order: number;
+interface HeadingTypeProps {
+	letter: string;
 }
 
-const AlphabetType: React.FC<AlphabetTypeProps> = ({
-	order,
-}: AlphabetTypeProps) => {
+const TYPE = TYPE_OF_QUESTION[3].type;
 
-	const [question, setQuestion] = useState("Enter your question here....");
+const HeadingType: React.FC<HeadingTypeProps> = ({
+	letter,
+}: HeadingTypeProps) => {
+
+	const [question, setQuestion] = useState("Enter your statement here....");
 
 	return (
 		<Col
-			span={24}
 			style={{ boxSizing: "border-box" }}
 			className={styles.question}
 		>
-			<div className={styles.number}>{order}</div>
-			<AlphabetSelect />
+			<div className={styles.number}>{letter}</div>
 			<Paragraph
 				editable={{
 					icon: <EditOutlined />,
@@ -55,4 +62,4 @@ const AlphabetType: React.FC<AlphabetTypeProps> = ({
 	);
 };
 
-export default AlphabetType;
+export default HeadingType;

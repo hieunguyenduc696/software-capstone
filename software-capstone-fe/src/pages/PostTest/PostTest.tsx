@@ -1,4 +1,4 @@
-import { Button, Col, Image, Row } from "antd";
+import { Button, Col, Image, Row, Space } from "antd";
 import { AppHeader, UploadImage } from "components";
 import { PreviewTestItem } from "components/PreviewTestItem";
 import { useRef, useState } from "react";
@@ -26,7 +26,7 @@ const mockPreviewTestItems = [
 
 export const PostTest = () => {
   const titleRef = useRef(null);
-  const [title, setTitle] = useState<string>("IELTS Recent mock test");
+  const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
   const navigate = useNavigate();
 
@@ -51,6 +51,10 @@ export const PostTest = () => {
     navigate("/add-test");
   };
 
+  const handleSaveClick = () => {
+    navigate("/test");
+  }
+
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
   const handleQuestionChange = (selected: string) => {
@@ -69,9 +73,17 @@ export const PostTest = () => {
           style={{ padding: "1.5rem 0 .5rem 1.5rem", backgroundColor: "white" }}
         >
           {/* left */}
-          <Col span={16}>
+          <Col xs={{ span: 24 }}>
             {/* title */}
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                width: "90%",
+                margin: "auto",
+              }}
+            >
               <div>
                 <UploadImage />
               </div>
@@ -80,7 +92,7 @@ export const PostTest = () => {
                   Title:
                 </div>
                 <Row style={{ gap: 5 }}>
-                  <Col span={14}>
+                  <Col span={18}>
                     <input
                       type="text"
                       required
@@ -94,6 +106,7 @@ export const PostTest = () => {
                       className={styles["ip-title"]}
                       value={title}
                       onChange={handleTitleChange}
+                      placeholder={"IELTS Test title here..."}
                     />
 
                     {
@@ -107,7 +120,7 @@ export const PostTest = () => {
                       </span>
                     }
                   </Col>
-                  <Col span={9}>
+                  <Col span={5}>
                     <Image
                       src="edit.png"
                       style={{
@@ -124,8 +137,12 @@ export const PostTest = () => {
             </div>
 
             {/* buttons */}
-            <Row style={{ padding: "4rem 2rem 0 2rem" }}>
-              <Col span={12}>
+            <Row style={{ padding: "3rem 2rem 1rem 2rem" }}>
+              <Col
+                xs={{ span: 24 }}
+                md={{ span: 12 }}
+                style={{ paddingTop: "1rem" }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -154,7 +171,11 @@ export const PostTest = () => {
                   </Button>
                 </div>
               </Col>
-              <Col span={12}>
+              <Col
+                xs={{ span: 24 }}
+                md={{ span: 12 }}
+                style={{ paddingTop: "1rem" }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -186,8 +207,10 @@ export const PostTest = () => {
             </Row>
           </Col>
           {/* right */}
-          <Col
+          {/* <Col
             span={8}
+            xs={{ span: 24 }}
+            lg={{ span: 8 }}
             style={{
               backgroundColor: "#F2F2F2",
               padding: "1rem",
@@ -211,8 +234,42 @@ export const PostTest = () => {
                 </div>
               ))}
             </div>
-          </Col>
+          </Col> */}
         </Row>
+      </div>
+      <div className={`${styles["footer"]}`}>
+        <div className={`${styles["footer-children"]}`}>
+          {/* <img
+            src="default.png"
+            style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
+          />
+          <p style={{ color: "white" }}>IELTS Recent mock test</p> */}
+          <Button
+            icon={<img src="white-trash.png" style={{ width: "20px" }} />}
+            className={`${styles["button"]} ${styles["primary"]}`}
+            style={{ backgroundColor: "#000" }}
+          >
+            Delete
+          </Button>
+        </div>
+
+        <div
+          className={`${styles["footer-children"]} ${styles["button-group"]}`}
+        >
+          <Button
+            className={`${styles["button"]} ${styles["primary"]}`}
+            style={{ backgroundColor: "var(--secondaryGrayColor)" }}
+          >
+            Cancel
+          </Button>
+          <Button
+            icon={<img src="save_icon.png" />}
+            className={`${styles["button"]} ${styles["primary"]}`}
+            onClick={handleSaveClick}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </div>
   );
