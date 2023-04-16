@@ -13,7 +13,7 @@ const tableName = "paragraph";
 
 //Query closure, without transaction (for later use)
 const getParagraphBySectionIdsClosure = getFindByKeyMethodQueryClosure(
-    tableName, ['id', 'wallpaper', 'title', 'content'], 'section_id'
+    tableName, ['paragraph_id', 'wallpaper', 'title', 'content'], 'section_id'
 );
 const createParagraphsClosure = getCreateMethodQueryClosure(
     tableName, ['wallpaper', 'title', 'content']
