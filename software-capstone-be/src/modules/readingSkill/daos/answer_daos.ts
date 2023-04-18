@@ -1,3 +1,4 @@
+import { PoolConnection } from "mariadb";
 import {
     queryExecutionWrapper,
 
@@ -8,6 +9,7 @@ import {
     getDeleteByKeyMethodQueryClosure,
 } from "../../../app/helpers/query_helper";
 
+import { AnswerDto } from "../datatypes/test";
 
 const tableName = "answer";
 
@@ -22,14 +24,22 @@ const updateAnswerClosure = getUpdateMethodQueryClosure(tableName);
 const deleteAnswersClosure = getDeleteByKeyMethodQueryClosure(tableName, "answer_id");
 
 //Wrap the query closure with/without transaction
-const getAnswerByQuestionIds = queryExecutionWrapper(getAnswerByQuestionIdsClosure, true);
+const getAnswerByQuestionIds = queryExecutionWrapper(getAnswerByQuestionIdsClosure, false);
 const createAnswers = queryExecutionWrapper(createAnswersClosure, true);
 const updateAnswer = queryExecutionWrapper(updateAnswerClosure, true);
 const deleteAnswers = queryExecutionWrapper(deleteAnswersClosure, true);
+
+const createAnswersProcess = async (dtos: AnswerDto[], connection: PoolConnection): Promise<number[]> => {
+    const answerDtos = {createDtos: dtos};
+    const answerIds = await createAnswersClosure(answerDtos, connection);
+    return answerIds;
+}
 
 export {
     getAnswerByQuestionIds,
     createAnswers,
     updateAnswer,
     deleteAnswers,
+
+    createAnswersProcess,
 }

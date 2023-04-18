@@ -20,8 +20,12 @@ const createTestsClosure = getCreateMethodQueryClosure(
 const updateTestClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTestsClosure = getDeleteByKeyMethodQueryClosure(tableName, "test_id");
 
+const createTestsProcess = async (): Promise<number[]> => {
+
+}
+
 //Wrap the query closure with/without transaction
-const getTestByIds = queryExecutionWrapper(getTestByIdsClosure, true);
+const getTestByIds = queryExecutionWrapper(getTestByIdsClosure, false);
 const createTests = queryExecutionWrapper(createTestsClosure, true);
 const updateTest = queryExecutionWrapper(updateTestClosure, true);
 const deleteTests = queryExecutionWrapper(deleteTestsClosure, true);

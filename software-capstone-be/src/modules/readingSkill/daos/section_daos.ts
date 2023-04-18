@@ -22,7 +22,7 @@ const updateSectionClosure = getUpdateMethodQueryClosure(tableName);
 const deleteSectionsClosure = getDeleteByKeyMethodQueryClosure(tableName, "section_id");
 
 //Wrap the query closure with/without transaction
-const getSectionByTestIds = queryExecutionWrapper(getSectionByTestIdsClosure, true);
+const getSectionByTestIds = queryExecutionWrapper(getSectionByTestIdsClosure, false);
 const createSections = queryExecutionWrapper(createSectionsClosure, true);
 const updateSection = queryExecutionWrapper(updateSectionClosure, true);
 const deleteSections = queryExecutionWrapper(deleteSectionsClosure, true);

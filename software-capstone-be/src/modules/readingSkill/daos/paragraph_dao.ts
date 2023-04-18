@@ -22,7 +22,7 @@ const updateParagraphClosure = getUpdateMethodQueryClosure(tableName);
 const deleteParagraphsClosure = getDeleteByKeyMethodQueryClosure(tableName, "paragraph_id");
 
 //Wrap the query closure with/without transaction
-const getParagraphBySectionIds = queryExecutionWrapper(getParagraphBySectionIdsClosure, true);
+const getParagraphBySectionIds = queryExecutionWrapper(getParagraphBySectionIdsClosure, false);
 const createParagraphs = queryExecutionWrapper(createParagraphsClosure, true);
 const updateParagraph = queryExecutionWrapper(updateParagraphClosure, true);
 const deleteParagraphs = queryExecutionWrapper(deleteParagraphsClosure, true);

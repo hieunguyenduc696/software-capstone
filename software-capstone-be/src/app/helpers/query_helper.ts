@@ -23,14 +23,17 @@ function getInsertionIdsFromQueryInsertion(queryResult: UpsertResult|null): numb
 //  Wrap a query function with/without transaction
 function queryExecutionWrapper(executorClosure: any, hasTransaction: boolean = true): any {
 
-    return async (params: any): Promise<any> => {
+    return async (params: any, defaultConnection: PoolConnection|null = null): Promise<any> => {
         let result: any = null;
-        let connection: PoolConnection|null = null;
+        let connection: PoolConnection|null = defaultConnection;
         try {
-            connection = await pool.getConnection();
-            if (hasTransaction) {connection.beginTransaction()};
+
+            if (null === connection) {
+                connection = await pool.getConnection();
+            }
+            if (hasTransaction) {connection?.beginTransaction()};
             result = executorClosure(params, connection);
-            if (hasTransaction) {connection.commit()};
+            if (hasTransaction) {connection?.commit()};
 
         } catch (error) {
             if (hasTransaction) {

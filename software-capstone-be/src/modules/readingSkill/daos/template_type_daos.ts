@@ -22,7 +22,7 @@ const updateTemplateClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTemplatesClosure = getDeleteByKeyMethodQueryClosure(tableName, "template_type_id");
 
 //Wrap the query closure with/without transaction
-const getTemplateByIds = queryExecutionWrapper(getTemplateByIdsClosure, true);
+const getTemplateByIds = queryExecutionWrapper(getTemplateByIdsClosure, false);
 const createTemplates = queryExecutionWrapper(createTemplatesClosure, true);
 const updateTemplate = queryExecutionWrapper(updateTemplateClosure, true);
 const deleteTemplates = queryExecutionWrapper(deleteTemplatesClosure, true);
