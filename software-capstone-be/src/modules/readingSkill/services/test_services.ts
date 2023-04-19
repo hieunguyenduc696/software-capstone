@@ -1,30 +1,13 @@
-import {TestDto} from "../datatypes/test";
+import {ReadingTestDto} from "../datatypes/test";
 import {
-    createParagraphs as saveParagraphs,
-    updateParagraph as editParagraph,
-    deleteParagraphs as removeParagraphs,
-}  from "../daos/paragraph_dao";
+    createReadingTests as saveReadingTests,
+}  from "../daos/test_daos";
 
-async function createTests(testDtos: TestDto[]): Promise<number[]> {
-    
-    
-
-    // //Map the Models into Entities
-    // const entityValues = paragraphDtos.map((dao) => {
-    //     return [
-    //         dao.wallpaper ?? null,
-    //         dao.title ?? null,
-    //         dao.content ?? null,
-    //     ]
-    // })
-
-    // const insertionIds: number[] = await saveParagraphs({
-    //     createDtos: entityValues,
-    // });
-    //TODO:
+async function createReadingTests(readingTestDtos: ReadingTestDto[]): Promise<number[]> {
+    const insertionIds: number[] = await saveReadingTests(readingTestDtos);
     return insertionIds;
 }
 
 export {
-    createTest,
+    createReadingTests,
 }

@@ -35,7 +35,6 @@ const createQuestionsProcess = async (dtos: QuestionDto[], connection: PoolConne
 
     const questionDtos: QuestionDto[] = dtos.map(dto => ({
         template_id: dto.template_id,
-        question_id: dto.question_id, 
         question_index: dto.question_index,  
         content: dto.content,  
         options: dto.options, 
@@ -53,7 +52,7 @@ const createQuestionsProcess = async (dtos: QuestionDto[], connection: PoolConne
         })
     });
 
-    const answerDtos: AnswerDto[] = dtos.flatMap(questionDto => questionDto.answers!.map(answerDto => answerDto));
+    const answerDtos: AnswerDto[] = dtos.flatMap(questionDto => questionDto.answers ?? []);
     const answerIds = await createAnswersProcess(answerDtos, connection);
 
     return questionIds;

@@ -21,7 +21,7 @@
 ## Test the DB run INSERT correctly API
 
 ```
-   GET /reading-skill/admin/test-db
+   GET /reading-skill/admin/test/test-db
 ```
 ### Success response
 ```javascript
@@ -35,7 +35,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 ## Test the DB run UPDATE correctly API
 
 ```
-   GET /reading-skill/admin/test-update
+   GET /reading-skill/admin/test/test-update
 ```
 ### Success response
 ```javascript
@@ -55,7 +55,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 ## Test the DB run DELETE correctly API
 
 ```
-   GET /reading-skill/admin/test-delete
+   GET /reading-skill/admin/test/test-delete
 ```
 ### Success response
 ```javascript

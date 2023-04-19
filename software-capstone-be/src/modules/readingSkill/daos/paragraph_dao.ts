@@ -1,3 +1,5 @@
+import { PoolConnection } from "mariadb";
+
 import {
     queryExecutionWrapper,
 
@@ -8,6 +10,7 @@ import {
     getDeleteByKeyMethodQueryClosure,
 } from "../../../app/helpers/query_helper";
 
+import { ParagraphDto } from "../datatypes/test";
 
 const tableName = "paragraph";
 
@@ -27,9 +30,18 @@ const createParagraphs = queryExecutionWrapper(createParagraphsClosure, true);
 const updateParagraph = queryExecutionWrapper(updateParagraphClosure, true);
 const deleteParagraphs = queryExecutionWrapper(deleteParagraphsClosure, true);
 
+const createParagraphsProcess = async (dtos: ParagraphDto[], connection: PoolConnection): Promise<number[]> => {
+    const paragraphDtos = {createDtos: dtos};
+    const paragraphIds = await createParagraphsClosure(paragraphDtos, connection);
+    return paragraphIds;
+}
+
+
 export {
     getParagraphBySectionIds,
     createParagraphs,
     updateParagraph,
     deleteParagraphs,
+
+    createParagraphsProcess,
 }

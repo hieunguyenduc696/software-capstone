@@ -15,8 +15,8 @@ type ReadingSectionDto = {
     section_index?: number | null | undefined,
     section_type?: number | null | undefined,
 
-    templates: TemplateDto[],
-    paragraph: ParagraphDto,
+    templates?: TemplateDto[],
+    paragraph?: ParagraphDto,
 }
 
 type ParagraphDto = {
