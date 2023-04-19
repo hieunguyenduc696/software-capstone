@@ -19,7 +19,7 @@ const getParagraphBySectionIdsClosure = getFindByKeyMethodQueryClosure(
     tableName, ['paragraph_id', 'wallpaper', 'title', 'content'], 'section_id'
 );
 const createParagraphsClosure = getCreateMethodQueryClosure(
-    tableName, ['wallpaper', 'title', 'content']
+    tableName, ['section_id', 'wallpaper', 'title', 'content']
 );
 const updateParagraphClosure = getUpdateMethodQueryClosure(tableName);
 const deleteParagraphsClosure = getDeleteByKeyMethodQueryClosure(tableName, "paragraph_id");

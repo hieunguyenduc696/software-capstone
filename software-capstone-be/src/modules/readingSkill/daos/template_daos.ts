@@ -20,7 +20,7 @@ const getTemplateBySectionIdsClosure = getFindByKeyMethodQueryClosure(
     tableName, ['template_id', 'template_index', 'title', 'content', 'expand_column'], 'section_id'
 );
 const createTemplatesClosure = getCreateMethodQueryClosure(
-    tableName,  ['template_index', 'title', 'content', 'expand_column']
+    tableName,  ['section_id', 'template_index', 'title', 'content', 'expand_column']
 );
 const updateTemplateClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTemplatesClosure = getDeleteByKeyMethodQueryClosure(tableName, "template_id");
@@ -40,7 +40,7 @@ const createTemplatesProcess = async (dtos: TemplateDto[], connection: PoolConne
         template_index: dto.template_index,
         title: dto.title,
         content: dto.content,
-        expand_column: dto.expand_column,
+        expand_column: dto.expand_column ?? null,
     }));
     const templateParams = {
         createDtos: templateDtos,

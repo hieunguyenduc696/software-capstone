@@ -26,7 +26,7 @@ const getSectionByTestIdsClosure = getFindByKeyMethodQueryClosure(
     tableName, ['section_id', 'section_index', 'section_type'], 'test_id'
 );
 const createSectionsClosure = getCreateMethodQueryClosure(
-    tableName, ['section_index', 'section_type']
+    tableName, ['test_id', 'section_index', 'section_type']
 );
 const updateSectionClosure = getUpdateMethodQueryClosure(tableName);
 const deleteSectionsClosure = getDeleteByKeyMethodQueryClosure(tableName, "section_id");

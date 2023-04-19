@@ -84,8 +84,10 @@ async function createReadingTests(request: Request, response: Response): Promise
     try {
         const readingTestIds = await saveReadingTests(data);
         if (readingTestIds) {
+            statusCode = 200;
             responseJson = {
-                ...responseJson,
+                message: "The test(s) are saved successfully",
+                code: BACKEND_UNIVERSAL_SUCCESS_CODE,
                 data: readingTestIds.map(id => ({createTestId: id})),
             }
         }

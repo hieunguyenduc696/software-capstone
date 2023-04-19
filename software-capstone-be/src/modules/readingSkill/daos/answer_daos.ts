@@ -18,7 +18,7 @@ const getAnswerByQuestionIdsClosure = getFindByKeyMethodQueryClosure(
     tableName, ['answer_id', 'content', 'options'], 'question_id'
 );
 const createAnswersClosure = getCreateMethodQueryClosure(
-    tableName, ['content', 'options']
+    tableName, ['question_id', 'content', 'options']
 );
 const updateAnswerClosure = getUpdateMethodQueryClosure(tableName);
 const deleteAnswersClosure = getDeleteByKeyMethodQueryClosure(tableName, "answer_id");

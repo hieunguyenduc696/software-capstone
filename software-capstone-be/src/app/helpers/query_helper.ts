@@ -97,6 +97,9 @@ function getCreateMethodQueryClosure(tableName: string, columnNames: string[]) {
 
         let result: number[] = [];
         const {createDtos} = params;
+        const bindingValue: any[] = createDtos.map(
+            createDto => columnNames.map(
+                columnName => createDto[columnName]));
         
         try {
             const columnNameString: string = columnNames.join(', ');
@@ -113,7 +116,7 @@ function getCreateMethodQueryClosure(tableName: string, columnNames: string[]) {
             ].join(' ');
 
             let queryResult: null|UpsertResult|UpsertResult[] = null;
-            queryResult = await connection.batch(query, createDtos);
+            queryResult = await connection.batch(query, bindingValue);
             result = getInsertionIdsFromQueryInsertion(queryResult as null|UpsertResult);
             
         } catch (error) {
