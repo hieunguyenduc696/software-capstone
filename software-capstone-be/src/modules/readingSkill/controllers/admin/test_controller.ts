@@ -6,6 +6,13 @@ import {
     deleteParagraphs as removeParagraphs,
 } from '../../services/paragraph_service';
 
+import {
+    BACKEND_UNIVERSAL_SUCCESS_CODE,
+    BACKEND_UNIVERSAL_ERROR_CODE,
+    BACKEND_UNIVERSAL_ERROR_MSG,
+} from '../../../../app/constants/message_constants';
+import { createReadingTests as saveReadingTests } from '../../services/test_services';
+
 //Dummy version for testing database work correctly
 async function testCreateParagraphs(request: Request, response: Response): Promise<any> {
     
@@ -64,14 +71,36 @@ async function testDeleteParagraphs(request: Request, response: Response): Promi
 }
 
 
-function createTest(request: Request, response: Response): Promise<any> {
-    return new Promise((resolve, reject) => {
-        
-    })
+async function createReadingTests(request: Request, response: Response): Promise<any> {
+    const {data} = request.body;
+
+    //Default message is error message
+    let statusCode = 500;
+    let responseJson: any = {
+        message: BACKEND_UNIVERSAL_ERROR_MSG,
+        errorCode: BACKEND_UNIVERSAL_ERROR_CODE,
+    }
+    
+    try {
+        const readingTestIds = await saveReadingTests(data);
+        if (readingTestIds) {
+            statusCode = 200;
+            responseJson = {
+                message: "The test(s) are saved successfully",
+                code: BACKEND_UNIVERSAL_SUCCESS_CODE,
+                data: readingTestIds.map(id => ({createTestId: id})),
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        response.status(statusCode).json(responseJson);
+    }
 }
 
 export {
-    createTest,
+    createReadingTests,
     testCreateParagraphs,
     testUpdateParagraph,
     testDeleteParagraphs,

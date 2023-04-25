@@ -23,14 +23,17 @@ function getInsertionIdsFromQueryInsertion(queryResult: UpsertResult|null): numb
 //  Wrap a query function with/without transaction
 function queryExecutionWrapper(executorClosure: any, hasTransaction: boolean = true): any {
 
-    return async (params: any): Promise<any> => {
+    return async (params: any, defaultConnection: PoolConnection|null = null): Promise<any> => {
         let result: any = null;
-        let connection: PoolConnection|null = null;
+        let connection: PoolConnection|null = defaultConnection;
         try {
-            connection = await pool.getConnection();
-            if (hasTransaction) {connection.beginTransaction()};
+
+            if (null === connection) {
+                connection = await pool.getConnection();
+            }
+            if (hasTransaction) {connection?.beginTransaction()};
             result = executorClosure(params, connection);
-            if (hasTransaction) {connection.commit()};
+            if (hasTransaction) {connection?.commit()};
 
         } catch (error) {
             if (hasTransaction) {
@@ -94,6 +97,9 @@ function getCreateMethodQueryClosure(tableName: string, columnNames: string[]) {
 
         let result: number[] = [];
         const {createDtos} = params;
+        const bindingValue: any[] = createDtos.map(
+            createDto => columnNames.map(
+                columnName => createDto[columnName]));
         
         try {
             const columnNameString: string = columnNames.join(', ');
@@ -110,7 +116,7 @@ function getCreateMethodQueryClosure(tableName: string, columnNames: string[]) {
             ].join(' ');
 
             let queryResult: null|UpsertResult|UpsertResult[] = null;
-            queryResult = await connection.batch(query, createDtos);
+            queryResult = await connection.batch(query, bindingValue);
             result = getInsertionIdsFromQueryInsertion(queryResult as null|UpsertResult);
             
         } catch (error) {

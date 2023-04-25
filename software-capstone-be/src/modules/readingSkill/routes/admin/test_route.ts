@@ -3,6 +3,7 @@ import {
     testCreateParagraphs,
     testUpdateParagraph,
     testDeleteParagraphs,
+    createReadingTests,
 } from '../../controllers/admin/test_controller';
 
 const router: Router = Router();
@@ -21,6 +22,11 @@ router.get(
 router.get(
     '/test-delete',
     testDeleteParagraphs,
+)
+
+router.post(
+    '/create',
+    createReadingTests
 )
 
 export {

@@ -47,6 +47,7 @@ CREATE TABLE question (
 
     question_index INT DEFAULT NULL,
     content TEXT DEFAULT NULL,
+    options LONGTEXT DEFAULT NULL,
     score INT DEFAULT 0,
 
     PRIMARY KEY(question_id)
@@ -57,6 +58,7 @@ CREATE TABLE answer (
     question_id INT DEFAULT NULL,
 
     content LONGTEXT DEFAULT NULL,
+    options LONGTEXT DEFAULT NULL,
     PRIMARY KEY(answer_id)
 );
 
