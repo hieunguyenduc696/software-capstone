@@ -70,6 +70,133 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 
 ### Create Test
 
+#### Create Multiple Tests without files
+
+```
+   POST /reading-skill/admin/test/create
+```
+
+```javascript
+  {
+    "data": [
+        {
+            "title": "TEST1",
+            "test_type": 0,
+            "test_level": 0,
+
+            "sections": [
+                {
+                    "section_index": 1,
+                    "section_type": 0,
+
+                    "paragraph": {
+                        "wallpaper": "image_url",
+                        "title": "paragraph title",
+                        "content": "paragraph content"
+                    },
+
+                    "templates": [
+                        {
+                            "template_type_id": 0,
+
+                            "template_index": 1,
+                            "title": "TEST template title",
+                            "content": "TEST content",
+                            "expand_clumn": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 1,
+                                    "content": "Test question",
+                                    "options": "{'test': 'hehehehe'}",
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "this is the answers",
+                                            "options": "{'some_options': 'hehehe'}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "title": "TEST2",
+            "test_type": 0,
+            "test_level": 0,
+
+            "sections": [
+                {
+                    "section_index": 1,
+                    "section_type": 0,
+
+                    "paragraph": {
+                        "wallpaper": "image_url",
+                        "title": "paragraph title",
+                        "content": "paragraph content"
+                    },
+                    
+                    "templates": [
+                        {
+                            "template_type_id": 0,
+
+                            "template_index": 1,
+                            "title": "TEST template title",
+                            "content": "TEST content",
+                            "expand_clumn": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 1,
+                                    "content": "Test question",
+                                    "options": "{'test': 'hehehehe'}",
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "this is the answers",
+                                            "options": "{'some_options': 'hehehe'}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+##### Success response
+```javascript
+   {
+      "message": "The test(s) are saved successfully",
+      "code": 0,
+      "data": [
+         {
+               "createTestId": 15
+         },
+         {
+               "createTestId": 16
+         }
+      ]
+   }
+```
+##### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+```
+
 #### Send [jpg, png] files for Reading Test Paragraph' Wallpaper
 
 ```
