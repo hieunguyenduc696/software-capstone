@@ -18,17 +18,53 @@
 
 # API Documentation
 
-## Test the DB run correctly API
+## Test the DB run INSERT correctly API
 
 ```
    GET /reading-skill/admin/test-db
 ```
 ### Success response
+```javascript
 {
    {"insertionIds":[31,32,33,34,35,36,37,38,39,40]} 
 }
+```
 
-Try 'SELECT * FROM paragraph' for checking the insertion actually work
+Try 'SELECT * FROM paragraph' for checking if the insertion actually work
+
+## Test the DB run UPDATE correctly API
+
+```
+   GET /reading-skill/admin/test-update
+```
+### Success response
+```javascript
+{
+    "updateParagraphEntity": {
+        "paragraph_id": 23,
+        "section_id": null,
+        "wallpaper": "test_update",
+        "title": "test_update",
+        "content": "test_update"
+    }
+}
+```
+- Change the "paragraph_id" property of "updateParagraph" variable of "testUpdateParagraph(...)" in "modules/readingSkill/controller/test_controller.ts" with an existed id of an paragraph
+- After the below step, Try 'SELECT * FROM paragraph WHERE id = ${paragraph_id}' for checking if the update actually work
+
+## Test the DB run DELETE correctly API
+
+```
+   GET /reading-skill/admin/test-delete
+```
+### Success response
+```javascript
+{
+    "deleteCount": 9
+}
+```
+- Change the "startId" and "size" variables of "testDeleteParagraph(...)" in "modules/readingSkill/controller/test_controller.ts". This api will delete all the paragraph which has id from [startId, startId + 1, .... startId + size - 1]
+- After the below step, Try 'SELECT * FROM paragraph' for checking if the deletion actually work
 
 ## Admin
 
