@@ -1,26 +1,83 @@
-import { Button, Col, Image, Row, Space } from "antd";
+import { Button, Col, Image, Modal, Row, Space, Table, Typography } from "antd";
 import { AppHeader, UploadImage } from "components";
-import { PreviewTestItem } from "components/PreviewTestItem";
 import { useRef, useState } from "react";
 import styles from "./PostTest.module.css";
 import { useNavigate } from "react-router";
-import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion";
+import { ColumnsType } from "antd/es/table";
 
-const mockPreviewTestItems = [
+interface DataType {
+  part: string;
+  questions: number;
+  duration: number;
+  actions: any[]
+}
+
+const columns: ColumnsType<DataType> = [
   {
-    image: "default.png",
-    title: "IELTS Mock test 2023",
-    publishDate: "28/03/2023",
+    title: 'Part',
+    dataIndex: 'part',
+    key: 'part',
+    render: (item) => <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Image src={item === 'LISTENING' ? 'listen_icon.png' : 'read_icon.png'} style={{ height: '20px', marginRight: '3px' }} preview={false} />
+      <Typography.Text>
+        {item}
+      </Typography.Text>
+    </div>,
   },
   {
-    image: "default.png",
-    title: "IELTS Mock test 2022",
-    publishDate: "28/03/2022",
+    title: 'Questions',
+    dataIndex: 'questions',
+    key: 'questions',
+    render: (item) => item,
   },
   {
-    image: "default.png",
-    title: "IELTS Mock test 2021",
-    publishDate: "28/03/2021",
+    title: 'Duration',
+    dataIndex: 'duration',
+    key: 'duration',
+    render: (item) => item ? `${item} minutes` : "-"
+  },
+  {
+    title: '',
+    key: 'action',
+    render: (_, { actions }) => (
+      <Space >
+        {actions.map((act) => {
+          return (
+            act
+          );
+        })}
+      </Space>
+    ),
+  },
+];
+
+const data: DataType[] = [
+  {
+    part: "LISTENING",
+    questions: 40,
+    duration: 40,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
+  },
+  {
+    part: "READING",
+    questions: 40,
+    duration: 60,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
+  },
+  {
+    part: "LISTENING",
+    questions: 40,
+    duration: 40,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
   },
 ];
 
@@ -28,6 +85,7 @@ export const PostTest = () => {
   const titleRef = useRef(null);
   const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
+  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
   const handleTitleChange = (e: any) => {
@@ -61,27 +119,18 @@ export const PostTest = () => {
     setSelectedAnswer(selected);
   };
 
-  const handleAddListeningSectionClick = () => {
-    console.log("add listening test");
-  };
-
   return (
     <div>
       <AppHeader />
-      <div>
-        <Row
-          style={{ padding: "1.5rem 0 .5rem 1.5rem", backgroundColor: "white" }}
-        >
-          {/* left */}
-          <Col xs={{ span: 24 }}>
-            {/* title */}
+      <div style={{ width: '100%', backgroundColor: 'white', paddingTop: '1rem' }}>
+        <Row style={{ width: '80%', margin: 'auto' }}>
+          <Col xs={{ span: 20 }}>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: 5,
-                width: "90%",
-                margin: "auto",
+                width: "100%",
               }}
             >
               <div>
@@ -137,7 +186,7 @@ export const PostTest = () => {
             </div>
 
             {/* buttons */}
-            <Row style={{ padding: "3rem 2rem 1rem 2rem" }}>
+            {/* <Row style={{ padding: "3rem 2rem 1rem 2rem" }}>
               <Col
                 xs={{ span: 24 }}
                 md={{ span: 12 }}
@@ -204,46 +253,35 @@ export const PostTest = () => {
                   </Button>
                 </div>
               </Col>
-            </Row>
+            </Row> */}
           </Col>
-          {/* right */}
-          {/* <Col
-            span={8}
-            xs={{ span: 24 }}
-            lg={{ span: 8 }}
-            style={{
-              backgroundColor: "#F2F2F2",
-              padding: "1rem",
-              borderRadius: "10px 0 0 10px",
-            }}
-          >
-            <div
+          <Col xs={{ span: 4 }} style={{ alignSelf: 'flex-end' }}>
+            <Button
               style={{
                 textTransform: "uppercase",
-                color: "#81041F",
-                fontSize: "20px",
-                paddingBottom: ".5rem",
+                backgroundColor: "#5CB1C5",
+                border: "none",
+                color: "white",
+                boxShadow: "4px 4px 4px 0 rgba(0, 0, 0, .25)",
+                marginTop: ".5rem",
               }}
+              onClick={() => setOpenDialog(true)}
             >
-              Recent Tests:
-            </div>
-            <div>
-              {mockPreviewTestItems.map((item, i) => (
-                <div style={{ paddingTop: ".5rem" }}>
-                  <PreviewTestItem item={item} />
-                </div>
-              ))}
-            </div>
-          </Col> */}
+              Add test part
+            </Button>
+          </Col>
+        </Row>
+        <Row style={{ width: '80%', margin: 'auto' }}>
+          <Col xs={{ span: 24 }} style={{ marginTop: '1rem' }}>
+            <Table
+              dataSource={data} columns={columns}
+              pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15'] }}
+            />
+          </Col>
         </Row>
       </div>
       <div className={`${styles["footer"]}`}>
         <div className={`${styles["footer-children"]}`}>
-          {/* <img
-            src="default.png"
-            style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
-          />
-          <p style={{ color: "white" }}>IELTS Recent mock test</p> */}
           <Button
             icon={<img src="white-trash.png" style={{ width: "20px" }} />}
             className={`${styles["button"]} ${styles["primary"]}`}
@@ -271,6 +309,37 @@ export const PostTest = () => {
           </Button>
         </div>
       </div>
+      <Modal
+        open={openDialog}
+        title="Add new part"
+        footer={null}
+        style={{ textAlign: 'center', textTransform: 'uppercase' }}
+        onCancel={() => setOpenDialog(false)}
+      >
+        <div style={{ width: '75%', margin: 'auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Image
+              src="read_group_icon.png"
+              preview={false}
+              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
+              onClick={handleAddReadingSectionClick}
+            />
+            <Image
+              src="listen_group_icon.png"
+              preview={false}
+              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
+              onClick={() => { }}
+            />
+          </div>
+          <Button
+            type="primary"
+            block
+            onClick={() => setOpenDialog(false)}
+            style={{ marginTop: '1rem', color: 'white', backgroundColor: '#9A9494', textTransform: 'uppercase' }}>
+            Cancel
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
