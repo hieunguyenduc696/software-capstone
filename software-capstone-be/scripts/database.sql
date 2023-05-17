@@ -23,6 +23,7 @@ CREATE TABLE template_type (
     template_type_id INT NOT NULL AUTO_INCREMENT,
     
     name VARCHAR(255) DEFAULT NULL,
+    key VARCHAR(255) DEFAULT NULL,
     description LONGTEXT DEFAULT NULL,
 
     PRIMARY KEY( template_type_id)
