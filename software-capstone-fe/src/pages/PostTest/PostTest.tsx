@@ -1,10 +1,11 @@
-import { Button, Col, Image, Row, Space } from "antd";
+import { Button, Col, Image, Row, Space, Typography } from "antd";
 import { AppHeader, UploadImage } from "components";
 import { PreviewTestItem } from "components/PreviewTestItem";
 import { useRef, useState } from "react";
 import styles from "./PostTest.module.css";
 import { useNavigate } from "react-router";
 import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion";
+import { LeftOutlined } from "@ant-design/icons";
 
 const mockPreviewTestItems = [
   {
@@ -53,7 +54,7 @@ export const PostTest = () => {
 
   const handleSaveClick = () => {
     navigate("/test");
-  }
+  };
 
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
@@ -65,16 +66,43 @@ export const PostTest = () => {
     console.log("add listening test");
   };
 
+  const handleBackClick = () => {
+    navigate("/test");
+  };
+
   return (
     <div>
       <AppHeader />
+      <div
+        style={{
+          padding: "1.5rem 0.5rem",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+
+          cursor: "pointer",
+        }}
+        onClick={handleBackClick}
+      >
+        <LeftOutlined
+          style={{ color: "var(--tertiaryColor)", marginRight: "10px" }}
+        />
+        <Typography style={{ fontSize: "30px", fontWeight: "500" }}>
+          IELTS Test Library
+        </Typography>
+      </div>
+
       <div>
         <Row
-          style={{ padding: "1.5rem 0 .5rem 1.5rem", backgroundColor: "white" }}
+          style={{
+            padding: "1.5rem 0 .5rem 1.5rem",
+            backgroundColor: "white",
+            borderTopLeftRadius: "50px",
+            borderTopRightRadius: "50px",
+          }}
         >
-          {/* left */}
           <Col xs={{ span: 24 }}>
-            {/* title */}
             <div
               style={{
                 display: "flex",
@@ -206,9 +234,10 @@ export const PostTest = () => {
               </Col>
             </Row>
           </Col>
-
         </Row>
       </div>
+
+      {/* FOOTER */}
       <div className={`${styles["footer"]}`}>
         <div className={`${styles["footer-children"]}`}>
           <Button
