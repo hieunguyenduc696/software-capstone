@@ -62,7 +62,7 @@
 
 .button {
    text-transform: uppercase;
-   font-weight: 700;
+   font-weight: 500;
    box-sizing: border-box;
    border-radius: 5px;
    padding: 0.25rem 1.75rem;
@@ -95,5 +95,17 @@
 .button.secondary:hover {
     color: var(--tertiaryColor);
     background-color: #FFF;
+    border: none;
+}
+
+.button.cancel {
+    color: white;
+    background-color: #9A9494;
+    border: none;
+}
+
+.button.cancel:hover {
+    color: white;
+    background-color: #9A9494;
     border: none;
 }

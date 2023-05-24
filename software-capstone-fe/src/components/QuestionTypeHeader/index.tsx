@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { UpOutlined, DownOutlined, DeleteFilled } from "@ant-design/icons";
 import { InputNumber } from "antd";
 import styles from "./index.module.css";
+import ReadingTestContext from "context/ReadingTestContext";
 
 interface QuestionTypeHeaderProps {
   typeOfQuestion: string;
@@ -16,11 +17,14 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
   onQuantityUpdateCallback,
   onCollapseStatusUpdate,
   collapsed = false,
-  questionQuantity
+  questionQuantity,
+
 }: QuestionTypeHeaderProps) => {
 
+  const { questionDetails, setQuestionDetails } = useContext(ReadingTestContext);
+
   const handleDeleteIconClick = () => {
-    
+    console.log(`You want to delete ${typeOfQuestion}`)
   }
 
   return (
@@ -57,7 +61,7 @@ const QuestionTypeHeader: React.FC<QuestionTypeHeaderProps> = ({
           gap: "10px",
         }}
       >
-        <img style={{ width: "20px" }} src="white-trash.png" className={`${styles["delete-icon"]}`}/>
+        <img style={{ width: "20px", display: 'none' }} src="white-trash.png" className={`${styles["delete-icon"]}`} onClick={handleDeleteIconClick}/>
         {collapsed ? (
           <DownOutlined onClick={onCollapseStatusUpdate} />
         ) : (

@@ -63,7 +63,7 @@ const columns: ColumnsType<DataType> = [
 const data: DataType[] = [
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 01",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",
@@ -75,7 +75,7 @@ const data: DataType[] = [
     },
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 02",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",
@@ -87,7 +87,7 @@ const data: DataType[] = [
     },
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 03",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",

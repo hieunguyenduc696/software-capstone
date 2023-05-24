@@ -206,44 +206,11 @@ export const PostTest = () => {
               </Col>
             </Row>
           </Col>
-          {/* right */}
-          {/* <Col
-            span={8}
-            xs={{ span: 24 }}
-            lg={{ span: 8 }}
-            style={{
-              backgroundColor: "#F2F2F2",
-              padding: "1rem",
-              borderRadius: "10px 0 0 10px",
-            }}
-          >
-            <div
-              style={{
-                textTransform: "uppercase",
-                color: "#81041F",
-                fontSize: "20px",
-                paddingBottom: ".5rem",
-              }}
-            >
-              Recent Tests:
-            </div>
-            <div>
-              {mockPreviewTestItems.map((item, i) => (
-                <div style={{ paddingTop: ".5rem" }}>
-                  <PreviewTestItem item={item} />
-                </div>
-              ))}
-            </div>
-          </Col> */}
+
         </Row>
       </div>
       <div className={`${styles["footer"]}`}>
         <div className={`${styles["footer-children"]}`}>
-          {/* <img
-            src="default.png"
-            style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
-          />
-          <p style={{ color: "white" }}>IELTS Recent mock test</p> */}
           <Button
             icon={<img src="white-trash.png" style={{ width: "20px" }} />}
             className={`${styles["button"]} ${styles["primary"]}`}
