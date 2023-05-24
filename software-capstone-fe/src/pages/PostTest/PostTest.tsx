@@ -1,27 +1,89 @@
-import { Button, Col, Image, Row, Space, Typography } from "antd";
+
+import { Button, Col, Image, Modal, Row, Space, Table, Typography } from "antd";
 import { AppHeader, UploadImage } from "components";
-import { PreviewTestItem } from "components/PreviewTestItem";
 import { useRef, useState } from "react";
 import styles from "./PostTest.module.css";
 import { useNavigate } from "react-router";
+
 import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion";
 import { LeftOutlined } from "@ant-design/icons";
 
-const mockPreviewTestItems = [
+import { ColumnsType } from "antd/es/table";
+
+
+interface DataType {
+  part: string;
+  questions: number;
+  duration: number;
+  actions: any[]
+}
+
+const columns: ColumnsType<DataType> = [
   {
-    image: "default.png",
-    title: "IELTS Mock test 2023",
-    publishDate: "28/03/2023",
+    title: 'Part',
+    dataIndex: 'part',
+    key: 'part',
+    render: (item) => <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Image src={item === 'LISTENING' ? 'listen_icon.png' : 'read_icon.png'} style={{ height: '20px', marginRight: '3px' }} preview={false} />
+      <Typography.Text>
+        {item}
+      </Typography.Text>
+    </div>,
   },
   {
-    image: "default.png",
-    title: "IELTS Mock test 2022",
-    publishDate: "28/03/2022",
+    title: 'Questions',
+    dataIndex: 'questions',
+    key: 'questions',
+    render: (item) => item,
   },
   {
-    image: "default.png",
-    title: "IELTS Mock test 2021",
-    publishDate: "28/03/2021",
+    title: 'Duration',
+    dataIndex: 'duration',
+    key: 'duration',
+    render: (item) => item ? `${item} minutes` : "-"
+  },
+  {
+    title: '',
+    key: 'action',
+    render: (_, { actions }) => (
+      <Space >
+        {actions.map((act) => {
+          return (
+            act
+          );
+        })}
+      </Space>
+    ),
+  },
+];
+
+const data: DataType[] = [
+  {
+    part: "LISTENING",
+    questions: 40,
+    duration: 40,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
+  },
+  {
+    part: "READING",
+    questions: 40,
+    duration: 60,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
+  },
+  {
+    part: "LISTENING",
+    questions: 40,
+    duration: 40,
+    actions: [
+      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
+      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
+    ]
   },
 ];
 
@@ -29,6 +91,7 @@ export const PostTest = () => {
   const titleRef = useRef(null);
   const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
+  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
   const handleTitleChange = (e: any) => {
@@ -62,54 +125,62 @@ export const PostTest = () => {
     setSelectedAnswer(selected);
   };
 
-  const handleAddListeningSectionClick = () => {
-    console.log("add listening test");
-  };
 
-  const handleBackClick = () => {
-    navigate("/test");
-  };
+  // const handleAddListeningSectionClick = () => {
+  //   console.log("add listening test");
+  // };
+
+  // const handleBackClick = () => {
+  //   navigate("/test");
+  // };
+
+  // return (
+  //   <div>
+  //     <AppHeader />
+  //     <div
+  //       style={{
+  //         padding: "1.5rem 0.5rem",
+  //         display: "flex",
+  //         flexDirection: "row",
+  //         justifyContent: "flex-start",
+  //         alignItems: "center",
+
+  //         cursor: "pointer",
+  //       }}
+  //       onClick={handleBackClick}
+  //     >
+  //       <LeftOutlined
+  //         style={{ color: "var(--tertiaryColor)", marginRight: "10px" }}
+  //       />
+  //       <Typography style={{ fontSize: "30px", fontWeight: "500" }}>
+  //         IELTS Test Library
+  //       </Typography>
+  //     </div>
+
+  //     <div>
+  //       <Row
+  //         style={{
+  //           padding: "1.5rem 0 .5rem 1.5rem",
+  //           backgroundColor: "white",
+  //           borderTopLeftRadius: "50px",
+  //           borderTopRightRadius: "50px",
+  //         }}
+  //       >
+  //         <Col xs={{ span: 24 }}>
 
   return (
     <div>
       <AppHeader />
-      <div
-        style={{
-          padding: "1.5rem 0.5rem",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
+      <div style={{ width: '100%', backgroundColor: 'white', paddingTop: '1rem' }}>
+        <Row style={{ width: '80%', margin: 'auto' }}>
+          <Col xs={{ span: 20 }}>
 
-          cursor: "pointer",
-        }}
-        onClick={handleBackClick}
-      >
-        <LeftOutlined
-          style={{ color: "var(--tertiaryColor)", marginRight: "10px" }}
-        />
-        <Typography style={{ fontSize: "30px", fontWeight: "500" }}>
-          IELTS Test Library
-        </Typography>
-      </div>
-
-      <div>
-        <Row
-          style={{
-            padding: "1.5rem 0 .5rem 1.5rem",
-            backgroundColor: "white",
-            borderTopLeftRadius: "50px",
-            borderTopRightRadius: "50px",
-          }}
-        >
-          <Col xs={{ span: 24 }}>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: 5,
-                width: "90%",
-                margin: "auto",
+                width: "100%",
               }}
             >
               <div>
@@ -164,75 +235,31 @@ export const PostTest = () => {
               </div>
             </div>
 
-            {/* buttons */}
-            <Row style={{ padding: "3rem 2rem 1rem 2rem" }}>
-              <Col
-                xs={{ span: 24 }}
-                md={{ span: 12 }}
-                style={{ paddingTop: "1rem" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Image
-                    src="read.png"
-                    style={{ height: 68 }}
-                    preview={false}
-                  />
-                  <Button
-                    style={{
-                      textTransform: "uppercase",
-                      backgroundColor: "#45764B",
-                      border: "none",
-                      color: "white",
-                      boxShadow: "4px 4px 4px 0 rgba(0, 0, 0, .25)",
-                      marginTop: ".5rem",
-                    }}
-                    onClick={handleAddReadingSectionClick}
-                  >
-                    Add Reading Section
-                  </Button>
-                </div>
-              </Col>
-              <Col
-                xs={{ span: 24 }}
-                md={{ span: 12 }}
-                style={{ paddingTop: "1rem" }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Image
-                    src="listen.png"
-                    style={{ height: 68 }}
-                    preview={false}
-                  />
-                  <Button
-                    style={{
-                      textTransform: "uppercase",
-                      backgroundColor: "#5CB1C5",
-                      border: "none",
-                      color: "white",
-                      boxShadow: "4px 4px 4px 0 rgba(0, 0, 0, .25)",
-                      marginTop: ".5rem",
-                    }}
-                    onClick={handleAddListeningSectionClick}
-                  >
-                    Add Listening Section
-                  </Button>
-                </div>
-              </Col>
-            </Row>
+
+          </Col>
+
+          <Col xs={{ span: 4 }} style={{ alignSelf: 'flex-end' }}>
+            <Button
+              style={{
+                textTransform: "uppercase",
+                backgroundColor: "#5CB1C5",
+                border: "none",
+                color: "white",
+                boxShadow: "4px 4px 4px 0 rgba(0, 0, 0, .25)",
+                marginTop: ".5rem",
+              }}
+              onClick={() => setOpenDialog(true)}
+            >
+              Add test part
+            </Button>
+          </Col>
+        </Row>
+        <Row style={{ width: '80%', margin: 'auto' }}>
+          <Col xs={{ span: 24 }} style={{ marginTop: '1rem' }}>
+            <Table
+              dataSource={data} columns={columns}
+              pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15'] }}
+            />
           </Col>
         </Row>
       </div>
@@ -267,6 +294,37 @@ export const PostTest = () => {
           </Button>
         </div>
       </div>
+      <Modal
+        open={openDialog}
+        title="Add new part"
+        footer={null}
+        style={{ textAlign: 'center', textTransform: 'uppercase' }}
+        onCancel={() => setOpenDialog(false)}
+      >
+        <div style={{ width: '75%', margin: 'auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Image
+              src="read_group_icon.png"
+              preview={false}
+              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
+              onClick={handleAddReadingSectionClick}
+            />
+            <Image
+              src="listen_group_icon.png"
+              preview={false}
+              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
+              onClick={() => { }}
+            />
+          </div>
+          <Button
+            type="primary"
+            block
+            onClick={() => setOpenDialog(false)}
+            style={{ marginTop: '1rem', color: 'white', backgroundColor: '#9A9494', textTransform: 'uppercase' }}>
+            Cancel
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
