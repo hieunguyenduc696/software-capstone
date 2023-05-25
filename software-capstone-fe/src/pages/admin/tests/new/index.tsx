@@ -4,9 +4,6 @@ import { useRef, useState } from "react";
 import styles from "./PostTest.module.css";
 import { useNavigate } from "react-router";
 
-import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/MultipleChoiceQuestion/MultipleChoiceQuestion";
-import { LeftOutlined } from "@ant-design/icons";
-
 import { ColumnsType } from "antd/es/table";
 import { BackNavigateBox } from "./helper";
 
@@ -101,7 +98,7 @@ const data: DataType[] = [
   },
 ];
 
-export const PostTest = () => {
+export const NewTest = () => {
   const titleRef = useRef(null);
   const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
@@ -126,11 +123,11 @@ export const PostTest = () => {
 
   const handleAddReadingSectionClick = () => {
     console.log("add reading test");
-    navigate("/add-test");
+    navigate("/new-test/add-reading");
   };
 
   const handleSaveClick = () => {
-    navigate("/test");
+    navigate("/tests");
   };
 
   const [selectedAnswer, setSelectedAnswer] = useState("");

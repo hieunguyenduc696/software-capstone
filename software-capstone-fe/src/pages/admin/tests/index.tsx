@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { AppHeader } from 'components'
 import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router';
-import StyledTable from '../../components/TestsTable';
+import StyledTable from 'components/TestsTable';
 
 interface DataType {
     image: string;
@@ -101,7 +101,7 @@ const data: DataType[] = [
 ];
 
 
-export function Test() {
+export function Tests() {
     const navigate = useNavigate();
     return (
         <div style={{ backgroundColor: 'white' }}>
@@ -128,7 +128,7 @@ export function Test() {
                     <Button
                         icon={<PlusOutlined />}
                         style={{ color: 'white', backgroundColor: '#5CB1C5' }}
-                        onClick={() => navigate('/post-test')}
+                        onClick={() => navigate('/new-test')}
                     >
                         ADD IELTS TEST
                     </Button>

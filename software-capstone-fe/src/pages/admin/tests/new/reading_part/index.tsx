@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styles from "./AddTest.module.css";
 import { Row, Col, Tabs, Button } from "antd";
-import { AppHeader } from "../../components/AppHeader";
+import { AppHeader } from "components";
 import type { TabsProps } from "antd";
 
 import ReadingParagraph from "components/ReadingParagraph";
@@ -15,7 +15,7 @@ import {
 import ReadingTestContext from "context/ReadingTestContext";
 import { useNavigate } from "react-router";
 
-const AddingTestPage = () => {
+const NewReadingPart = () => {
   const navigate = useNavigate();
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
@@ -213,4 +213,4 @@ const AddingTestPage = () => {
   );
 };
 
-export default AddingTestPage;
+export default NewReadingPart;
