@@ -1,9 +1,10 @@
-import { Button, Col, Divider, Image, Input, Row, Space, Table, Tag, Typography } from 'antd'
+import { Button, Col, Divider, Image, Input, Row, Space, Typography } from 'antd'
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { AppHeader } from 'components'
 import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router';
+import StyledTable from '../../components/TestsTable';
 
 interface DataType {
     image: string;
@@ -132,9 +133,9 @@ export function Test() {
                         ADD IELTS TEST
                     </Button>
                 </div>
-                <Table
-                    columns={columns} dataSource={[...data, ...data, ...data, ...data]} style={{ marginTop: '1rem' }}
-                    pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15'] }}
+                <StyledTable
+                    columns={columns} dataSource={[...data]} style={{ marginTop: '1rem' }}
+                    pagination={{ defaultPageSize: 5 }}
                 />
             </div>
         </div>

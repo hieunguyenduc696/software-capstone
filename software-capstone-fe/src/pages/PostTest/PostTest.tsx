@@ -1,4 +1,3 @@
-
 import { Button, Col, Image, Modal, Row, Space, Table, Typography } from "antd";
 import { AppHeader, UploadImage } from "components";
 import { useRef, useState } from "react";
@@ -9,48 +8,52 @@ import MultipleChoiceQuestion from "components/QuestionType/MultipleChoice/Multi
 import { LeftOutlined } from "@ant-design/icons";
 
 import { ColumnsType } from "antd/es/table";
+import { BackNavigateBox } from "./helper";
+
 
 
 interface DataType {
   part: string;
   questions: number;
   duration: number;
-  actions: any[]
+  actions: any[];
 }
 
 const columns: ColumnsType<DataType> = [
   {
-    title: 'Part',
-    dataIndex: 'part',
-    key: 'part',
-    render: (item) => <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Image src={item === 'LISTENING' ? 'listen_icon.png' : 'read_icon.png'} style={{ height: '20px', marginRight: '3px' }} preview={false} />
-      <Typography.Text>
-        {item}
-      </Typography.Text>
-    </div>,
+    title: "Part",
+    dataIndex: "part",
+    key: "part",
+    render: (item) => (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Image
+          src={item === "LISTENING" ? "listen_icon.png" : "read_icon.png"}
+          style={{ height: "20px", marginRight: "3px" }}
+          preview={false}
+        />
+        <Typography.Text>{item}</Typography.Text>
+      </div>
+    ),
   },
   {
-    title: 'Questions',
-    dataIndex: 'questions',
-    key: 'questions',
+    title: "Questions",
+    dataIndex: "questions",
+    key: "questions",
     render: (item) => item,
   },
   {
-    title: 'Duration',
-    dataIndex: 'duration',
-    key: 'duration',
-    render: (item) => item ? `${item} minutes` : "-"
+    title: "Duration",
+    dataIndex: "duration",
+    key: "duration",
+    render: (item) => (item ? `${item} minutes` : "-"),
   },
   {
-    title: '',
-    key: 'action',
+    title: "",
+    key: "action",
     render: (_, { actions }) => (
-      <Space >
+      <Space>
         {actions.map((act) => {
-          return (
-            act
-          );
+          return act;
         })}
       </Space>
     ),
@@ -63,27 +66,38 @@ const data: DataType[] = [
     questions: 40,
     duration: 40,
     actions: [
-      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
-      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
-    ]
+      <Image
+        src="edit_fill.png"
+        alt=""
+        preview={false}
+        style={{ height: "16px", cursor: "pointer" }}
+      />,
+      <Image
+        src="trash_fill.png"
+        alt=""
+        preview={false}
+        style={{ height: "20px", cursor: "pointer" }}
+      />,
+    ],
   },
   {
     part: "READING",
     questions: 40,
     duration: 60,
     actions: [
-      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
-      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
-    ]
-  },
-  {
-    part: "LISTENING",
-    questions: 40,
-    duration: 40,
-    actions: [
-      <Image src='edit_fill.png' alt='' preview={false} style={{ height: '16px', cursor: 'pointer' }} />,
-      <Image src='trash_fill.png' alt='' preview={false} style={{ height: '20px', cursor: 'pointer' }} />
-    ]
+      <Image
+        src="edit_fill.png"
+        alt=""
+        preview={false}
+        style={{ height: "16px", cursor: "pointer" }}
+      />,
+      <Image
+        src="trash_fill.png"
+        alt=""
+        preview={false}
+        style={{ height: "20px", cursor: "pointer" }}
+      />,
+    ],
   },
 ];
 
@@ -126,55 +140,29 @@ export const PostTest = () => {
   };
 
 
-  // const handleAddListeningSectionClick = () => {
-  //   console.log("add listening test");
-  // };
-
-  // const handleBackClick = () => {
-  //   navigate("/test");
-  // };
-
-  // return (
-  //   <div>
-  //     <AppHeader />
-  //     <div
-  //       style={{
-  //         padding: "1.5rem 0.5rem",
-  //         display: "flex",
-  //         flexDirection: "row",
-  //         justifyContent: "flex-start",
-  //         alignItems: "center",
-
-  //         cursor: "pointer",
-  //       }}
-  //       onClick={handleBackClick}
-  //     >
-  //       <LeftOutlined
-  //         style={{ color: "var(--tertiaryColor)", marginRight: "10px" }}
-  //       />
-  //       <Typography style={{ fontSize: "30px", fontWeight: "500" }}>
-  //         IELTS Test Library
-  //       </Typography>
-  //     </div>
-
-  //     <div>
-  //       <Row
-  //         style={{
-  //           padding: "1.5rem 0 .5rem 1.5rem",
-  //           backgroundColor: "white",
-  //           borderTopLeftRadius: "50px",
-  //           borderTopRightRadius: "50px",
-  //         }}
-  //       >
-  //         <Col xs={{ span: 24 }}>
-
   return (
     <div>
       <AppHeader />
-      <div style={{ width: '100%', backgroundColor: 'white', paddingTop: '1rem' }}>
-        <Row style={{ width: '80%', margin: 'auto' }}>
-          <Col xs={{ span: 20 }}>
 
+      <BackNavigateBox/>
+
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: "white",
+          paddingTop: "1rem",
+          borderTopLeftRadius: "50px",
+          borderTopRightRadius: "50px",
+        }}
+        className={styles["shadow"]}
+      >
+        <Row
+          style={{
+            width: "80%",
+            margin: "auto",
+          }}
+        >
+          <Col xs={{ span: 20 }}>
             <div
               style={{
                 display: "flex",
@@ -234,11 +222,9 @@ export const PostTest = () => {
                 </Row>
               </div>
             </div>
-
-
           </Col>
 
-          <Col xs={{ span: 4 }} style={{ alignSelf: 'flex-end' }}>
+          <Col xs={{ span: 4 }} style={{ alignSelf: "flex-end" }}>
             <Button
               style={{
                 textTransform: "uppercase",
@@ -254,11 +240,13 @@ export const PostTest = () => {
             </Button>
           </Col>
         </Row>
-        <Row style={{ width: '80%', margin: 'auto' }}>
-          <Col xs={{ span: 24 }} style={{ marginTop: '1rem' }}>
+
+        <Row style={{ width: "80%", margin: "auto" }}>
+          <Col xs={{ span: 24 }} style={{ marginTop: "1rem" }}>
             <Table
-              dataSource={data} columns={columns}
-              pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15'] }}
+              dataSource={data}
+              columns={columns}
+              pagination={false}
             />
           </Col>
         </Row>
@@ -298,29 +286,35 @@ export const PostTest = () => {
         open={openDialog}
         title="Add new part"
         footer={null}
-        style={{ textAlign: 'center', textTransform: 'uppercase' }}
+        style={{ textAlign: "center", textTransform: "uppercase" }}
         onCancel={() => setOpenDialog(false)}
       >
-        <div style={{ width: '75%', margin: 'auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ width: "75%", margin: "auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Image
               src="read_group_icon.png"
               preview={false}
-              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
+              style={{ width: "162px", height: "172px", cursor: "pointer" }}
               onClick={handleAddReadingSectionClick}
             />
             <Image
               src="listen_group_icon.png"
               preview={false}
-              style={{ width: '162px', height: '172px', cursor: 'pointer' }}
-              onClick={() => { }}
+              style={{ width: "162px", height: "172px", cursor: "pointer" }}
+              onClick={() => {}}
             />
           </div>
           <Button
             type="primary"
             block
             onClick={() => setOpenDialog(false)}
-            style={{ marginTop: '1rem', color: 'white', backgroundColor: '#9A9494', textTransform: 'uppercase' }}>
+            style={{
+              marginTop: "1rem",
+              color: "white",
+              backgroundColor: "#9A9494",
+              textTransform: "uppercase",
+            }}
+          >
             Cancel
           </Button>
         </div>

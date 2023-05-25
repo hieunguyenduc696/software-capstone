@@ -5,6 +5,16 @@ import { useAuth } from "hooks/useAuth";
 import type { MenuProps } from "antd";
 import { useNavigate } from "react-router";
 import * as styles from "./index.module.css";
+import { styled } from "styled-components";
+
+const StyledMenu = styled(Menu)`
+  .ant-menu-title-content {
+    &:hover {
+      text-decoration: none !important;
+      color: #fff;
+    }
+  }
+`;
 
 export const AppHeader = () => {
   const [langDropdownVisible, setLangDropdownVisibleVisible] =
@@ -120,7 +130,7 @@ export const AppHeader = () => {
                 height: "100%",
               }}
             >
-              <Menu
+              <StyledMenu
                 onClick={onClick}
                 selectedKeys={[current]}
                 items={items}
@@ -131,7 +141,6 @@ export const AppHeader = () => {
                   flexGrow: 1,
                   borderBottom: "none",
                 }}
-                className="menu"
               />
             </div>
           </Col>
