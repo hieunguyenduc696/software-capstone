@@ -16,7 +16,7 @@ const tableName = "paragraph";
 
 //Query closure, without transaction (for later use)
 const getParagraphBySectionIdsClosure = getFindByKeyMethodQueryClosure(
-    tableName, ['paragraph_id', 'wallpaper', 'title', 'content'], 'section_id'
+    tableName, ['paragraph_id', 'section_id', 'wallpaper', 'title', 'content'], 'section_id'
 );
 const createParagraphsClosure = getCreateMethodQueryClosure(
     tableName, ['section_id', 'wallpaper', 'title', 'content']
@@ -29,6 +29,19 @@ const getParagraphBySectionIds = queryExecutionWrapper(getParagraphBySectionIdsC
 const createParagraphs = queryExecutionWrapper(createParagraphsClosure, true);
 const updateParagraph = queryExecutionWrapper(updateParagraphClosure, true);
 const deleteParagraphs = queryExecutionWrapper(deleteParagraphsClosure, true);
+
+const getParagraphProcess = async (sectionIds: number[], connection: PoolConnection): Promise<any[]> => {
+    let foundParagraphs: any[] = [];
+
+    try {
+        foundParagraphs = await getParagraphBySectionIdsClosure({keyValue: sectionIds}, connection);
+
+    } catch (error) {
+        throw(error);
+    }
+
+    return foundParagraphs;
+}
 
 const createParagraphsProcess = async (dtos: ParagraphDto[], connection: PoolConnection): Promise<number[]> => {
     const paragraphDtos = {createDtos: dtos};
@@ -44,4 +57,5 @@ export {
     deleteParagraphs,
 
     createParagraphsProcess,
+    getParagraphProcess,
 }

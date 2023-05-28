@@ -5,6 +5,7 @@ import {
     testDeleteParagraphs,
     createReadingTests,
     pagingReadingTests,
+    getReadingTestById,
 } from '../../controllers/admin/test_controller';
 
 const router: Router = Router();
@@ -33,6 +34,11 @@ router.post(
 router.get(
     '/',
     pagingReadingTests,
+)
+
+router.get(
+    '/:testId',
+    getReadingTestById,
 )
 
 export {

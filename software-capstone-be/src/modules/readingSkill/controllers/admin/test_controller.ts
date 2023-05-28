@@ -9,11 +9,13 @@ import {
 import {
     BACKEND_UNIVERSAL_SUCCESS_CODE,
     BACKEND_UNIVERSAL_ERROR_CODE,
+    NOT_FOUND_CODE,
     BACKEND_UNIVERSAL_ERROR_MSG,
 } from '../../../../app/constants/message_constants';
 import { 
     createReadingTests as saveReadingTests,
     pagingReadingTests as pagingTests,
+    getReadingTestByIds,
 } from '../../services/test_services';
 
 import {
@@ -134,16 +136,66 @@ async function pagingReadingTests(request: Request, response: Response) {
         }
 
     } catch (error) {
-        console.log(error);
+        responseJson = {
+            message: BACKEND_UNIVERSAL_ERROR_MSG,
+            errorCode: BACKEND_UNIVERSAL_ERROR_CODE,
+        }
+
     } finally {
         response.status(statusCode).json(responseJson);
     }
     
 }
 
+
+async function getReadingTestById(request: Request, response: Response) {
+
+    //Get the test id from path variable
+    const testId: number = parseInt(request.params.testId);
+    const testIds = [testId];
+    
+    //Default message is error message
+    let statusCode = 500;
+    let responseJson: any = {
+        message: BACKEND_UNIVERSAL_ERROR_MSG,
+        errorCode: BACKEND_UNIVERSAL_ERROR_CODE,
+    }
+
+    try {
+        const foundTests: any[] = await getReadingTestByIds(testIds);
+        if (foundTests.length > 0) {
+            statusCode = 200;
+            responseJson = {
+                message: `Found the test with id = ${testId}`,
+                code: BACKEND_UNIVERSAL_SUCCESS_CODE,
+                data: foundTests[0],
+            };
+        } else {
+            statusCode = 404;
+            responseJson = {
+                message: `Not found the test with id = ${testId}`,
+                code: NOT_FOUND_CODE,
+                data: foundTests,
+            }
+        }
+
+    } catch (error) {
+        responseJson = {
+            message: BACKEND_UNIVERSAL_ERROR_MSG,
+            errorCode: BACKEND_UNIVERSAL_ERROR_CODE,
+        }
+
+    } finally {
+        response.status(statusCode).json(responseJson);
+    }
+    
+}
+
+
 export {
     createReadingTests,
     pagingReadingTests,
+    getReadingTestById,
 
     testCreateParagraphs,
     testUpdateParagraph,
