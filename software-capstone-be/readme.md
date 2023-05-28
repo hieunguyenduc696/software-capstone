@@ -68,6 +68,50 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 
 ## Admin
 
+### Get Test with Pagination
+```
+    GET /reading-skill/admin/test/?limit=10&page=1
+```
+| Param     | Datatype |         Note         |
+| --------- | -------- | -------------------- |
+| limit     | number   | required, 1-indexing |
+| page      | number   | required, 1-indexing |
+
+
+##### Success response
+```javascript
+   {
+    "message": "Found 2 test(s)",
+    "code": 0,
+    "data": {
+        "total": 2,
+        "count": 2,
+        "tests": [
+            {
+                "test_id": 1,
+                "title": "TEST1",
+                "test_type": 0,
+                "test_level": 0
+            },
+            {
+                "test_id": 2,
+                "title": "TEST2",
+                "test_type": 0,
+                "test_level": 0
+            }
+        ]
+    }
+}
+```
+##### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+```
+
+
 ### Create Test
 
 #### Create Multiple Tests without files
