@@ -11,7 +11,15 @@ import {
     BACKEND_UNIVERSAL_ERROR_CODE,
     BACKEND_UNIVERSAL_ERROR_MSG,
 } from '../../../../app/constants/message_constants';
-import { createReadingTests as saveReadingTests } from '../../services/test_services';
+import { 
+    createReadingTests as saveReadingTests,
+    pagingReadingTests as pagingTests,
+} from '../../services/test_services';
+
+import {
+    DEFAULT_PAGING_INDEX,
+    DEFAULT_PAGING_LIMIT,
+} from '../../../../app/constants/common_constants';
 
 //Dummy version for testing database work correctly
 async function testCreateParagraphs(request: Request, response: Response): Promise<any> {
@@ -99,8 +107,44 @@ async function createReadingTests(request: Request, response: Response): Promise
     }
 }
 
+
+async function pagingReadingTests(request: Request, response: Response) {
+
+    //Paging input
+    const limit: number = request.query.limit ? parseInt(String(request.query.limit)) : DEFAULT_PAGING_LIMIT;
+    const pageIndex: number = request.query.page ? parseInt(String(request.query.page)) : DEFAULT_PAGING_INDEX;
+
+    //Default message is error message
+    let statusCode = 500;
+    let responseJson: any = {
+        message: BACKEND_UNIVERSAL_ERROR_MSG,
+        errorCode: BACKEND_UNIVERSAL_ERROR_CODE,
+    }
+
+    try {
+        const pagingResult: any = await pagingTests(limit, pageIndex);
+        if (pagingResult) {
+            statusCode = 200;
+            responseJson = {
+                message: `Found ${pagingResult.count} test(s)`,
+                code: BACKEND_UNIVERSAL_SUCCESS_CODE,
+                data: pagingResult,
+            }
+
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        response.status(statusCode).json(responseJson);
+    }
+    
+}
+
 export {
     createReadingTests,
+    pagingReadingTests,
+
     testCreateParagraphs,
     testUpdateParagraph,
     testDeleteParagraphs,
