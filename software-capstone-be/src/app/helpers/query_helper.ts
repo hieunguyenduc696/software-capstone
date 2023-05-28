@@ -69,6 +69,11 @@ function getFindByKeyMethodQueryClosure(tableName: string, columnNames: string[]
         let result: any = null;
         const {keyValue} = params;
 
+        //Terminate if there is empty key value
+        if (keyValue.length < 1) {
+            return [];
+        }
+
         const columnNameString: string = columnNames.join(', ');
             
         try {

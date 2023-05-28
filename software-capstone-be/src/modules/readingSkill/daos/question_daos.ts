@@ -11,13 +11,16 @@ import {
 } from "../../../app/helpers/query_helper";
 
 import { QuestionDto, AnswerDto } from "../datatypes/test";
-import { createAnswersProcess } from "./answer_daos";
+import { 
+    createAnswersProcess,
+    getAnswerProcess,
+} from "./answer_daos";
 
 const tableName = "question";
 
 //Query closure, without transaction (for later use)
 const getQuestionByTemplateIdsClosure = getFindByKeyMethodQueryClosure(
-    tableName, ['question_id', 'question_index', 'content', 'options', 'score'], 'template_id'
+    tableName, ['question_id', 'template_id', 'question_index', 'content', 'options', 'score'], 'template_id'
 );
 const createQuestionsClosure = getCreateMethodQueryClosure(
     tableName, ['template_id', 'question_index', 'content', 'options', 'score']
@@ -30,6 +33,52 @@ const getQuestionByTemplateIds = queryExecutionWrapper(getQuestionByTemplateIdsC
 const createQuestions = queryExecutionWrapper(createQuestionsClosure, true);
 const updateQuestion = queryExecutionWrapper(updateQuestionClosure, true);
 const deleteQuestions = queryExecutionWrapper(deleteQuestionsClosure, true);
+
+const getQuestionProcess = async (templateIds: number[], connection: PoolConnection): Promise<any[]> => {
+    let foundQuestions: any[] = [];
+
+    try {
+        foundQuestions = await getQuestionByTemplateIdsClosure({keyValue: templateIds}, connection);
+    } catch (error) {
+        throw(error);
+    }
+
+    if (foundQuestions) {
+        const questionIds: number[] = foundQuestions.map(question => question.question_id);
+
+        try {
+            const answers: any[] = await getAnswerProcess(questionIds, connection);
+
+            //Building the answer with mapping: question's id => [question's answer]
+            const answerMap = new Map();
+            answers.forEach(answer => {
+                const questionId: number = answer.question_id;
+                if (!answerMap.has(questionId)) {
+                    answerMap.set(questionId, []);
+                }
+
+                answerMap.get(questionId).push(answer);
+
+            });        
+
+            //Map the answer value to the final result
+            for (const foundQuestion of foundQuestions) {
+                const questionId = foundQuestion.question_id;
+                if (!answerMap.has(questionId)) {
+                    foundQuestion.answers = [];
+                } else {
+                    foundQuestion.answers = answerMap.get(questionId);
+                }
+            }
+
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    return foundQuestions;
+}
 
 const createQuestionsProcess = async (dtos: QuestionDto[], connection: PoolConnection): Promise<number[]> => {
 
@@ -64,5 +113,6 @@ export {
     updateQuestion,
     deleteQuestions,
 
-    createQuestionsProcess
+    createQuestionsProcess,
+    getQuestionProcess,
 }

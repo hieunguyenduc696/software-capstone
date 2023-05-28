@@ -3,6 +3,8 @@ import {
     createReadingTests as saveReadingTests,
     pagingReadingTests as pageReadingTests,
     countPagingReadingTests,
+    getTestByIds,
+
 }  from "../daos/test_daos";
 
 import {
@@ -13,6 +15,19 @@ import {
 async function createReadingTests(readingTestDtos: ReadingTestDto[]): Promise<number[]> {
     const insertionIds: number[] = await saveReadingTests(readingTestDtos);
     return insertionIds;
+}
+
+async function getReadingTestByIds(testIds: number[]): Promise<any[]> {
+    
+    let readingTests: any[] = [];
+
+    try {
+        readingTests = await getTestByIds(testIds);
+    } catch (error) {
+        console.log(error);
+    }
+
+    return readingTests;
 }
 
 async function pagingReadingTests(limit: number, pageIndex: number, options: null | {keyword?: string} = null): Promise<any> {
@@ -65,4 +80,5 @@ async function pagingReadingTests(limit: number, pageIndex: number, options: nul
 export {
     createReadingTests,
     pagingReadingTests,
+    getReadingTestByIds,
 }
