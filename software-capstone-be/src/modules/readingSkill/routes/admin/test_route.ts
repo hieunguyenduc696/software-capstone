@@ -4,6 +4,7 @@ import {
     testUpdateParagraph,
     testDeleteParagraphs,
     createReadingTests,
+    pagingReadingTests,
 } from '../../controllers/admin/test_controller';
 
 const router: Router = Router();
@@ -27,6 +28,11 @@ router.get(
 router.post(
     '/create',
     createReadingTests
+)
+
+router.get(
+    '/',
+    pagingReadingTests,
 )
 
 export {

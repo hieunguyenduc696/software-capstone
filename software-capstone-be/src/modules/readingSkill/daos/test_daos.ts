@@ -7,6 +7,8 @@ import {
     getFindByKeyMethodQueryClosure,
     getUpdateMethodQueryClosure,
     getDeleteByKeyMethodQueryClosure,
+    getPagingMethodQueryClosure,
+    getCountingMethodQueryClosure,
 } from "../../../app/helpers/query_helper";
 
 import { ReadingTestDto, ReadingSectionDto } from "../datatypes/test";
@@ -23,6 +25,8 @@ const createTestsClosure = getCreateMethodQueryClosure(
 );
 const updateTestClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTestsClosure = getDeleteByKeyMethodQueryClosure(tableName, "test_id");
+const pagingReadingTestsProcess = getPagingMethodQueryClosure(tableName, ['test_id', 'title', 'test_type', 'test_level']);
+const countPagingReadingTestsProcess = getCountingMethodQueryClosure(tableName);
 
 const createReadingTestsProcess = async (dtos: ReadingTestDto[], connection: PoolConnection): Promise<number[]> => {
 
@@ -55,10 +59,15 @@ const getTestByIds = queryExecutionWrapper(getTestByIdsClosure, false);
 const createReadingTests = queryExecutionWrapper(createReadingTestsProcess, true);
 const updateTest = queryExecutionWrapper(updateTestClosure, true);
 const deleteTests = queryExecutionWrapper(deleteTestsClosure, true);
+const pagingReadingTests = queryExecutionWrapper(pagingReadingTestsProcess, false);
+const countPagingReadingTests = queryExecutionWrapper(countPagingReadingTestsProcess, false);
+
 
 export {
     getTestByIds,
     createReadingTests,
     updateTest,
     deleteTests,
+    pagingReadingTests,
+    countPagingReadingTests,
 }
