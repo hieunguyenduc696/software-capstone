@@ -20,8 +20,9 @@ jobs:
         command_timeout: 20m
         script_stop: true
         script: |
-         cd software-capstone-be
+         cd software-capstone
          git pull
+         cd software-capstone-be
          sudo docker build --platform linux/amd64 -t namphamhcmus1906/capstone:be.production . 
          cd -
          sudo docker stop be_server1_production || true 
