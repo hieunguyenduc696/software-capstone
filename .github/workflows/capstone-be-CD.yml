@@ -3,8 +3,6 @@ name: capstone-be CD
 on:
   push:
     branches: [ "be-production" ]
-  pull_request:
-    branches: [ "be-production" ]
 
 jobs:
   build:
