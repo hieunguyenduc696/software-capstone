@@ -68,6 +68,169 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 
 ## Admin
 
+### Get Test with Pagination
+```
+    GET /reading-skill/admin/test/?limit=10&page=1
+```
+| Param     | Datatype |         Note         |
+| --------- | -------- | -------------------- |
+| limit     | number   | required, 1-indexing |
+| page      | number   | required, 1-indexing |
+
+
+#### Success response
+```javascript
+   {
+    "message": "Found 2 test(s)",
+    "code": 0,
+    "data": {
+        "total": 2,
+        "count": 2,
+        "tests": [
+            {
+                "test_id": 1,
+                "title": "TEST1",
+                "test_type": 0,
+                "test_level": 0
+            },
+            {
+                "test_id": 2,
+                "title": "TEST2",
+                "test_type": 0,
+                "test_level": 0
+            }
+        ]
+    }
+}
+```
+#### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+```
+
+### Get a Test with its id
+```
+    GET /reading-skill/admin/test/:testId
+```
+#### Success response
+```javascript
+{
+    "message": "Found the test with id = 1",
+    "code": 0,
+    "data": {
+        "test_id": 1,
+        "title": "TEST1",
+        "test_type": 0,
+        "test_level": 0,
+        "sections": [
+            {
+                "section_id": 1,
+                "test_id": 1,
+                "section_index": 1,
+                "section_type": 0,
+                "templates": [
+                    {
+                        "template_id": 1,
+                        "template_type_id": 1,
+                        "section_id": 1,
+                        "template_index": 1,
+                        "title": "TEST template title",
+                        "content": "TEST content",
+                        "expand_column": null,
+                        "questions": [
+                            {
+                                "question_id": 1,
+                                "template_id": 1,
+                                "question_index": 1,
+                                "content": "Test question",
+                                "options": "{'test': 'hehehehe'}",
+                                "score": 1,
+                                "answers": [
+                                    {
+                                        "answer_id": 1,
+                                        "question_id": 1,
+                                        "content": "this is the answers",
+                                        "options": "{'some_options': 'hehehe'}"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "paragraphs": {
+                    "paragraph_id": 1,
+                    "section_id": 1,
+                    "wallpaper": "image_url",
+                    "title": "paragraph title",
+                    "content": "paragraph content"
+                }
+            },
+            {
+                "section_id": 2,
+                "test_id": 1,
+                "section_index": 2,
+                "section_type": 0,
+                "templates": [
+                    {
+                        "template_id": 2,
+                        "template_type_id": 1,
+                        "section_id": 2,
+                        "template_index": 1,
+                        "title": "TEST template title",
+                        "content": "TEST content",
+                        "expand_column": null,
+                        "questions": [
+                            {
+                                "question_id": 2,
+                                "template_id": 2,
+                                "question_index": 1,
+                                "content": "Test question",
+                                "options": "{'test': 'hehehehe'}",
+                                "score": 1,
+                                "answers": [
+                                    {
+                                        "answer_id": 2,
+                                        "question_id": 2,
+                                        "content": "this is the answers",
+                                        "options": "{'some_options': 'hehehe'}"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "paragraphs": {
+                    "paragraph_id": 2,
+                    "section_id": 2,
+                    "wallpaper": "image_url",
+                    "title": "paragraph title",
+                    "content": "paragraph content"
+                }
+            }
+        ]
+    }
+}
+```
+#### Error response
+```javascript
+   {
+      "code": 1,
+      "message": "Something went wrong from the backend",
+   }
+```
+
+```javascript
+{
+    "message": "Not found the test with id = ${testId}",
+    "code": 2,
+    "data": []
+}
+```
+
+
 ### Create Test
 
 #### Create Multiple Tests without files

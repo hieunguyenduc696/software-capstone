@@ -23,8 +23,11 @@ function getInsertionIdsFromQueryInsertion(queryResult: UpsertResult|null): numb
 //  Wrap a query function with/without transaction
 function queryExecutionWrapper(executorClosure: any, hasTransaction: boolean = true): any {
 
-    return async (params: any, defaultConnection: PoolConnection|null = null): Promise<any> => {
-        let result: any = null;
+    return async (
+        params: any, 
+        defaultConnection: PoolConnection|null = null): Promise<any> => {
+        
+            let result: any = null;
         let connection: PoolConnection|null = defaultConnection;
         try {
 
@@ -65,6 +68,11 @@ function getFindByKeyMethodQueryClosure(tableName: string, columnNames: string[]
         
         let result: any = null;
         const {keyValue} = params;
+
+        //Terminate if there is empty key value
+        if (keyValue.length < 1) {
+            return [];
+        }
 
         const columnNameString: string = columnNames.join(', ');
             
@@ -215,6 +223,95 @@ function getDeleteByKeyMethodQueryClosure(tableName: string, keyColumnName: stri
 }
 
 
+//Create an Univseral Counting DAO
+function getCountingMethodQueryClosure(tableName: string, options: null | {keywordColumn?: string} = null) {
+
+    const keywordColumn: string|null = options?.keywordColumn ?? null;
+
+    //The insertion dao method always return the array of the insertion entities' id
+    return async (params: {keyword?: string}, connection: PoolConnection): Promise<number> => {
+        
+        let queryResult: any = null;
+        let count: number = 0;
+        let whereStatement: string = "WHERE 1=1";
+        let bindingValues: any[] = [];
+        
+        //Keyword search
+        if (params) {
+            if (params.hasOwnProperty("keyword") && keywordColumn) {
+                
+                whereStatement = `${whereStatement} AND ${keywordColumn} LIKE ?`
+                const keyword = params.keyword;
+                bindingValues.push(`%${keyword}%`);
+            } 
+        }
+        
+        try {
+            const query = [
+                `SELECT COUNT(1)`,
+                `FROM ${tableName}`,
+                whereStatement,
+            ].join(' ');
+
+            queryResult = await connection.query(query, bindingValues);
+            count = queryResult[0]['COUNT(1)'];
+
+        } catch (error) {
+            throw error;
+        } 
+
+        return count;
+    }
+
+}
+
+function getPagingMethodQueryClosure(tableName: string, columnNames: string[], closureOptions: null | {keywordColumn?: string} = null) {
+    
+    const keywordColumn: string|null = closureOptions?.keywordColumn ?? null;
+    const columnNameString: string = columnNames.join(', ');
+
+    return async (
+        params: {
+            limit: number, 
+            offset: number, 
+            keyword?: null | string,
+        },
+        connection: PoolConnection): Promise<any> => {
+
+        let result: any = [];
+        let bindingValues: any[] = [];
+        let selectStatement = `SELECT ${columnNameString}`;
+        let fromStatement   = `FROM ${tableName}`;
+        let whereStatement  = "WHERE 1=1";
+        let limitStatement  = "LIMIT ? OFFSET ?";
+        
+        //Keyword search
+        if (params.hasOwnProperty("keyword") && keywordColumn) {
+            whereStatement = `${whereStatement} AND ${keywordColumn} LIKE ?`;
+            const keyword = params.keyword;
+            bindingValues.push(`%${keyword}%`);
+        }
+
+        //Paging properties
+        const {limit, offset} = params; 
+        bindingValues.push(limit, offset);
+        try {
+            const query = [
+                selectStatement,
+                fromStatement,
+                whereStatement,
+                limitStatement,
+            ].join(' ');
+
+            result = await connection.query(query, bindingValues);
+        } catch (error) {
+            throw error;
+        } 
+
+        return result;
+    }   
+}
+
 export {
     getInsertionIdsFromQueryInsertion,
     queryExecutionWrapper,
@@ -224,4 +321,6 @@ export {
     getFindByKeyMethodQueryClosure,
     getUpdateMethodQueryClosure,
     getDeleteByKeyMethodQueryClosure,
+    getCountingMethodQueryClosure,
+    getPagingMethodQueryClosure,
 }

@@ -7,10 +7,15 @@ import {
     getFindByKeyMethodQueryClosure,
     getUpdateMethodQueryClosure,
     getDeleteByKeyMethodQueryClosure,
+    getPagingMethodQueryClosure,
+    getCountingMethodQueryClosure,
 } from "../../../app/helpers/query_helper";
 
 import { ReadingTestDto, ReadingSectionDto } from "../datatypes/test";
-import { createReadingSectionsProcess } from "./section_daos";
+import { 
+    createReadingSectionsProcess,
+    getReadingSectionsProcess,
+} from "./section_daos";
 
 const tableName = "test";
 
@@ -23,6 +28,8 @@ const createTestsClosure = getCreateMethodQueryClosure(
 );
 const updateTestClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTestsClosure = getDeleteByKeyMethodQueryClosure(tableName, "test_id");
+const pagingReadingTestsProcess = getPagingMethodQueryClosure(tableName, ['test_id', 'title', 'test_type', 'test_level']);
+const countPagingReadingTestsProcess = getCountingMethodQueryClosure(tableName);
 
 const createReadingTestsProcess = async (dtos: ReadingTestDto[], connection: PoolConnection): Promise<number[]> => {
 
@@ -50,15 +57,67 @@ const createReadingTestsProcess = async (dtos: ReadingTestDto[], connection: Poo
     return readingTestIds;
 }
 
+const getTestByIdProcess = async(testIds: number[], connection: PoolConnection): Promise<any> => {
+
+    let foundTests: any[] = [];
+
+    try {
+        foundTests = await getTestByIdsClosure({keyValue: testIds}, connection);
+    } catch (error) {
+        throw(error);
+    }
+    
+    if (foundTests) {
+        const testIds: number[] = foundTests.map(test => test.test_id);
+
+        try {
+            const readingSections: any[] = await getReadingSectionsProcess(testIds, connection);
+
+            //Building the section with mapping: test's id => [test's section]
+            const readingSectionMap = new Map();
+            readingSections.forEach(section => {
+                const testId: number = section.test_id;
+                if (!readingSectionMap.has(testId)) {
+                    readingSectionMap.set(testId, []);
+                }
+
+                readingSectionMap.get(testId).push(section);
+
+            });        
+
+            //Map the section value to the final result
+            for (const foundTest of foundTests) {
+                const testId = foundTest.test_id;
+                if (!readingSectionMap.has(testId)) {
+                    foundTest.sections = [];
+                } else {
+                    foundTest.sections = readingSectionMap.get(testId);
+                }
+            }
+
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    return foundTests;
+}
+
 //Wrap the query closure with/without transaction
-const getTestByIds = queryExecutionWrapper(getTestByIdsClosure, false);
+const getTestByIds = queryExecutionWrapper(getTestByIdProcess, false);
 const createReadingTests = queryExecutionWrapper(createReadingTestsProcess, true);
 const updateTest = queryExecutionWrapper(updateTestClosure, true);
 const deleteTests = queryExecutionWrapper(deleteTestsClosure, true);
+const pagingReadingTests = queryExecutionWrapper(pagingReadingTestsProcess, false);
+const countPagingReadingTests = queryExecutionWrapper(countPagingReadingTestsProcess, false);
+
 
 export {
     getTestByIds,
     createReadingTests,
     updateTest,
     deleteTests,
+    pagingReadingTests,
+    countPagingReadingTests,
 }
