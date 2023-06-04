@@ -134,6 +134,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
                 "templates": [
                     {
                         "template_id": 1,
+                        "template_type_id": 1,
                         "section_id": 1,
                         "template_index": 1,
                         "title": "TEST template title",
@@ -175,6 +176,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
                 "templates": [
                     {
                         "template_id": 2,
+                        "template_type_id": 1,
                         "section_id": 2,
                         "template_index": 1,
                         "title": "TEST template title",
