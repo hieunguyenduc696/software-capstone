@@ -20,10 +20,10 @@ const tableName = "template";
 
 //Query closure, without transaction (for later use)
 const getTemplateBySectionIdsClosure = getFindByKeyMethodQueryClosure(
-    tableName, ['template_id', 'section_id' , 'template_index', 'title', 'content', 'expand_column'], 'section_id'
+    tableName, ['template_id', 'template_type_id', 'section_id' , 'template_index', 'title', 'content', 'expand_column'], 'section_id'
 );
 const createTemplatesClosure = getCreateMethodQueryClosure(
-    tableName,  ['section_id', 'template_index', 'title', 'content', 'expand_column']
+    tableName,  ['section_id', 'template_type_id' , 'template_index', 'title', 'content', 'expand_column']
 );
 const updateTemplateClosure = getUpdateMethodQueryClosure(tableName);
 const deleteTemplatesClosure = getDeleteByKeyMethodQueryClosure(tableName, "template_id");
