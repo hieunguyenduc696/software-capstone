@@ -240,7 +240,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 ```
 
 ```javascript
-  {
+{
     "data": [
         {
             "title": "TEST1",
@@ -260,42 +260,134 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
 
                     "templates": [
                         {
-                            "template_type_id": 0,
+                            "template_type_id": 1,
 
                             "template_index": 1,
-                            "title": "TEST template title",
-                            "content": "TEST content",
-                            "expand_clumn": null,
+                            "title": "TEST Yes/No/Not given",
+                            "content": "Please select Yes/No/Not given",
+                            "expand_column": null,
 
                             "questions": [
                                 {
                                     "question_index": 1,
-                                    "content": "Test question",
-                                    "options": "{'test': 'hehehehe'}",
+                                    "content": "The true is correct",
+                                    "options": "",
                                     "score": 1,
 
                                     "answers": [
                                         {
-                                            "content": "this is the answers",
-                                            "options": "{'some_options': 'hehehe'}"
+                                            "content": "No",
+                                            "options": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        }, 
+
+                        {
+                            "template_type_id": 2,
+
+                            "template_index": 2,
+                            "title": "TEST Multiple Choice",
+                            "content": "Please select A/B/C/D for correct answer",
+                            "expand_column": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 2,
+                                    "content": "2 is bigger than 1",
+                                    "options": "{\n   \"A\": \"Correct\",\n   \"B\": \"Incorrect\",\n   \"C\": \"Not Given\",\n   \"D\": \"I don't known\"\n}",
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "A",
+                                            "options": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                        {
+                            "template_type_id": 3,
+
+                            "template_index": 3,
+                            "title": "TEST Short Answer",
+                            "content": "Write no more than 3 words etc...",
+                            "expand_column": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 3,
+                                    "content": "When did the unexpected discoveries of chimpanzee behaviour start?",
+                                    "options": null,
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "in 1960s",
+                                            "options": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                        {
+                            "template_type_id": 4,
+
+                            "template_index": 4,
+                            "title": "TEST Sentence Completion",
+                            "content": "Write no more than 3 words etc...",
+                            "expand_column": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 4,
+                                    "content": "The angle of the dance from the vertical shows the angle of the food from the ${blank}",
+                                    "options": null,
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "sun",
+                                            "options": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                        {
+                            "template_type_id": 5,
+
+                            "template_index": 5,
+                            "title": "TEST Matching Heading",
+                            "content": "The following Reading Passage has nine paragraphs, A–I. Choose the correct heading for paragraphs A–H from the list of headings below. Write the correct number, i–xi, in boxes 1–8 on your answer sheet.",
+                            "expand_column": null,
+
+                            "questions": [
+                                {
+                                    "question_index": 5,
+                                    "content": "Paragraph A",
+                                    "options": "{\n  \"header\": 1\n}",
+                                    "score": 1,
+
+                                    "answers": [
+                                        {
+                                            "content": "vii",
+                                            "options": null
                                         }
                                     ]
                                 }
                             ]
                         }
                     ]
-                }
-            ]
-        },
+                },
 
-        {
-            "title": "TEST2",
-            "test_type": 0,
-            "test_level": 0,
-
-            "sections": [
                 {
-                    "section_index": 1,
+                    "section_index": 2,
                     "section_type": 0,
 
                     "paragraph": {
@@ -303,19 +395,18 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
                         "title": "paragraph title",
                         "content": "paragraph content"
                     },
-                    
+
                     "templates": [
                         {
-                            "template_type_id": 0,
-
-                            "template_index": 1,
+                            "template_type_id": 1,
+                            "template_index": 6,
                             "title": "TEST template title",
                             "content": "TEST content",
                             "expand_clumn": null,
 
                             "questions": [
                                 {
-                                    "question_index": 1,
+                                    "question_index": 6,
                                     "content": "Test question",
                                     "options": "{'test': 'hehehehe'}",
                                     "score": 1,
