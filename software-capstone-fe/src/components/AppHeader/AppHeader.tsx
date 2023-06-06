@@ -4,56 +4,66 @@ import { Avatar, Col, Image, Layout, Menu, Row } from "antd";
 import { useAuth } from "hooks/useAuth";
 import type { MenuProps } from "antd";
 import { useNavigate } from "react-router";
+import * as styles from "./index.module.css";
+import { styled } from "styled-components";
 
-
+const StyledMenu = styled(Menu)`
+  .ant-menu-title-content {
+    &:hover {
+      text-decoration: none !important;
+      color: #fff;
+    }
+  }
+`;
 
 export const AppHeader = () => {
   const [langDropdownVisible, setLangDropdownVisibleVisible] =
     useState<boolean>(false);
   const { userProfile } = useAuth();
 
-  const username = `${userProfile?.firstName || ""} ${userProfile?.lastName || ""
-    }`;
+  const username = `${userProfile?.firstName || ""} ${
+    userProfile?.lastName || ""
+  }`;
 
   const navigate = useNavigate();
 
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
-      label: 'IELTS Test',
-      key: 'test',
+      label: "IELTS Test",
+      key: "test",
       children: [
         {
-          label: 'New Test',
-          key: 'test:1',
-          onClick: () => navigate('/post-test')
+          label: "New Test",
+          key: "test:1",
+          onClick: () => navigate("/post-test"),
         },
         {
-          label: 'IELTS Library',
-          key: 'test:2',
-          onClick: () => console.log('test:2')
+          label: "IELTS Library",
+          key: "test:2",
+          onClick: () => console.log("test:2"),
         },
       ],
     },
     {
       label: "User Acounts",
-      key: 'user',
+      key: "user",
       children: [
         {
           label: "New Account",
-          key: "account:1"
+          key: "account:1",
         },
         {
           label: "User Accounts",
-          key: "account:2"
-        }
-      ]
+          key: "account:2",
+        },
+      ],
     },
   ];
 
-  const [current, setCurrent] = useState('mail');
+  const [current, setCurrent] = useState("mail");
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
+  const onClick: MenuProps["onClick"] = (e) => {
+    console.log("click ", e);
     setCurrent(e.key);
   };
 
@@ -70,7 +80,7 @@ export const AppHeader = () => {
           borderBottom: "2px solid var(--mainGrayColor)",
         }}
       >
-        <Row style={{ width: '100%' }}>
+        <Row style={{ width: "100%" }}>
           <Col xs={{ span: 12, order: 2 }} lg={{ span: 7, order: 1 }}>
             <div
               style={{
@@ -85,7 +95,7 @@ export const AppHeader = () => {
                   fontSize: "32px",
                 }}
               >
-                ILETS
+                IELTS
               </span>
               <Image src="sword.png" height={42} preview={false} />
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -112,20 +122,26 @@ export const AppHeader = () => {
           </Col>
 
           <Col xs={{ span: 0, order: 4 }} lg={{ span: 14, order: 2 }}>
-            <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', height: '100%' }}>
-              {/* <Dropdown menu={{ items }}>
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: "15px",
-                    lineHeight: 0.5,
-                    textAlign: "right",
-                  }}
-                >
-                  IELTS Tests Library
-                </div>
-              </Dropdown> */}
-              <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{ backgroundColor: 'transparent', color: 'white', flexGrow: 1, borderBottom: 'none' }} className="menu" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <StyledMenu
+                onClick={onClick}
+                selectedKeys={[current]}
+                items={items}
+                mode="horizontal"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "white",
+                  flexGrow: 1,
+                  borderBottom: "none",
+                }}
+              />
             </div>
           </Col>
           <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 3 }}>
@@ -135,7 +151,7 @@ export const AppHeader = () => {
                 alignItems: "center",
                 gap: 5,
                 cursor: "pointer",
-                justifyContent: 'flex-end'
+                justifyContent: "flex-end",
               }}
             >
               <Avatar src={"avatar.png"} size={50} />
@@ -146,8 +162,7 @@ export const AppHeader = () => {
             </div>
           </Col>
         </Row>
-
-      </Layout.Header >
+      </Layout.Header>
     </>
   );
 };

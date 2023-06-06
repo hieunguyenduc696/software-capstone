@@ -402,7 +402,7 @@ Try 'SELECT * FROM paragraph' for checking if the insertion actually work
                             "template_index": 6,
                             "title": "TEST template title",
                             "content": "TEST content",
-                            "expand_clumn": null,
+                            "expand_column": null,
 
                             "questions": [
                                 {

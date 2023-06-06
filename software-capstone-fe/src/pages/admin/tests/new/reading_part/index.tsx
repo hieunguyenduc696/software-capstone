@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styles from "./AddTest.module.css";
 import { Row, Col, Tabs, Button } from "antd";
-import { AppHeader } from "../../components/AppHeader";
+import { AppHeader } from "components";
 import type { TabsProps } from "antd";
 
 import ReadingParagraph from "components/ReadingParagraph";
@@ -15,7 +15,7 @@ import {
 import ReadingTestContext from "context/ReadingTestContext";
 import { useNavigate } from "react-router";
 
-const AddingTestPage = () => {  
+const NewReadingPart = () => {
   const navigate = useNavigate();
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
@@ -23,6 +23,7 @@ const AddingTestPage = () => {
     generateReadingQuestionDetails
   );
 
+  // save question detail of each section
   const [firstQuestionGroup, setFirstQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
@@ -32,40 +33,63 @@ const AddingTestPage = () => {
   const [thirdQuestionGroup, setThirdQuestionGroup] = useState<
     QuestionGroupInfo[]
   >([]);
-  const [forthQuestionGroup, setForthQuestionGroup] = useState<
-    QuestionGroupInfo[]
-  >([]);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: `Section 1`,
-      children: <ReadingParagraph sectionKey={1} setReadingParagraphsCallback={setParagraphs}/>,
+      children: (
+        <ReadingParagraph
+          sectionKey={1}
+          setReadingParagraphsCallback={setParagraphs}
+        />
+      ),
     },
     {
       key: "2",
       label: `Section 2`,
-      children: <ReadingParagraph sectionKey={2} setReadingParagraphsCallback={setParagraphs}/>,
+      children: (
+        <ReadingParagraph
+          sectionKey={2}
+          setReadingParagraphsCallback={setParagraphs}
+        />
+      ),
     },
     {
       key: "3",
       label: `Section 3`,
-      children: <ReadingParagraph sectionKey={3} setReadingParagraphsCallback={setParagraphs}/>,
+      children: (
+        <ReadingParagraph
+          sectionKey={3}
+          setReadingParagraphsCallback={setParagraphs}
+        />
+      ),
     },
-    // {
-    //   key: "4",
-    //   label: `Section 4`,
-    //   children: <ReadingParagraph sectionKey={4} setReadingParagraphsCallback={setParagraphs}/>,
-    // },
   ];
 
   const onSectionChange = (key: string) => {
     setQuestionSectionKey(parseInt(key, 10));
   };
 
+  const handlePreviousClick = () => {
+    if (questionSectionKey > 1) {
+      setQuestionSectionKey(questionSectionKey - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (questionSectionKey < 3) {
+      setQuestionSectionKey(questionSectionKey + 1);
+    }
+  };
+
+  const handleCancelClick = () => {
+    navigate("/post-test");
+  }
+
   const handleSubmit = () => {
-    console.log('PARAGRAPHS: ',paragraphs);
-    console.log('QUESTION DETAILS');
+    console.log("PARAGRAPHS: ", paragraphs);
+    console.log("QUESTION DETAILS");
     console.table(questionDetails);
 
     navigate("/post-test");
@@ -80,11 +104,16 @@ const AddingTestPage = () => {
     <div style={{ background: "#FFF" }}>
       <AppHeader />
       <Row>
-        <Col className={`${styles.column} ${styles.left}`} xs={{ span: 24 }} lg={{ span: 12 }} style={{
+        <Col
+          className={`${styles.column} ${styles.left}`}
+          xs={{ span: 24 }}
+          lg={{ span: 12 }}
+          style={{
             height: "83vh",
             maxHeight: "83vh",
-            overflowY: "auto"
-          }}>
+            overflowY: "auto",
+          }}
+        >
           <Row>
             <Col span={24}>
               <Tabs
@@ -92,6 +121,7 @@ const AddingTestPage = () => {
                 items={items}
                 onChange={onSectionChange}
                 className={`${styles.tabs}`}
+                activeKey={questionSectionKey.toString()}
               />
             </Col>
           </Row>
@@ -99,17 +129,19 @@ const AddingTestPage = () => {
 
         <Col
           className={`${styles.column} ${styles.right}`}
-          xs={{ span: 24 }} lg={{ span: 12 }}
+          xs={{ span: 24 }}
+          lg={{ span: 12 }}
           style={{
             borderLeft: "2px solid #9F9F9F",
             height: "83vh",
             maxHeight: "83vh",
-            overflowY: "auto"
+            overflowY: "auto",
           }}
         >
           <ReadingTestContext.Provider
             value={{ questionDetails, setQuestionDetails }}
           >
+            {/* for each section */}
             {questionSectionKey === 1 && (
               <QuestionSection
                 sectionKey={1}
@@ -131,13 +163,6 @@ const AddingTestPage = () => {
                 setQuestionGroupCallback={setThirdQuestionGroup}
               />
             )}
-            {questionSectionKey === 4 && (
-              <QuestionSection
-                sectionKey={4}
-                questionGroup={forthQuestionGroup}
-                setQuestionGroupCallback={setForthQuestionGroup}
-              />
-            )}
           </ReadingTestContext.Provider>
         </Col>
       </Row>
@@ -154,12 +179,27 @@ const AddingTestPage = () => {
         <div
           className={`${styles["footer-children"]} ${styles["button-group"]}`}
         >
-          {/* <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+          <Button
+            className={`${styles["button"]} ${styles["secondary"]}`}
+            onClick={handlePreviousClick}
+          >
             Previous
           </Button>
-          <Button className={`${styles["button"]} ${styles["secondary"]}`}>
+
+          <Button
+            className={`${styles["button"]} ${styles["secondary"]}`}
+            onClick={handleNextClick}
+          >
             Next
-          </Button> */}
+          </Button>
+
+          <Button
+            className={`${styles["button"]} ${styles["cancel"]}`}
+            onClick={handleCancelClick}
+          >
+            Cancel
+          </Button>
+
           <Button
             icon={<img src="save_icon.png" />}
             className={`${styles["button"]} ${styles["primary"]}`}
@@ -173,4 +213,4 @@ const AddingTestPage = () => {
   );
 };
 
-export default AddingTestPage;
+export default NewReadingPart;

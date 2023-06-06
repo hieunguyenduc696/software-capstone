@@ -38,6 +38,11 @@ const ShortAnswerTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, 
     }
   };
 
+  // need more time
+  const handleDeleteQuestionTemplate = () => {
+
+  }
+
   return (
     <Col span={24}>
       <QuestionTypeHeader
@@ -53,6 +58,7 @@ const ShortAnswerTemplate: React.FC<TemplateProps> = ({ initialFrom, initialTo, 
         to={initialTo}
         collapsed={collapse}
       />
+      
       <div style={{ width: "inherit", display: collapse ? "none" : "block" }}>
         {Array(questionQuantity)
           .fill(null)

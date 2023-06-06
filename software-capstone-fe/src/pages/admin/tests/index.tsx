@@ -1,9 +1,10 @@
-import { Button, Col, Divider, Image, Input, Row, Space, Table, Tag, Typography } from 'antd'
+import { Button, Col, Divider, Image, Input, Row, Space, Typography } from 'antd'
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { AppHeader } from 'components'
 import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router';
+import StyledTable from 'components/TestsTable';
 
 interface DataType {
     image: string;
@@ -63,7 +64,7 @@ const columns: ColumnsType<DataType> = [
 const data: DataType[] = [
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 01",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",
@@ -75,7 +76,7 @@ const data: DataType[] = [
     },
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 02",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",
@@ -87,7 +88,7 @@ const data: DataType[] = [
     },
     {
         image: "",
-        title: "IELTS Recent mock test",
+        title: "IELTS Recent mock test 03",
         reading: 1,
         listening: 0,
         publishDay: "11/4/2023",
@@ -100,7 +101,7 @@ const data: DataType[] = [
 ];
 
 
-export function Test() {
+export function Tests() {
     const navigate = useNavigate();
     return (
         <div style={{ backgroundColor: 'white' }}>
@@ -127,12 +128,15 @@ export function Test() {
                     <Button
                         icon={<PlusOutlined />}
                         style={{ color: 'white', backgroundColor: '#5CB1C5' }}
-                        onClick={() => navigate('/post-test')}
+                        onClick={() => navigate('/new-test')}
                     >
                         ADD IELTS TEST
                     </Button>
                 </div>
-                <Table columns={columns} dataSource={data} style={{ marginTop: '1rem' }} />
+                <StyledTable
+                    columns={columns} dataSource={[...data]} style={{ marginTop: '1rem' }}
+                    pagination={{ defaultPageSize: 5 }}
+                />
             </div>
         </div>
     )

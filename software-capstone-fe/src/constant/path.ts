@@ -4,5 +4,13 @@ export const RootPaths = {
   SIGN_OUT: "/sign-out",
   POST_TEST: "/post-test",
   ADD_TEST: "/add-test",
-  TEST: "/test"
+  TEST: "/test",
+
+
+  // new path 
+  TEST_LIBRARY: "/tests",
+  NEW_TEST: "/new-test",
+  NEW_LISTENING_PART: "/new-test/add-listening",
+  NEW_READING_PART: "/new-test/add-reading",
+
 };

@@ -44,6 +44,7 @@ const TrueFalseNotGivenTemplate: React.FC<TemplateProps> = ({initialFrom, initia
 
   return (
     <Col span={24}>
+      {/* Update question group info  */}
       <QuestionTypeHeader
         typeOfQuestion="True False Not Given"
         // count its own number of question
