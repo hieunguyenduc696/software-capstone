@@ -1,10 +1,9 @@
 import { useState } from "react";
 import classes from "./AppHeader.module.less";
-import { Avatar, Col, Image, Layout, Menu, Row } from "antd";
+import { Avatar, Button, Col, Image, Layout, Menu, Row } from "antd";
 import { useAuth } from "hooks/useAuth";
 import type { MenuProps } from "antd";
 import { useNavigate } from "react-router";
-import * as styles from "./index.module.css";
 import { styled } from "styled-components";
 
 const StyledMenu = styled(Menu)`
@@ -19,15 +18,20 @@ const StyledMenu = styled(Menu)`
 export const AppHeader = () => {
   const [langDropdownVisible, setLangDropdownVisibleVisible] =
     useState<boolean>(false);
-  const { userProfile } = useAuth();
+  // const { userProfile } = useAuth();
+  const userProfile = {
+    firstName: "Nam Sơn",
+    lastName: "Phạm",
+    role: "ADMIN"
+    // role: ""
+  }
 
-  const username = `${userProfile?.firstName || ""} ${
-    userProfile?.lastName || ""
-  }`;
+  const username = `${userProfile?.firstName || ""} ${userProfile?.lastName || ""
+    }`;
 
   const navigate = useNavigate();
 
-  const items: MenuProps["items"] = [
+  const items: MenuProps["items"] = userProfile?.role === "ADMIN" ? [
     {
       label: "IELTS Test",
       key: "test",
@@ -55,6 +59,23 @@ export const AppHeader = () => {
         {
           label: "User Accounts",
           key: "account:2",
+        },
+      ],
+    },
+  ] : [
+    {
+      label: "IELTS Test",
+      key: "test",
+      children: [
+        {
+          label: "New Test",
+          key: "test:1",
+          onClick: () => navigate("/post-test"),
+        },
+        {
+          label: "IELTS Library",
+          key: "test:2",
+          onClick: () => console.log("test:2"),
         },
       ],
     },
@@ -107,21 +128,23 @@ export const AppHeader = () => {
                 >
                   Warrior
                 </div>
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: "15px",
-                    lineHeight: 0.5,
-                    textAlign: "right",
-                  }}
-                >
-                  Admin tools
-                </div>
+                {userProfile?.role === "ADMIN" &&
+                  (<div
+                    style={{
+                      color: "white",
+                      fontSize: "15px",
+                      lineHeight: 0.5,
+                      textAlign: "right",
+                    }}
+                  >
+                    Admin tools
+                  </div>)
+                }
               </div>
             </div>
           </Col>
 
-          <Col xs={{ span: 0, order: 4 }} lg={{ span: 14, order: 2 }}>
+          <Col xs={{ span: 0, order: 4 }} lg={{ span: 13, order: 2 }}>
             <div
               style={{
                 display: "flex",
@@ -144,22 +167,30 @@ export const AppHeader = () => {
               />
             </div>
           </Col>
-          <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 3 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                cursor: "pointer",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Avatar src={"avatar.png"} size={50} />
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ color: "white", fontSize: "15px" }}>Nam Pham</div>
-                <div style={{ color: "white", fontSize: "15px" }}>Admin</div>
+          <Col xs={{ span: 11, order: 3 }} lg={{ span: 4, order: 3 }}>
+            {userProfile?.role === "ADMIN" &&
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  cursor: "pointer",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Avatar src={"avatar.png"} size={50} />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{ color: "white", fontSize: "15px" }}>{username}</div>
+                  <div style={{ color: "white", fontSize: "15px" }}>{userProfile?.role?.toLowerCase()}</div>
+                </div>
               </div>
-            </div>
+            }
+            {!userProfile?.role && (
+              <div>
+                <Button ghost style={{ marginRight: '.5rem' }}>Register</Button>
+                <Button>Login</Button>
+              </div>
+            )}
           </Col>
         </Row>
       </Layout.Header>

@@ -35,7 +35,7 @@ export const flattenRoutes = flatten(routes);
 const renderRoute = (routes: TRoute[]): React.ReactNode[] =>
   routes.map(({ redirectTo, children, component: Component, path }) => {
     const CustomComponent = withCustomErrorBoundary(
-      path !== "*" ? /*withAuthorization(Component)*/ Component : Component
+      path !== "*" ? withAuthorization(Component) : Component
     );
     if (children && children.length > 0) {
       return (
