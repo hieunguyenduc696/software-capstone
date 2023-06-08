@@ -5,15 +5,15 @@
   "author": "19120508 <hieu.nguyen@southasiaservices.com>",
   "license": "MIT",
   "scripts": {
-
     "start": "concurrently \"yarn\" \"cd software-capstone-fe && yarn && yarn start\" \"cd software-capstone-be && yarn && yarn start\"",
     "winstart": "concurrently \"yarn\" \"cd software-capstone-fe && yarn && yarn winstart\" \"cd software-capstone-be && yarn && yarn start\"",
     "dev": "concurrently \"cd software-capstone-fe && yarn start\" \"cd software-capstone-be && yarn start\"",
-
     "windev": "concurrently \"cd software-capstone-fe && yarn winstart\" \"cd software-capstone-be && yarn start\""
   },
   "dependencies": {
+    "@types/cors": "^2.8.13",
     "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
     "styled-components": "^6.0.0-rc.2",
     "yarn": "^1.22.19"
   }
