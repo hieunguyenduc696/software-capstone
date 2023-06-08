@@ -3,6 +3,7 @@ import styles from "./AddTest.module.css";
 import { Row, Col, Tabs, Button } from "antd";
 import { AppHeader } from "components";
 import type { TabsProps } from "antd";
+import { message } from "antd";
 
 import ReadingParagraph from "components/ReadingParagraph";
 import QuestionSection from "components/QuestionSection";
@@ -10,13 +11,18 @@ import {
   QuestionGroupInfo,
   generateReadingQuestionDetails,
   generateReadingParagraphs,
-  IReadingParagraph,
+  formatSections,
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
+import { test } from "services/AdminService";
+import { HTTP_METHOD } from "config/common";
 
 const NewReadingPart = () => {
+  const { state } = useLocation();
+  const { title } = state;
   const navigate = useNavigate();
+
   const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
   const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
   const [questionDetails, setQuestionDetails] = useState(
@@ -85,14 +91,61 @@ const NewReadingPart = () => {
 
   const handleCancelClick = () => {
     navigate("/post-test");
-  }
+  };
 
-  const handleSubmit = () => {
-    console.log("PARAGRAPHS: ", paragraphs);
-    console.log("QUESTION DETAILS");
-    console.table(questionDetails);
+  const [messageApi, contextHolder] = message.useMessage();
 
-    navigate("/post-test");
+  const invalidateDetails = (order: number) => {
+    messageApi.open({
+      type: "error",
+      content: `Question ${order} is not validate`,
+    });
+  };
+
+  const handleSubmit = async () => {
+    // console.log("PARAGRAPHS: ", paragraphs);
+    // console.log("QUESTION DETAILS");
+    // console.table(questionDetails);
+
+    // const sections = [];
+
+    // const sectionOneQuestions = questionDetails.slice(0, 13 + 1);
+
+    // // check if anything is null -- here
+    // for (let i = 0; i < sectionOneQuestions.length; i++) {
+    //   if (sectionOneQuestions[i].type === null ||
+    //     sectionOneQuestions[i].question === null ||
+    //     sectionOneQuestions[i].options === null ||
+    //     sectionOneQuestions[i].answer === null) {
+    //       invalidateDetails(sectionOneQuestions[i].order);
+    //       return;
+    //   }
+    // }
+
+    // navigate("/new-test");
+    // const templates = formatSections(sectionOneQuestions);
+
+    // const sectionOne = {
+    //   section_index: 1,
+    //   templates: templates,
+    // }
+
+    // console.log(sectionOne);
+
+    //const res = await test();
+
+    const response = await fetch("http://localhost:8088/reading-skill/admin/test/test-db", {
+      method: HTTP_METHOD.GET,
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    // console.log(res);
   };
 
   useEffect(() => {
@@ -133,11 +186,12 @@ const NewReadingPart = () => {
           lg={{ span: 12 }}
           style={{
             borderLeft: "2px solid #9F9F9F",
-            height: "83vh",
-            maxHeight: "83vh",
+            height: "85vh",
+            maxHeight: "85vh",
             overflowY: "auto",
           }}
         >
+          {contextHolder}
           <ReadingTestContext.Provider
             value={{ questionDetails, setQuestionDetails }}
           >
@@ -170,10 +224,10 @@ const NewReadingPart = () => {
       <div className={`${styles["footer"]}`}>
         <div className={`${styles["footer-children"]}`}>
           <img
-            src="default.png"
+            src="/default.png"
             style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
           />
-          <p style={{ color: "white" }}>IELTS Recent mock test</p>
+          <p style={{ color: "white" }}>{title}</p>
         </div>
 
         <div
@@ -201,7 +255,6 @@ const NewReadingPart = () => {
           </Button>
 
           <Button
-            icon={<img src="save_icon.png" />}
             className={`${styles["button"]} ${styles["primary"]}`}
             onClick={handleSubmit}
           >

@@ -97,7 +97,7 @@ export const AppHeader = () => {
               >
                 IELTS
               </span>
-              <Image src="sword.png" height={42} preview={false} />
+              <Image src="/sword.png" height={42} preview={false} />
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
