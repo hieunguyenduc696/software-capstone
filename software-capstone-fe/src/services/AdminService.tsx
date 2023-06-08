@@ -11,7 +11,7 @@ export const createTest = async (data: any) => {
 }
 
 export const getTestWithID = async (data: any) => {
-    console.log(data?.ID);
+    console.log('ID: ',data?.ID);
     const res = await makeRequest(HTTP_METHOD.GET,READING_URI + ADMIN_URI + `/test/${data?.ID}`, null);
     return res;
 }

@@ -15,7 +15,7 @@ import {
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
 import { useNavigate, useLocation } from "react-router";
-import { test } from "services/AdminService";
+import { getTestWithID, test } from "services/AdminService";
 import { HTTP_METHOD } from "config/common";
 
 const NewReadingPart = () => {
@@ -132,11 +132,8 @@ const NewReadingPart = () => {
 
     // console.log(sectionOne);
 
-    //const res = await test();
-
-    const response = await fetch("http://localhost:8088/reading-skill/admin/test/test-db", {
+    const response = await fetch("http://localhost:8090/reading-skill/admin/test/1", {
       method: HTTP_METHOD.GET,
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -145,6 +142,7 @@ const NewReadingPart = () => {
     const jsonData = await response.json();
     console.log(jsonData);
 
+    // const res = await getTestWithID({ ID: 1});
     // console.log(res);
   };
 
