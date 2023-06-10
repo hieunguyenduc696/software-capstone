@@ -214,25 +214,7 @@ export const formatSections = (questionsOfSection: IQuestionDetail[]) => {
       first_index: multipleChoiceQuestions[0]?.question_index,
     })
   }
-
-  // const templates = [
-  //   {
-  //     ...TrueFalseTemplate,
-  //     questions: trueFalseQuestions,
-  //     first_index: trueFalseQuestions[0]?.order,
-  //   },
-  //   {
-  //     ...MultipleChoiceTemplate,
-  //     questions: multipleChoiceQuestions,
-  //     first_index: multipleChoiceQuestions[0]?.order,
-  //   },
-  //   {
-  //     ...ShortAnswer,
-  //     questions: shortAnswerQuestions,
-  //     first_index: shortAnswerQuestions[0]?.order,
-  //   },
-  // ];
-
+  
   templates.sort(compare);
 
   for (let i = 0; i < templates.length; i++) {

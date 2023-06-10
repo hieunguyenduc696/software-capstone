@@ -103,8 +103,6 @@ const NewReadingPart = () => {
     });
   };
 
-
-
   const handleSubmit = async () => {
     // console.log("PARAGRAPHS: ", paragraphs);
     console.log("QUESTION DETAILS: ", questionDetails);
@@ -113,11 +111,13 @@ const NewReadingPart = () => {
     const sections = [];
     let cloneQuestionDetails = questionDetails;
 
+    console.log("RAW: ", questionDetails)
+    console.log("CLONE: ", cloneQuestionDetails)
+
     // slice section
-    const sectionOneQuestions = cloneQuestionDetails.slice(0, 13 + 1); 
+    const sectionOneQuestions = cloneQuestionDetails.slice(0, 13 + 1);
     const sectionTwoQuestions = cloneQuestionDetails.slice(14, 26 + 1);
     const sectionThreeQuestions = cloneQuestionDetails.slice(27, 39 + 1);
-
 
     const rawSections = [];
 
@@ -125,8 +125,8 @@ const NewReadingPart = () => {
     rawSections.push(sectionTwoQuestions);
     rawSections.push(sectionThreeQuestions);
 
-    console.log('RAW SECTIONS: ', rawSections);
-    
+    console.log("RAW SECTIONS: ", rawSections);
+
     // validate each section
     // for (let i = 0; i < rawSections.length; i++) {
     //   let invalidQuestionIndex = checkSectionValidation(rawSections[i]);
@@ -136,47 +136,49 @@ const NewReadingPart = () => {
     //   }
     // }
 
-    // improve template index nhe 
+    // improve template index nhe
+    let templateIndex = 1;
     for (let i = 0; i < rawSections.length; i++) {
       let templates = formatSections(rawSections[i]);
+      let convertedTemplates = templates.map(template => {
+        const result = {
+          ...template,
+          template_index: templateIndex,
+        }
+
+        templateIndex++;
+
+        return result;
+      })
       sections.push({
         section_index: i + 1,
         section_type: 0,
         paragraph: {
           wallpaper: "image_url",
           title: "paragraph title",
-          content: "paragraph content"
-      },
-        templates: templates,
-      })
+          content: "paragraph content",
+        },
+        templates: convertedTemplates,
+      });
     }
 
-    console.log('SECTIONS: ',sections);
+    console.log("SECTIONS: ", sections);
 
-    const data = [{
-      "title": "TEST 1 - DO NOT USE",
-      "test_type": READING_TYPE,
-      "test_level": 0,
-      sections: sections,
-    }];
+    const data = [
+      {
+        title: "TEST FINAL",
+        test_type: READING_TYPE,
+        test_level: 0,
+        sections: sections,
+      },
+    ];
 
-
-    console.log({ data: data });
+    console.log('DATA TEST: ',{ data: data });
 
     const res = await createTest({ data: data });
     console.log(res);
 
- 
-    // const templates = formatSections(sectionOneQuestions);
 
-    // const sectionOne = {
-    //   section_index: 1,
-    //   templates: templates,
-    // }
-
-    // navigate("/new-test");
-
-    // console.log(sectionOne);
   };
 
   useEffect(() => {
