@@ -104,7 +104,7 @@ const NewReadingPart = () => {
   };
 
   const handleSubmit = async () => {
-    // console.log("PARAGRAPHS: ", paragraphs);
+    console.log("PARAGRAPHS: ", paragraphs);
     console.log("QUESTION DETAILS: ", questionDetails);
     console.table(questionDetails);
 
@@ -166,7 +166,7 @@ const NewReadingPart = () => {
 
     const data = [
       {
-        title: "TEST FINAL",
+        title: "TEST NO.1",
         test_type: READING_TYPE,
         test_level: 0,
         sections: sections,
@@ -175,8 +175,8 @@ const NewReadingPart = () => {
 
     console.log('DATA TEST: ',{ data: data });
 
-    const res = await createTest({ data: data });
-    console.log(res);
+    // const res = await createTest({ data: data });
+    // console.log(res);
 
 
   };

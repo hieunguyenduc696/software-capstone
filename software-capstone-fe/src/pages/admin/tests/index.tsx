@@ -180,10 +180,6 @@ export function Tests() {
           </Button>
         </div>
 
-        {/* {!loading && (
-         
-        )} */}
-
         <StyledTable
           columns={TestField}
           dataSource={testList}
@@ -197,22 +193,6 @@ export function Tests() {
             onChange: handlePageNumberChange,
           }}
         />
-
-        {/* {loading && (
-          <div
-            style={{
-              width: "90%",
-              height: "200px",
-              margin: "auto",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignContent: "center",
-            }}
-          >
-            <Spin indicator={antIcon} />
-          </div>
-        )} */}
       </div>
     </div>
   );
