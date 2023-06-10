@@ -6,6 +6,7 @@ const ADMIN_URI = "/admin"
 
 
 export const createTest = async (data: any) => {
+    console.log('DATA: ',data);
     const res = await makeRequest(HTTP_METHOD.POST,READING_URI + ADMIN_URI + "/test/create", data);
     return res;
 }

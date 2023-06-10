@@ -9,6 +9,8 @@ import { BackNavigateBox } from "./helper";
 import { Typography } from "antd";
 import NewTestTable from "components/NewTestTable";
 import ReactJson from "react-json-view";
+import { getTestWithID } from "services/AdminService";
+import { HTTP_METHOD } from "config/common";
 
 const { Text } = Typography;
 
@@ -35,8 +37,26 @@ export const NewTest = () => {
     }
   };
 
-  const handleAddReadingSectionClick = () => {
+  const handleAddReadingSectionClick = async () => {
     navigate("/new-test/add-reading", { state: { title: title } });
+
+    // const res = await getTestWithID({ ID: 1});
+    // console.log(res);
+
+    // let headers = new Headers();
+
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
+  
+  
+    // // headers.append('GET', 'POST');
+
+    // const response = await fetch("http://localhost:8090/reading-skill/admin/test/1", {
+    //   method: HTTP_METHOD.GET,
+    //   headers: headers
+    // });
+    // const jsonData = await response.json();
+    // console.log(jsonData);
   };
 
   const handleSaveClick = () => {

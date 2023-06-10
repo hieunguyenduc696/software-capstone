@@ -35,7 +35,7 @@ export const makeRequest = async (
                 })
             ).json();
     
-            console.log(res);
+            console.log('BODY IN MAKE REQUEST: ',JSON.stringify(data || {}));
         }
         if (redirectToLogin && res && res.status === API_STATUS.UNAUTHORIZED) {
             window.location.href = `/login?url=${window.location.pathname}${window.location.search}`;

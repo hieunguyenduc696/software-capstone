@@ -12,11 +12,12 @@ import {
   generateReadingQuestionDetails,
   generateReadingParagraphs,
   formatSections,
+  checkSectionValidation,
+  READING_TYPE,
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
 import { useNavigate, useLocation } from "react-router";
-import { getTestWithID, test } from "services/AdminService";
-import { HTTP_METHOD } from "config/common";
+import { createTest } from "services/AdminService";
 
 const NewReadingPart = () => {
   const { state } = useLocation();
@@ -102,27 +103,70 @@ const NewReadingPart = () => {
     });
   };
 
+
+
   const handleSubmit = async () => {
     // console.log("PARAGRAPHS: ", paragraphs);
-    // console.log("QUESTION DETAILS");
-    // console.table(questionDetails);
+    console.log("QUESTION DETAILS: ", questionDetails);
+    console.table(questionDetails);
 
-    // const sections = [];
+    const sections = [];
+    let cloneQuestionDetails = questionDetails;
 
-    // const sectionOneQuestions = questionDetails.slice(0, 13 + 1);
+    // slice section
+    const sectionOneQuestions = cloneQuestionDetails.slice(0, 13 + 1); 
+    const sectionTwoQuestions = cloneQuestionDetails.slice(14, 26 + 1);
+    const sectionThreeQuestions = cloneQuestionDetails.slice(27, 39 + 1);
 
-    // // check if anything is null -- here
-    // for (let i = 0; i < sectionOneQuestions.length; i++) {
-    //   if (sectionOneQuestions[i].type === null ||
-    //     sectionOneQuestions[i].question === null ||
-    //     sectionOneQuestions[i].options === null ||
-    //     sectionOneQuestions[i].answer === null) {
-    //       invalidateDetails(sectionOneQuestions[i].order);
-    //       return;
+
+    const rawSections = [];
+
+    rawSections.push(sectionOneQuestions);
+    rawSections.push(sectionTwoQuestions);
+    rawSections.push(sectionThreeQuestions);
+
+    console.log('RAW SECTIONS: ', rawSections);
+    
+    // validate each section
+    // for (let i = 0; i < rawSections.length; i++) {
+    //   let invalidQuestionIndex = checkSectionValidation(rawSections[i]);
+    //   if (invalidQuestionIndex !== -1) { // section is not validated
+    //     invalidateDetails(sectionOneQuestions[i].order);
+    //     return;
     //   }
     // }
 
-    // navigate("/new-test");
+    // improve template index nhe 
+    for (let i = 0; i < rawSections.length; i++) {
+      let templates = formatSections(rawSections[i]);
+      sections.push({
+        section_index: i + 1,
+        section_type: 0,
+        paragraph: {
+          wallpaper: "image_url",
+          title: "paragraph title",
+          content: "paragraph content"
+      },
+        templates: templates,
+      })
+    }
+
+    console.log('SECTIONS: ',sections);
+
+    const data = [{
+      "title": "TEST 1 - DO NOT USE",
+      "test_type": READING_TYPE,
+      "test_level": 0,
+      sections: sections,
+    }];
+
+
+    console.log({ data: data });
+
+    const res = await createTest({ data: data });
+    console.log(res);
+
+ 
     // const templates = formatSections(sectionOneQuestions);
 
     // const sectionOne = {
@@ -130,20 +174,9 @@ const NewReadingPart = () => {
     //   templates: templates,
     // }
 
+    // navigate("/new-test");
+
     // console.log(sectionOne);
-
-    const response = await fetch("http://localhost:8090/reading-skill/admin/test/1", {
-      method: HTTP_METHOD.GET,
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
-    const jsonData = await response.json();
-    console.log(jsonData);
-
-    // const res = await getTestWithID({ ID: 1});
-    // console.log(res);
   };
 
   useEffect(() => {

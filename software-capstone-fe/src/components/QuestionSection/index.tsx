@@ -129,7 +129,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({
           <div className={`${styles["type-options"]}`}>
             {TYPE_OF_QUESTION.map((item: IQuestionItem) => {
               const [firstLine, secondLine] = item.name.split("-");
-              console.log(item.icon);
               return (
                 <QuestionItem
                   icon={item.icon}

@@ -57,28 +57,26 @@ export const READING_SECTION_LIMIT: IReadingSectionLimit[] = [
   {
     sectionKey: 1,
     start: 1,
-    end: 13,
+    end: 14,
   },
   {
     sectionKey: 2,
-    start: 14,
-    end: 26,
+    start: 15,
+    end: 27,
   },
   {
     sectionKey: 3,
-    start: 27,
+    start: 28,
     end: 40,
   },
-  // {
-  //     sectionKey: 4,
-  //     start: 41,
-  //     end: 53,
-  // }
 ];
 
 export const MAX_QUESTION_SECTION_ONE = 18;
 export const DEFAULT_NUMBER_OF_QUESTION = 3;
 export const MAX_READING_QUESTION = 40;
+
+export const READING_TYPE = 0;
+export const LISTENING_TYPE = 1;
 
 // name: separated by '-' means firstLine-secondLine when displayed in AddTest.jsx
 export const TYPE_OF_QUESTION: IQuestionItem[] = [
@@ -105,40 +103,70 @@ export const TYPE_OF_QUESTION: IQuestionItem[] = [
 
 export const QUESTION_TEMPLATES = {
   "TRUE-FALSE-NOT-GIVEN": {
-    template_type_id: TYPE_OF_QUESTION[0].index,
+    template_type_id: 1,
 
-    template_index: TYPE_OF_QUESTION[0].index,
-    title: "",
+    template_index: 0, // need to be updated
+    title: "TEST True False Not Given",
     content: "",
     expand_clumn: null,
   },
   "SHORT-ANSWER": {
-    template_type_id: TYPE_OF_QUESTION[1].index,
+    template_type_id: 3,
 
-    template_index: TYPE_OF_QUESTION[1].index,
-    title: "",
+    template_index: 0, // need to be updated
+    title: "TEST Short Answer",
     content: "",
     expand_clumn: null,
   },
   "MULTIPLE-CHOICE": {
-    template_type_id: TYPE_OF_QUESTION[2].index,
+    template_type_id: 2,
+    title: "TEST Multiple Choice", 
 
-    template_index: TYPE_OF_QUESTION[2].index,
-    title: "",
+    template_index: 0, // need to be updated
     content: "",
     expand_clumn: null,
   },
 };
 
-function compare( a: any, b: any ) {
-    if ( a.first_index < b.first_index ){
-      return -1;
-    }
-    if ( a.first_index > b.first_index ){
-      return 1;
-    }
-    return 0;
+function compare(a: any, b: any) {
+  if (a.first_index < b.first_index) {
+    return -1;
   }
+  if (a.first_index > b.first_index) {
+    return 1;
+  }
+  return 0;
+}
+
+export const checkSectionValidation = (questionOfSection: IQuestionDetail[]) => {
+  for (let i = 0; i < questionOfSection.length; i++) {
+    if (questionOfSection[i].type === null ||
+      questionOfSection[i].question === null ||
+      questionOfSection[i].options === null ||
+      questionOfSection[i].answer === null) {
+        return i;
+    }
+  }
+
+  return -1;
+};
+
+const convertToFormatQuestion = (question: IQuestionDetail) => {
+  const convertedQuestion: any = {
+    ...question,
+    question_index: question.order,
+    answers: [{content: question.answer, options: null}],
+    content: question.question,
+    score: 1,
+  }
+
+  delete convertedQuestion.answer;
+  // delete convertedQuestion.order;
+  delete convertedQuestion.type;
+  delete convertedQuestion.question;
+
+  return convertedQuestion;
+}
 
 export const formatSections = (questionsOfSection: IQuestionDetail[]) => {
   const TrueFalseTemplate = QUESTION_TEMPLATES["TRUE-FALSE-NOT-GIVEN"];
@@ -150,45 +178,66 @@ export const formatSections = (questionsOfSection: IQuestionDetail[]) => {
 
   for (let i = 0; i < questionsOfSection.length; i++) {
     if (questionsOfSection[i].type === "TRUE-FALSE-NOT-GIVEN") {
-      trueFalseQuestions.push({
-        ...questionsOfSection[i],
-        question_index: questionsOfSection[i].order,
-        content: questionsOfSection[i].question,
-      });
+      const converted = convertToFormatQuestion(questionsOfSection[i]);
+      trueFalseQuestions.push(converted);
     } else if (questionsOfSection[i].type === "MULTIPLE-CHOICE") {
-      multipleChoiceQuestions.push({
-        ...questionsOfSection[i],
-        question_index: questionsOfSection[i].order,
-        content: questionsOfSection[i].question,
-      });
+      const converted = convertToFormatQuestion(questionsOfSection[i]);
+      multipleChoiceQuestions.push(converted);
     } else if (questionsOfSection[i].type === "SHORT-ANSWER") {
-      shortAnswerQuestions.push({
-        ...questionsOfSection[i],
-        question_index: questionsOfSection[i].order,
-        content: questionsOfSection[i].question,
-      });
+      const converted = convertToFormatQuestion(questionsOfSection[i]);
+      shortAnswerQuestions.push(converted);
     }
-  };
+  }
 
-  const templates = [
-    {
-      ...TrueFalseTemplate,
-      questions: trueFalseQuestions,
-      first_index: trueFalseQuestions[0]?.order,
-    },
-    {
-      ...MultipleChoiceTemplate,
-      questions: multipleChoiceQuestions,
-      first_index: multipleChoiceQuestions[0]?.order,
-    },
-    {
+  const templates = [];
+
+  if (shortAnswerQuestions.length > 0) {
+    templates.push({
       ...ShortAnswer,
       questions: shortAnswerQuestions,
-      first_index: shortAnswerQuestions[0]?.order,
-    },
-  ];
+      first_index: shortAnswerQuestions[0]?.question_index,
+    });
+  }
+
+  if (trueFalseQuestions.length > 0) {
+    templates.push({
+      ...TrueFalseTemplate,
+      questions: trueFalseQuestions,
+      first_index: trueFalseQuestions[0]?.question_index,
+    })
+  }
+
+  if (multipleChoiceQuestions.length > 0) {
+    templates.push({
+      ...MultipleChoiceTemplate,
+      questions: multipleChoiceQuestions,
+      first_index: multipleChoiceQuestions[0]?.question_index,
+    })
+  }
+
+  // const templates = [
+  //   {
+  //     ...TrueFalseTemplate,
+  //     questions: trueFalseQuestions,
+  //     first_index: trueFalseQuestions[0]?.order,
+  //   },
+  //   {
+  //     ...MultipleChoiceTemplate,
+  //     questions: multipleChoiceQuestions,
+  //     first_index: multipleChoiceQuestions[0]?.order,
+  //   },
+  //   {
+  //     ...ShortAnswer,
+  //     questions: shortAnswerQuestions,
+  //     first_index: shortAnswerQuestions[0]?.order,
+  //   },
+  // ];
 
   templates.sort(compare);
+
+  for (let i = 0; i < templates.length; i++) {
+    delete templates[i].first_index;
+  }
 
   return templates;
 };
