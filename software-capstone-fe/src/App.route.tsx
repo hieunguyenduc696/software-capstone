@@ -6,17 +6,27 @@ import { Route, Routes } from "react-router";
 import { TRoute } from "types";
 import { withAuthorization, withCustomErrorBoundary } from "HOC";
 import { flatten } from "utils";
-import { PostTestRoutes } from "pages/PostTest";
-import { AddTestRoutes } from "pages/Create";
-import { TestRoutes } from "pages/Test";
+// import { PostTestRoutes } from "pages/PostTest";
+// import { AddTestRoutes } from "pages/Create";
+// import { TestRoutes } from "pages/Test";
+import { TestLibraryPath, NewTestPath, NewReadingPath } from "pages/admin/tests/route";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
   path: "/",
   page: "accessible",
-  children: [...NotFoundRoutes, ...DashboardRoutes, ...PostTestRoutes, ...AddTestRoutes, ...TestRoutes],
-};
+  children: [
+    ...NotFoundRoutes,
+    ...DashboardRoutes,
+    // ...PostTestRoutes,
+    // ...AddTestRoutes,
+    // ...TestRoutes,
 
+    ...TestLibraryPath,
+    ...NewTestPath,
+    ...NewReadingPath
+  ],
+};
 
 export const routes: TRoute[] = [SignInRoutes, MainLayoutRoutes];
 

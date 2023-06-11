@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styles from "./index.module.css";
 import { Row, Col, Tabs, Collapse, Typography, message, Button } from "antd";
 import QuestionItem from "components/QuestionItem/QuestionItem";
@@ -9,6 +9,7 @@ import {
   IReadingSectionLimit,
   READING_SECTION_LIMIT,
   DEFAULT_NUMBER_OF_QUESTION,
+  IQuestionDetail,
 } from "services/QuestionTypeService";
 
 import { MehOutlined } from "@ant-design/icons";
@@ -16,6 +17,7 @@ import TrueFalseNotGivenTemplate from "components/QuestionTemplate/TrueFalseNotG
 import ShortAnswerTemplate from "components/QuestionTemplate/ShortAnswerTemplate";
 import MultipleChoiceTemplate from "components/QuestionTemplate/MultipleChoiceTemplate";
 import MappingHeadingTemplate from "components/QuestionTemplate/MappingHeadingTemplate";
+import ReadingTestContext from "context/ReadingTestContext";
 
 interface QuestionSectionProps {
   sectionKey: number;
@@ -23,19 +25,27 @@ interface QuestionSectionProps {
   setQuestionGroupCallback: (prev: any) => any;
 }
 
-const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionGroup, setQuestionGroupCallback }: QuestionSectionProps) => {
-  const [questionTemplates, setQuestionTemplates] = useState<string[]>(questionGroup.map(item => item.type));
+const QuestionSection: React.FC<QuestionSectionProps> = ({
+  sectionKey,
+  questionGroup,
+  setQuestionGroupCallback,
+}: QuestionSectionProps) => {
+  const [questionTemplates, setQuestionTemplates] = useState<string[]>(
+    questionGroup.map((item) => item.type)
+  );
   const [messageApi, contextHolder] = message.useMessage();
   // check
   const [countQuestion, setCountQuestion] = useState<number>(0);
-  //   const [questionGroup, setQuestionGroupCallback] = useState<QuestionGroupInfo[]>([]);
 
-  const { end: endQuestion, start: startQuestion } = READING_SECTION_LIMIT[sectionKey - 1];
+  const { end: endQuestion, start: startQuestion } =
+    READING_SECTION_LIMIT[sectionKey - 1];
+  const { questionDetails, setQuestionDetails } =
+    useContext(ReadingTestContext);
 
   const duplicatedTypeOfQuestionError = () => {
     messageApi.open({
       type: "error",
-      content: "This type of question has already existed",
+      content: "This type of question has already existed in this section",
     });
   };
 
@@ -45,22 +55,51 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
     if (!duplicated) {
       setQuestionGroupCallback((prev: QuestionGroupInfo[]) => {
         if (prev?.length === 0) {
+          const from = startQuestion;
+          const to = startQuestion + DEFAULT_NUMBER_OF_QUESTION - 1;
+
+          setQuestionDetails((prev: IQuestionDetail[]) => {
+            return prev?.map((item: IQuestionDetail) => {
+              if (item?.order <= to && item?.order >= from) {
+                return {
+                  ...item,
+                  type: typeOfQuestion,
+                };
+              }
+              return item;
+            });
+          });
+
           return [
             {
               type: typeOfQuestion,
-              from: startQuestion,
-              to: startQuestion + DEFAULT_NUMBER_OF_QUESTION - 1,
+              from: from,
+              to: to,
               index: 0,
             },
           ];
         } else {
           const start = prev[prev.length - 1].to + 1;
+          const end = start + DEFAULT_NUMBER_OF_QUESTION - 1;
+
+          setQuestionDetails((prev: IQuestionDetail[]) => {
+            return prev?.map((item: IQuestionDetail) => {
+              if (item?.order <= end && item?.order >= start) {
+                return {
+                  ...item,
+                  type: typeOfQuestion,
+                };
+              }
+              return item;
+            });
+          });
+
           return [
             ...prev,
             {
               type: typeOfQuestion,
               from: start,
-              to: start + DEFAULT_NUMBER_OF_QUESTION - 1,
+              to: end,
               index: prev.length,
             },
           ];
@@ -146,14 +185,6 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ sectionKey, questionG
             else if (item === TYPE_OF_QUESTION[2].type)
               return (
                 <MultipleChoiceTemplate
-                  initialFrom={questionGroup[index].from}
-                  initialTo={questionGroup[index].to}
-                  updateQuestionGroupInfoCallback={setQuestionGroupCallback}
-                />
-              );
-            else if (item === TYPE_OF_QUESTION[3].type) 
-              return (
-                <MappingHeadingTemplate
                   initialFrom={questionGroup[index].from}
                   initialTo={questionGroup[index].to}
                   updateQuestionGroupInfoCallback={setQuestionGroupCallback}

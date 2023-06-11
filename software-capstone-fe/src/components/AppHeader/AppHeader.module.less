@@ -1,3 +1,5 @@
+@import 'antd/dist/antd.css';
+
 .top-header {
   background-color: white;
   display: flex;
@@ -30,4 +32,14 @@
     color: #566371;
     cursor: pointer;
   }
+}
+
+::global.ant-menu-title-content:hover {
+  border-bottom: none;
+  color: white !important;
+}
+
+:global(.ant-menu-title-content:hover) {
+  color: #FFFFFF;
+  border-bottom: none;
 }

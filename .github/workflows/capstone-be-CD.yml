@@ -1,0 +1,40 @@
+name: capstone-be CD
+
+on:
+  push:
+    branches: [ "be-production" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./software-capstone-be
+    steps:
+    - name: Connect to server
+      uses: appleboy/ssh-action@master 
+      with:
+        host: ${{ secrets.HOST }}
+        key: ${{ secrets.SSH_KEY }}
+        username: ${{ secrets.USER_NAME }}
+        command_timeout: 20m
+        script_stop: true
+        script: |
+         cd software-capstone
+         git pull
+         cd software-capstone-be
+         sudo docker build --platform linux/amd64 -t namphamhcmus1906/capstone:be.production . 
+         cd -
+         sudo docker stop be_server1_production || true 
+         sudo docker rm be_server1_production || true
+         sudo docker run -m=4g -t -d -p ${{ secrets.APP_PORT_1 }}:${{ secrets.APP_PORT_1 }} \
+           --name be_server1_production \
+          --env APP_PORT=${{ secrets.APP_PORT_1 }} \
+          --env DB_PORT=${{ secrets.DB_PORT }} \
+          --env DB_HOST=${{ secrets.DB_HOST }} \
+          --env DB_USER=${{ secrets.DB_USER }} \
+          --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+          --env DB_NAME=${{ secrets.DB_NAME }} \
+          --env DB_CONNECTION_LIMIT= ${{ secrets.DB_CONNECTION_LIMIT }} \
+          namphamhcmus1906/capstone:be.production
+   
