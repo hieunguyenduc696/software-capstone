@@ -12,5 +12,5 @@ export const RootPaths = {
   NEW_TEST: "/new-test",
   NEW_LISTENING_PART: "/new-test/add-listening",
   NEW_READING_PART: "/new-test/add-reading",
-
+  EDIT_READING_PART: "/tests/detail/:id/reading"
 };

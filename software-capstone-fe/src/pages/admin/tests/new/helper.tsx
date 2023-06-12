@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 export const BackNavigateBox = () => {
     const navigate = useNavigate();
     const handleBackClick = () => {
-        navigate("/test");
+        navigate("/tests");
       };
   return (
     <div

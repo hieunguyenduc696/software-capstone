@@ -1,7 +1,7 @@
 import { Button, Col, Image, Modal, Row } from "antd";
 import { AppHeader, UploadImage } from "components";
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import styles from "./PostTest.module.css";
 
 import { BackNavigateBox } from "./helper";
@@ -19,6 +19,9 @@ export const NewTest = () => {
   const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
   const [openDialog, setOpenDialog] = useState(false);
+
+  const { state } = useLocation();
+
   const navigate = useNavigate();
 
   const handleTitleChange = (e: any) => {
@@ -27,7 +30,7 @@ export const NewTest = () => {
       setTitle(e.target.value);
       setErr({ ...err, title: "" });
     }
-    !len && setErr({ ...err, title: "Title is require" });
+    !len && setErr({ ...err, title: "Title is required" });
   };
 
   const handleEditButtonClick = () => {
@@ -38,25 +41,11 @@ export const NewTest = () => {
   };
 
   const handleAddReadingSectionClick = async () => {
-    navigate("/new-test/add-reading", { state: { title: title } });
-
-    // const res = await getTestWithID({ ID: 1});
-    // console.log(res);
-
-    // let headers = new Headers();
-
-    // headers.append('Content-Type', 'application/json');
-    // headers.append('Accept', 'application/json');
-  
-  
-    // // headers.append('GET', 'POST');
-
-    // const response = await fetch("http://localhost:8090/reading-skill/admin/test/1", {
-    //   method: HTTP_METHOD.GET,
-    //   headers: headers
-    // });
-    // const jsonData = await response.json();
-    // console.log(jsonData);
+    if (title?.length === 0 || title === "") {
+      setErr({ ...err, title: "Title is required" });
+    } else {
+      navigate("/new-test/add-reading", { state: { title: title } });
+    }
   };
 
   const handleSaveClick = () => {
@@ -68,6 +57,15 @@ export const NewTest = () => {
   const handleQuestionChange = (selected: string) => {
     setSelectedAnswer(selected);
   };
+
+  useEffect(() => {
+    if (state) {
+      let { title: _title} = state;
+      if (_title) {
+        setTitle(_title);
+      }
+    }
+  }, []);
 
   return (
     <div>
@@ -138,7 +136,7 @@ export const NewTest = () => {
                   </Col>
                   <Col span={5}>
                     <Image
-                      src="edit.png"
+                      src="/edit.png"
                       style={{
                         width: "1.5rem",
                         height: "1.5rem",

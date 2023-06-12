@@ -41,6 +41,8 @@ const NewReadingPart = () => {
     QuestionGroupInfo[]
   >([]);
 
+  const [uploading, setUploading] = useState(false);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -91,7 +93,7 @@ const NewReadingPart = () => {
   };
 
   const handleCancelClick = () => {
-    navigate("/post-test");
+    navigate("/new-test");
   };
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -103,16 +105,25 @@ const NewReadingPart = () => {
     });
   };
 
+  const testCreatedToast = () => {
+    messageApi.open({
+      type: "success",
+      content: `${title}'s Reading Part is created successfully`
+    })
+  }
+
   const handleSubmit = async () => {
-    console.log("PARAGRAPHS: ", paragraphs);
-    console.log("QUESTION DETAILS: ", questionDetails);
-    console.table(questionDetails);
+    // console.log("PARAGRAPHS: ", paragraphs);
+    // console.log("QUESTION DETAILS: ", questionDetails);
+    // console.table(questionDetails);
+
+    console.log(firstQuestionGroup);
 
     const sections = [];
     let cloneQuestionDetails = questionDetails;
 
-    console.log("RAW: ", questionDetails)
-    console.log("CLONE: ", cloneQuestionDetails)
+    // console.log("RAW: ", questionDetails)
+    // console.log("CLONE: ", cloneQuestionDetails)
 
     // slice section
     const sectionOneQuestions = cloneQuestionDetails.slice(0, 13 + 1);
@@ -128,13 +139,13 @@ const NewReadingPart = () => {
     console.log("RAW SECTIONS: ", rawSections);
 
     // validate each section
-    // for (let i = 0; i < rawSections.length; i++) {
-    //   let invalidQuestionIndex = checkSectionValidation(rawSections[i]);
-    //   if (invalidQuestionIndex !== -1) { // section is not validated
-    //     invalidateDetails(sectionOneQuestions[i].order);
-    //     return;
-    //   }
-    // }
+    for (let i = 0; i < rawSections.length; i++) {
+      let invalidQuestionIndex = checkSectionValidation(rawSections[i]);
+      if (invalidQuestionIndex !== -1) { // section is not validated
+        invalidateDetails(sectionOneQuestions[i].order);
+        return;
+      }
+    }
 
     // improve template index nhe
     let templateIndex = 1;
@@ -155,18 +166,16 @@ const NewReadingPart = () => {
         section_type: 0,
         paragraph: {
           wallpaper: "image_url",
-          title: "paragraph title",
-          content: "paragraph content",
+          title: paragraphs[i].title,
+          content: paragraphs[i].content,
         },
         templates: convertedTemplates,
       });
     }
 
-    console.log("SECTIONS: ", sections);
-
     const data = [
       {
-        title: "TEST NO.1",
+        title: title,
         test_type: READING_TYPE,
         test_level: 0,
         sections: sections,
@@ -175,10 +184,19 @@ const NewReadingPart = () => {
 
     console.log('DATA TEST: ',{ data: data });
 
+    // setUploading(true);
     // const res = await createTest({ data: data });
     // console.log(res);
 
+    // if (res?.code === 0) {
+    //   testCreatedToast();
+    // };
 
+    // setUploading(false);
+
+    // if (!uploading && res?.code === 0) {
+    //   navigate("/new-test", { state: { title: title } })
+    // }
   };
 
   useEffect(() => {

@@ -13,13 +13,16 @@ const { TextArea } = Input;
 interface ReadingParagraphProps {
   sectionKey: number;
   setReadingParagraphsCallback: (prev: any) => void;
+  paragraphs?: IReadingParagraph[] | null;
 }
 
 const ReadingParagraph: React.FC<ReadingParagraphProps> = ({
   sectionKey,
   setReadingParagraphsCallback,
+  paragraphs = null,
 }: ReadingParagraphProps) => {
   const [title, setTitle] = useState<string>();
+  const [content, setContent] = useState<string>();
   const titleRef = useRef<HTMLInputElement>(null);
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (titleRef.current) {
@@ -38,17 +41,12 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({
     }
   };
 
-  const [content, setContent] = useState<string>("Enter content");
+
   const contentRef = useRef<HTMLInputElement>(null);
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    console.log(event);
-    console.log(event.target.value);
-    console.log(event.target.innerHTML);
-
     setContent(event.target.value);
-    console.log(event.target.value);
     setReadingParagraphsCallback((prev: IReadingParagraph[]) => {
       return prev?.map((item: IReadingParagraph) => {
         if (item.order === sectionKey) {
@@ -107,6 +105,19 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({
       return () => URL.revokeObjectURL(objectUrl);
     }
   }, [image]);
+
+  useEffect(() => {
+    if (paragraphs) {
+      const paragraph = paragraphs[sectionKey - 1];
+      const initialTitle = paragraph.title;
+      const initialContent = paragraph.content;
+
+      if (initialTitle)
+        setTitle(initialTitle);
+      if (initialContent) 
+        setContent(initialContent);
+    }
+  }, [])
 
 
   return (
@@ -218,8 +229,8 @@ const ReadingParagraph: React.FC<ReadingParagraphProps> = ({
           placeholder={`Enter paragraph content for Section ${sectionKey}`}
           autoSize={{ minRows: 3 }}
           bordered={false}
-          //onChange={event => setContent(event.target.value)}
           onChange={handleContentChange}
+          value={content}
         />
       </div>
     </>
