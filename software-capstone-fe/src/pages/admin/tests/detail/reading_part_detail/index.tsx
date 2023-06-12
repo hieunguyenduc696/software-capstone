@@ -149,11 +149,18 @@ const EditReadingPart = () => {
         console.log('questionGroup: ', questionGroupInfo);
 
         if (sectionIndex === 0) { // sectionOne
-            setFirstQuestionGroup([...firstQuestionGroup, questionGroupInfo]);
+            // setFirstQuestionGroup([...firstQuestionGroup, questionGroupInfo]);
+            setFirstQuestionGroup((prev: QuestionGroupInfo[]) => {
+                return [...prev, questionGroupInfo];
+            })
         } else if (sectionIndex === 1) {
-            setSecondQuestionGroup([...secondQuestionGroup, questionGroupInfo]);
+            setSecondQuestionGroup((prev: QuestionGroupInfo[]) => {
+                return [...prev, questionGroupInfo];
+            });
         } else if (sectionIndex === 2) {
-            setThirdQuestionGroup([...thirdQuestionGroup, questionGroupInfo]);
+            setThirdQuestionGroup((prev: QuestionGroupInfo[]) => {
+                return [...prev, questionGroupInfo];
+            });
         }
       }
       // extract question detail  
