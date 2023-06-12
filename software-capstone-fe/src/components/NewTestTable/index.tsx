@@ -82,7 +82,7 @@ const NewTestTable = () => {
         >
           <Text style={{ fontWeight: "bold" }}>
             <Image
-              src="read_icon.png"
+              src="/read_icon.png"
               alt=""
               preview={false}
               style={{ height: "16px", cursor: "pointer" }}
@@ -129,7 +129,7 @@ const NewTestTable = () => {
         >
           <Text style={{ fontWeight: "bold" }}>
             <Image
-              src="listen_icon.png"
+              src="/listen_icon.png"
               alt=""
               preview={false}
               style={{ height: "16px", cursor: "pointer" }}

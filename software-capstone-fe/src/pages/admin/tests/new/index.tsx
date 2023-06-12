@@ -136,7 +136,7 @@ export const NewTest = () => {
                   </Col>
                   <Col span={5}>
                     <Image
-                      src="edit.png"
+                      src="/edit.png"
                       style={{
                         width: "1.5rem",
                         height: "1.5rem",

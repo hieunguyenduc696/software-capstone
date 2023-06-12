@@ -14,7 +14,7 @@ import { AppHeader } from "components";
 import StyledTable, { DataType, TestField } from "components/TestsTable";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { getTestList } from "services/AdminService";
+import { getTestList, getTestWithID } from "services/AdminService";
 
 const DEFAULT_SIZE = 5;
 
@@ -29,6 +29,14 @@ export function Tests() {
   const [loading, setLoading] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [messageApi, contextHolder] = message.useMessage();
+
+  const navigateToTestDetail = async (id: number) => {
+
+    // const res = await getTestWithID({ ID: id });
+    // console.log('TEST DETAIL: ',res);
+
+    navigate(`/tests/detail/${id}/reading`);
+  }
 
   const fetchTestList = async (pageNumber: number = 1) => {
     setLoading(true);
@@ -51,14 +59,13 @@ export function Tests() {
               alt=""
               preview={false}
               style={{ height: "16px", cursor: "pointer" }}
+              onClick={() => navigateToTestDetail(test?.test_id)}
             />,
           ],
         };
 
         return testData;
       });
-
-      console.log(data);
 
       setTestList(data);
     }

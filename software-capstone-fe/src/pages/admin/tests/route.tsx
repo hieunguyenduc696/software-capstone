@@ -5,6 +5,7 @@ import { RootPaths } from "constant";
 import { Tests } from "./index";
 import { NewTest } from "./new";
 import NewReadingPart from "./new/reading_part";
+import EditReadingPart from "./detail/reading_part_detail";
 
 export const TestLibraryPath: TRoute[] = [
     {
@@ -29,3 +30,12 @@ export const NewReadingPath: TRoute[] = [
         children: [],
     },
 ]
+
+export const EditReadingPath: TRoute[] = [
+    {
+        path: RootPaths.EDIT_READING_PART,
+        component: EditReadingPart,
+        children: [],
+    }
+]
+
