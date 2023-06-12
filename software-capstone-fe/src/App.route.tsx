@@ -10,6 +10,7 @@ import { flatten } from "utils";
 // import { AddTestRoutes } from "pages/Create";
 // import { TestRoutes } from "pages/Test";
 import { TestLibraryPath, NewTestPath, NewReadingPath } from "pages/admin/tests/route";
+import { ReadingPath } from "pages/user/tests";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
@@ -24,7 +25,8 @@ export const MainLayoutRoutes: TRoute = {
 
     ...TestLibraryPath,
     ...NewTestPath,
-    ...NewReadingPath
+    ...NewReadingPath,
+    ...ReadingPath
   ],
 };
 

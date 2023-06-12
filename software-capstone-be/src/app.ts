@@ -1,6 +1,7 @@
 "use strict"
 
-import express, {Express} from 'express';
+import express, { Express } from 'express';
+import cors from "cors";
 import { APP_PORT } from './app/constants/config_constants';
 import * as readingRoutes from './modules/readingSkill/routes/route';
 
@@ -8,7 +9,17 @@ const app: Express = express();
 const port: string | undefined = APP_PORT;    //default port is 8088
 
 //Middlewares registrations
-app.use(express.json()); 
+app.use(express.json());
+
+const myCors = (arrayOfOrigin: any) => {
+    if (!arrayOfOrigin) {
+        return cors();
+    }
+    return cors({
+        origin: arrayOfOrigin || [],
+        optionsSuccessStatus: 200,
+    });
+};
 
 //Routes registrations
 app.use('/reading-skill/admin/test', readingRoutes.adminTest.router);

@@ -118,7 +118,7 @@ export const AppHeader = () => {
               >
                 IELTS
               </span>
-              <Image src="sword.png" height={42} preview={false} />
+              <Image src="../sword.png" height={42} preview={false} />
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
@@ -178,7 +178,7 @@ export const AppHeader = () => {
                   justifyContent: "flex-end",
                 }}
               >
-                <Avatar src={"avatar.png"} size={50} />
+                <Avatar src={"../avatar.png"} size={50} />
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div style={{ color: "white", fontSize: "15px" }}>{username}</div>
                   <div style={{ color: "white", fontSize: "15px" }}>{userProfile?.role?.toLowerCase()}</div>

@@ -141,7 +141,7 @@ export const NewTest = () => {
     <div>
       <AppHeader />
 
-      <BackNavigateBox/>
+      <BackNavigateBox />
 
       <div
         style={{
@@ -298,7 +298,7 @@ export const NewTest = () => {
               src="listen_group_icon.png"
               preview={false}
               style={{ width: "162px", height: "172px", cursor: "pointer" }}
-              onClick={() => {}}
+              onClick={() => { }}
             />
           </div>
           <Button
