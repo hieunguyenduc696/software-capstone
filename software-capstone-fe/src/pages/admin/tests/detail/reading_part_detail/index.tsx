@@ -25,6 +25,7 @@ import { useParams } from "react-router";
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import { convertRawQuestion, extractTemplate } from "./helper";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -93,8 +94,6 @@ const EditReadingPart = () => {
     for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
       const section = sections[sectionIndex];
 
-      console.log('SECTION: ', section);
-
       // extract paragraph
       const paragraph: IReadingParagraph = {
         order: sectionIndex + 1,
@@ -107,33 +106,16 @@ const EditReadingPart = () => {
       // extract question group - inside template
       for (let index = 0; index < templates.length; index++) {
         const template = templates[index];
-        // hard code ;-; 
-        let type = "TRUE-FALSE-NOT-GIVEN";
-        let typeIndex = 1;
-        if (template?.template_type_id === QUESTION_TEMPLATES["SHORT-ANSWER"].template_type_id) {
-            type = "SHORT-ANSWER";
-            typeIndex = 2;
-        } else if (template?.template_type_id === QUESTION_TEMPLATES["MULTIPLE-CHOICE"].template_type_id) {
-            type = "MULTIPLE-CHOICE";
-            typeIndex = 3;
-        };
+        // hard code ;-; to get type and index for IQuestionDetail
+        const { type, typeIndex } = extractTemplate(template);
 
         const questions = template?.questions;
 
+        // convert to IQuestionDetail to collect 40 questions 
         for (let questionIndex = 0; questionIndex < questions.length; questionIndex++) {
-            // convert to IQuestionDetail;
+            
             const rawQuestion = questions[questionIndex];
-            console.log(rawQuestion);
-            const question: IQuestionDetail = {
-                order: rawQuestion?.question_index, 
-                question: rawQuestion?.content,
-                options: rawQuestion?.options,
-                type: type,
-                answer: rawQuestion?.answers[0]?.content
-            }
-
-            // setQuestionDetails([...questionDetails, question]);
-            console.log(`Question ${question.order}`,question);
+            const question: IQuestionDetail = convertRawQuestion(rawQuestion, type);
             setQuestionDetails((prev: IQuestionDetail[]) => {
                 return [...prev, question];
             })
@@ -149,7 +131,6 @@ const EditReadingPart = () => {
         console.log('questionGroup: ', questionGroupInfo);
 
         if (sectionIndex === 0) { // sectionOne
-            // setFirstQuestionGroup([...firstQuestionGroup, questionGroupInfo]);
             setFirstQuestionGroup((prev: QuestionGroupInfo[]) => {
                 return [...prev, questionGroupInfo];
             })
@@ -163,7 +144,6 @@ const EditReadingPart = () => {
             });
         }
       }
-      // extract question detail  
 
       paragraphs.push(paragraph);
     }
@@ -173,16 +153,7 @@ const EditReadingPart = () => {
   };
 
   useEffect(() => {
-    // setParagraphs(generateReadingParagraphs);
-
-    console.log("TEST ID: ", id);
-
     fetchTestWithID(id);
-    console.log('TEST QG: ',firstQuestionGroup);
-    console.log('TEST QG: ',secondQuestionGroup);
-    console.log('TEST QG: ',thirdQuestionGroup);
-
-    console.log('TEST QD: ',questionDetails);
   }, []);
 
   const items: TabsProps["items"] = [
@@ -255,6 +226,7 @@ const EditReadingPart = () => {
             <Row>
               <Col span={24}>
                 <Tabs
+                  defaultActiveKey="1"
                   items={items}
                   onChange={onSectionChange}
                   className={`${styles.tabs}`}
