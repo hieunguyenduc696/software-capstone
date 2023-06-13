@@ -1,9 +1,11 @@
 const axios = require("axios");
 const { testId, invalidTestId } = require("./sc.fixture.ts");
 
+const API_URL = process.env.API_URL;
+
 test("Create test success with status 201", async () => {
   const createTest = () =>
-    axios.post("http://localhost:8090/reading-skill/admin/test/create", {
+    axios.post(API_URL+"/reading-skill/admin/test/create", {
       data: [
         {
           title: "TEST1",
@@ -85,7 +87,7 @@ test("Create test success with status 201", async () => {
 
 test("Get test successfully with status code 200 and test id", async () => {
   const getTestById = (id: number) =>
-    axios.get(`http://localhost:8090/reading-skill/admin/test/${id}`);
+    axios.get(API_URL+`/reading-skill/admin/test/${id}`);
 
   const res = await getTestById(testId);
 
@@ -95,7 +97,7 @@ test("Get test successfully with status code 200 and test id", async () => {
 
 test("Get test fail with status code 404", async () => {
   const getTestById = (id: number) =>
-    axios.get(`http://localhost:8090/reading-skill/admin/test/${id}`);
+    axios.get(API_URL+`/reading-skill/admin/test/${id}`);
 
   try {
     await getTestById(invalidTestId);
