@@ -1,4 +1,4 @@
-import { Card, List, Typography } from "antd";
+import { List, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router";
 
@@ -31,7 +31,11 @@ function Features() {
 				}}
 				dataSource={data}
 				renderItem={(item, index) => (
-					<List.Item key={index} style={{ cursor: "pointer" }}>
+					<List.Item
+						key={index}
+						style={{ cursor: "pointer" }}
+						onClick={() => navigate("user-tests")}
+					>
 						<div>
 							<img
 								alt=""

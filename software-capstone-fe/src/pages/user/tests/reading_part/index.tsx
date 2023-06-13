@@ -1,24 +1,17 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "./index.module.css";
 import { Row, Col, Tabs, Button } from "antd";
 import { AppHeader } from "components";
 import type { TabsProps } from "antd";
 import { message } from "antd";
 
-import ReadingParagraph from "components/ReadingParagraph";
-import QuestionSection from "components/QuestionSection";
 import {
 	QuestionGroupInfo,
 	generateReadingParagraphs,
-	formatSections,
-	checkSectionValidation,
-	READING_TYPE,
 	IReadingParagraph,
-	QUESTION_TEMPLATES,
 	IQuestionDetail,
 } from "services/QuestionTypeService";
 import ReadingTestContext from "context/ReadingTestContext";
-import { useNavigate } from "react-router";
 import { getTestWithID } from "services/AdminService";
 import { useParams } from "react-router";
 
@@ -33,11 +26,11 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const ReadingPart = () => {
 	const { id } = useParams();
-	const navigate = useNavigate();
-
 	//countdown
-	const duration = 60 * 60;
+	const TIME_TO_DO_TEST = 60;
+	const duration = 60 * TIME_TO_DO_TEST;
 	const [timeRemaining, setTimeRemaining] = useState(duration);
+
 	// popup confirm
 	const [openPopup, setOpenPopup] = useState(false);
 	const handleNextClick = () => {
@@ -47,10 +40,10 @@ const ReadingPart = () => {
 	};
 
 	const [messageApi, contextHolder] = message.useMessage();
-
 	const handleSubmit = async () => {
 		console.log(questionDetails);
 		console.log(timeRemaining);
+		setOpenPopup(true);
 	};
 
 	const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
@@ -63,6 +56,7 @@ const ReadingPart = () => {
 	const [thirdQuestionGroup, setThirdQuestionGroup] = useState<QuestionGroupInfo[]>([]);
 
 	const [loading, setLoading] = useState(false);
+	const [answersKey, setAnswerKey] = useState<String[]>([]);
 
 	const onSectionChange = (key: string) => {
 		setQuestionSectionKey(parseInt(key, 10));
@@ -75,7 +69,7 @@ const ReadingPart = () => {
 	};
 
 	const handleReviewClick = () => {
-		navigate("/tests");
+		console.log("Review");
 	};
 
 	const fetchTestWithID = async (id: any) => {
@@ -124,14 +118,20 @@ const ReadingPart = () => {
 					});
 				}
 
+				for (let questionIndex = 0; questionIndex < questions.length; questionIndex++) {
+					const rawQuestion = questions[questionIndex];
+					let question: IQuestionDetail = convertRawQuestion(rawQuestion, type);
+					setAnswerKey((prev: String[]) => {
+						return [...prev, question?.answer || ""];
+					});
+				}
+
 				const questionGroupInfo: QuestionGroupInfo = {
 					type: type,
 					from: questions[0]?.question_index,
 					to: questions[questions?.length - 1]?.question_index,
 					index: typeIndex,
 				};
-
-				console.log("questionGroup: ", questionGroupInfo);
 
 				if (sectionIndex === 0) {
 					// sectionOne
@@ -156,6 +156,10 @@ const ReadingPart = () => {
 		setLoading(false);
 	};
 
+	const userAnswers = useMemo(() => {
+		return questionDetails.map((question) => question?.answer || "");
+	}, [questionDetails]);
+
 	useEffect(() => {
 		fetchTestWithID(id);
 	}, []);
@@ -168,7 +172,7 @@ const ReadingPart = () => {
 
 		// Set up the interval
 		const intervalId = setInterval(() => {
-			setTimeRemaining((time) => time - 1);
+			setTimeRemaining((time: number) => time - 1);
 		}, 1000);
 
 		// Clean up the interval
@@ -329,13 +333,13 @@ const ReadingPart = () => {
 					<Button
 						className={`${styles["button"]} ${styles["cancel"]}`}
 						onClick={handleReviewClick}
-						icon={<img src="../../review.png" />}
+						icon={<img src="../../review.png" alt="" />}
 					>
 						Review
 					</Button>
 
 					<Button
-						icon={<img src="../../save_icon.png" />}
+						icon={<img src="../../save_icon.png" alt="" />}
 						className={`${styles["button"]} ${styles["primary"]}`}
 						onClick={handleSubmit}
 					>
@@ -345,7 +349,13 @@ const ReadingPart = () => {
 			</div>
 
 			{/* confirm popup */}
-			<TestConfirmModal open={openPopup} setOpen={setOpenPopup} />
+			<TestConfirmModal
+				open={openPopup}
+				setOpen={setOpenPopup}
+				answersKey={answersKey}
+				time={duration - timeRemaining}
+				userAnswers={userAnswers}
+			/>
 		</div>
 	);
 };
