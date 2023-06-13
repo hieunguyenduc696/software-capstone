@@ -35,5 +35,5 @@ jobs:
          cd software-capstone-be
          sudo docker build --platform linux/amd64 -t namphamhcmus1906/capstone:be.production . 
          cd -
-         sudo docker run -m=4g -t -d -p 8080:8080 --name be_nodejs_production --env APP_PORT=8080  --env DB_PORT=3306 --env DB_HOST=api.ieltswarrior.me --env DB_USER=root  --env DB_PASSWORD=xecnyw-xevbiK-gazsi6 --env DB_NAME=warrior  --env DB_CONNECTION_LIMIT= 10  namphamhcmus1906/capstone:be.production
+         sudo docker run -m=4g -t -d -p 8080:8080 --name be_nodejs_production --env APP_PORT=8080 --env DB_PORT=3306 --env DB_HOST=api.ieltswarrior.me --env DB_USER=root --env DB_PASSWORD=xecnyw-xevbiK-gazsi6 --env DB_NAME=warrior --env DB_CONNECTION_LIMIT=10 namphamhcmus1906/capstone:be.production
    
