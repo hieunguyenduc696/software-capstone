@@ -1,0 +1,111 @@
+.column {
+    margin: 0;
+    height: calc(100% - 80px);
+    max-height: calc(100% - 80px);
+    overflow-y: auto;
+
+    box-sizing: border-box;
+}
+
+.column.right {
+    background-color: var(--mainGrayColor);
+    border-left: 2px solid #9F9F9F;
+    width: 100%;
+    max-width: 100%;
+}
+
+.column.left {
+    
+}
+
+.tabs {
+    padding: 0.5rem;
+    font-size: 16px;
+}
+
+.type-options {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: #FFF;
+}
+
+.footer {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--mainColor);
+    padding: 0.75rem 1.5rem;
+}
+
+.footer-children {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.footer-children.button-group {
+    gap: 15px;
+}
+
+.button {
+   text-transform: uppercase;
+   font-weight: 500;
+   box-sizing: border-box;
+   border-radius: 5px;
+   padding: 0.25rem 1.75rem;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   gap: 0.25rem
+}
+
+.button.primary {
+    color: white;
+    background-color: var(--tertiaryColor);
+    border: none;
+}
+
+.button.primary:hover {
+    color: white;
+    background-color: var(--tertiaryColor);
+    border: none;
+}
+
+.button.secondary {
+    color: var(--tertiaryColor);
+    background-color: #FFF;
+    border: none;
+}
+
+.button.secondary:hover {
+    color: var(--tertiaryColor);
+    background-color: #FFF;
+    border: none;
+}
+
+.button.cancel {
+    color: white;
+    background-color: #9A9494;
+    border: none;
+}
+
+.button.cancel:hover {
+    color: white;
+    background-color: #9A9494;
+    border: none;
+}
