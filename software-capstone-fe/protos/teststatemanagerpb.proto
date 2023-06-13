@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package teststatemanager;
+
+option go_package="./protos";
+
+message StartTestRequest {
+    int32 userId = 1;
+    int32 testId = 2;
+}
+
+message StartTestResponse {
+    int32 testAttemptId = 1;
+}
+
+message GetInprogressTestRequest {
+    int32 testAttemptId = 1;
+}
+
+message GetInprogressTestResponse {
+    int32 timeRemainInSecond = 1;
+}
+
+message EndTestRequest {
+    int32 testAttemptId = 1;
+}
+
+message EndTestResponse {
+    int32 errorCode = 1;
+    string message = 2;
+}
+
+service TestStateManagement{
+    rpc GetInprogressTest(GetInprogressTestRequest) returns (GetInprogressTestResponse) {}
+    rpc StartTest(StartTestRequest) returns (StartTestResponse) {}
+    rpc EndTest(EndTestRequest) returns (EndTestResponse) {}    
+}
