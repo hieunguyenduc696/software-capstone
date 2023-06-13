@@ -9,8 +9,10 @@ import { flatten } from "utils";
 // import { PostTestRoutes } from "pages/PostTest";
 // import { AddTestRoutes } from "pages/Create";
 // import { TestRoutes } from "pages/Test";
-import { TestLibraryPath, NewTestPath, NewReadingPath } from "pages/admin/tests/route";
+// import { TestLibraryPath, NewTestPath, NewReadingPath } from "pages/admin/tests/route";
 import { ReadingPath } from "pages/user/tests";
+import { TestLibraryPath, NewTestPath, NewReadingPath, EditReadingPath } from "pages/admin/tests/route";
+import EditReadingPart from "pages/admin/tests/detail/reading_part_detail";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
@@ -19,14 +21,11 @@ export const MainLayoutRoutes: TRoute = {
   children: [
     ...NotFoundRoutes,
     ...DashboardRoutes,
-    // ...PostTestRoutes,
-    // ...AddTestRoutes,
-    // ...TestRoutes,
-
     ...TestLibraryPath,
     ...NewTestPath,
     ...NewReadingPath,
-    ...ReadingPath
+    ...ReadingPath,
+    ...EditReadingPath
   ],
 };
 

@@ -1,108 +1,20 @@
-import { Button, Col, Image, Modal, Row, Space, Table, Typography } from "antd";
+import { Button, Col, Image, Modal, Row } from "antd";
 import { AppHeader, UploadImage } from "components";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import styles from "./PostTest.module.css";
-import { useNavigate } from "react-router";
-
-import { ColumnsType } from "antd/es/table";
 import { BackNavigateBox } from "./helper";
+import NewTestTable from "components/NewTestTable";
 
-
-
-interface DataType {
-  part: string;
-  questions: number;
-  duration: number;
-  actions: any[];
-}
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Part",
-    dataIndex: "part",
-    key: "part",
-    render: (item) => (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Image
-          src={item === "LISTENING" ? "listen_icon.png" : "read_icon.png"}
-          style={{ height: "20px", marginRight: "3px" }}
-          preview={false}
-        />
-        <Typography.Text>{item}</Typography.Text>
-      </div>
-    ),
-  },
-  {
-    title: "Questions",
-    dataIndex: "questions",
-    key: "questions",
-    render: (item) => item,
-  },
-  {
-    title: "Duration",
-    dataIndex: "duration",
-    key: "duration",
-    render: (item) => (item ? `${item} minutes` : "-"),
-  },
-  {
-    title: "",
-    key: "action",
-    render: (_, { actions }) => (
-      <Space>
-        {actions.map((act) => {
-          return act;
-        })}
-      </Space>
-    ),
-  },
-];
-
-const data: DataType[] = [
-  {
-    part: "LISTENING",
-    questions: 40,
-    duration: 40,
-    actions: [
-      <Image
-        src="edit_fill.png"
-        alt=""
-        preview={false}
-        style={{ height: "16px", cursor: "pointer" }}
-      />,
-      <Image
-        src="trash_fill.png"
-        alt=""
-        preview={false}
-        style={{ height: "20px", cursor: "pointer" }}
-      />,
-    ],
-  },
-  {
-    part: "READING",
-    questions: 40,
-    duration: 60,
-    actions: [
-      <Image
-        src="edit_fill.png"
-        alt=""
-        preview={false}
-        style={{ height: "16px", cursor: "pointer" }}
-      />,
-      <Image
-        src="trash_fill.png"
-        alt=""
-        preview={false}
-        style={{ height: "20px", cursor: "pointer" }}
-      />,
-    ],
-  },
-];
 
 export const NewTest = () => {
   const titleRef = useRef(null);
   const [title, setTitle] = useState<string>("");
   const [err, setErr] = useState<any>({});
   const [openDialog, setOpenDialog] = useState(false);
+
+  const { state } = useLocation();
+
   const navigate = useNavigate();
 
   const handleTitleChange = (e: any) => {
@@ -111,7 +23,7 @@ export const NewTest = () => {
       setTitle(e.target.value);
       setErr({ ...err, title: "" });
     }
-    !len && setErr({ ...err, title: "Title is require" });
+    !len && setErr({ ...err, title: "Title is required" });
   };
 
   const handleEditButtonClick = () => {
@@ -121,9 +33,12 @@ export const NewTest = () => {
     }
   };
 
-  const handleAddReadingSectionClick = () => {
-    console.log("add reading test");
-    navigate("/new-test/add-reading");
+  const handleAddReadingSectionClick = async () => {
+    if (title?.length === 0 || title === "") {
+      setErr({ ...err, title: "Title is required" });
+    } else {
+      navigate("/new-test/add-reading", { state: { title: title } });
+    }
   };
 
   const handleSaveClick = () => {
@@ -136,6 +51,14 @@ export const NewTest = () => {
     setSelectedAnswer(selected);
   };
 
+  useEffect(() => {
+    if (state) {
+      let { title: _title} = state;
+      if (_title) {
+        setTitle(_title);
+      }
+    }
+  }, []);
 
   return (
     <div>
@@ -206,7 +129,7 @@ export const NewTest = () => {
                   </Col>
                   <Col span={5}>
                     <Image
-                      src="edit.png"
+                      src="/edit.png"
                       style={{
                         width: "1.5rem",
                         height: "1.5rem",
@@ -240,11 +163,7 @@ export const NewTest = () => {
 
         <Row style={{ width: "80%", margin: "auto" }}>
           <Col xs={{ span: 24 }} style={{ marginTop: "1rem" }}>
-            <Table
-              dataSource={data}
-              columns={columns}
-              pagination={false}
-            />
+            <NewTestTable />
           </Col>
         </Row>
       </div>
@@ -316,6 +235,7 @@ export const NewTest = () => {
           </Button>
         </div>
       </Modal>
+
     </div>
   );
 };

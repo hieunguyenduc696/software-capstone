@@ -39,12 +39,12 @@ export const AppHeader = () => {
         {
           label: "New Test",
           key: "test:1",
-          onClick: () => navigate("/post-test"),
+          onClick: () => navigate("/new-test"),
         },
         {
           label: "IELTS Library",
           key: "test:2",
-          onClick: () => console.log("test:2"),
+          onClick: () => navigate("/tests"),
         },
       ],
     },

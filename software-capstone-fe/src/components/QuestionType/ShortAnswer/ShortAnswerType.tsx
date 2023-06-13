@@ -110,7 +110,7 @@ const ShortAnswer = ({ order }: ShortAnswerProps) => {
           <Icon
             component={() => (
               <Tooltip title="Add explanation">
-                <img style={{ width: "13px" }} src="quotation.png" />
+                <img style={{ width: "13px" }} src="/quotation.png" />
               </Tooltip>
             )}
           />
