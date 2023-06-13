@@ -39,6 +39,15 @@ const ReadingPart = () => {
 	const [timeRemaining, setTimeRemaining] = useState(duration);
 	// popup confirm
 	const [openPopup, setOpenPopup] = useState(false);
+	const handleNextClick = () => {
+		if (questionSectionKey < 3) {
+			setQuestionSectionKey(questionSectionKey + 1);
+		}
+	};
+
+	const [messageApi, contextHolder] = message.useMessage();
+
+	const handleSubmit = async () => {};
 
 	const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
 	const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
@@ -61,19 +70,9 @@ const ReadingPart = () => {
 		}
 	};
 
-	const handleNextClick = () => {
-		if (questionSectionKey < 3) {
-			setQuestionSectionKey(questionSectionKey + 1);
-		}
-	};
-
 	const handleCancelClick = () => {
 		navigate("/tests");
 	};
-
-	const [messageApi, contextHolder] = message.useMessage();
-
-	const handleSubmit = async () => {};
 
 	const fetchTestWithID = async (id: any) => {
 		setLoading(true);
@@ -282,14 +281,14 @@ const ReadingPart = () => {
 								/>
 							)}
 							{questionSectionKey === 2 && (
-								<QuestionSection
+								<QuestionSectionDetail
 									sectionKey={2}
 									questionGroup={secondQuestionGroup}
 									setQuestionGroupCallback={setSecondQuestionGroup}
 								/>
 							)}
 							{questionSectionKey === 3 && (
-								<QuestionSection
+								<QuestionSectionDetail
 									sectionKey={3}
 									questionGroup={thirdQuestionGroup}
 									setQuestionGroupCallback={setThirdQuestionGroup}
