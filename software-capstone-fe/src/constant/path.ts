@@ -15,7 +15,7 @@ export const RootPaths = {
 
   // user
   USER_TESTS: "user-tests",
-  DO_READING_PART: "/user/:testID",
+  DO_READING_PART: "/user-test/:id/reading",
   TEST_RESULT: "/result/:testID",
   EDIT_READING_PART: "/tests/detail/:id/reading"
 };

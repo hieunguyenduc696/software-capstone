@@ -1,0 +1,129 @@
+.column {
+    margin: 0;
+    height: 93vh;
+}
+
+.column.left {
+    border-right: 2px solid #9F9F9F;
+}
+
+.column.right {
+    background-color: #F5F5F5;
+    width: 100%;
+    max-width: 100%;
+}
+
+.questionHeader {
+    height: '40px';
+
+    background-color: #000;
+    color: #FFF;
+
+    padding: 1.25rem 0.5rem;
+}
+
+
+.question {
+    padding: 0.75rem 0.5rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    width: 100%;
+    max-width: 100%;
+}
+
+.number {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+
+    background-color: #D9D9D9;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-right: 0.5rem;
+}
+
+.select {
+    height: 30px;
+    width: 120px;
+    margin-right: 1em;
+}
+
+.paragraph {
+    font-size: 16px;
+    width: 75%;
+    padding-top: 0.25rem;
+}
+
+.paragraph.full {
+    width: 90%;
+}
+
+.input {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    margin-top: 0.5rem;
+}
+
+.input:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255);
+}
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.radio span:last-of-type {
+    display: inline-block;
+    flex-grow: 1;
+}
+
+.radio span:first-of-type {
+    transform: translateY(2px);
+}
+
+.shortAnswer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+
+    padding: 0.75rem 0.5rem;
+}
+
+.ip-title:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.number {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+
+    background-color: #D9D9D9;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+
+    margin-right: 0.5rem;
+}

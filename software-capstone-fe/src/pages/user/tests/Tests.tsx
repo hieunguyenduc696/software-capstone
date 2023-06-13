@@ -1,11 +1,13 @@
-import { Button, Col, Divider, Image, Input, Row, Space, Typography } from 'antd'
-import React from 'react'
-import { PlusOutlined } from '@ant-design/icons'
+import {Button, Col, Divider, Image, Input, Row, Typography, message, Spin } from 'antd'
+import React, {useState, useRef, useEffect} from 'react'
 import { AppHeader } from 'components'
-import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router';
 import StyledTable from 'components/TestsTable';
+import { LoadingOutlined } from "@ant-design/icons";
+import { getTestList } from 'services/AdminService';
+import type { ColumnsType } from 'antd/es/table';
 
+// table config
 interface DataType {
     image: string;
     title: string;
@@ -13,8 +15,27 @@ interface DataType {
     listening: any;
     publishDay: string;
 }
+const DEFAULT_SIZE = 5;
 
-const columns: ColumnsType<DataType> = [
+
+
+export function UserTests() {
+    const navigate = useNavigate();
+  const [testList, setTestList] = useState<any[]>();
+  const [total, setTotal] = useState();
+  const isFirstRenderRef = useRef(true);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [searchText, setSearchText] = useState<string>();
+
+  const [loading, setLoading] = useState(true);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const navigateToTest = async (id: number) => {
+    navigate(`/user-test/${id}/reading`);
+  }
+
+  const columns: ColumnsType<DataType> = [
     {
         title: '',
         dataIndex: 'image',
@@ -32,25 +53,23 @@ const columns: ColumnsType<DataType> = [
         dataIndex: 'reading',
         key: 'reading',
         align: 'center',
-        render: (item) => <>
-            <p style={{ textAlign: 'center' }}>{item ? `${item.score}/${item.total}` : "-/-"}</p>
-            <br />
-            <Button
+        render: (item) =><Button
                 style={{
                     textTransform: "uppercase",
                     backgroundColor: "#5CB1C5",
                     border: "none",
                     color: "white",
                     boxShadow: "4px 4px 4px 0 rgba(0, 0, 0, .25)",
-                }}>Take test</Button>
-        </>
+                }}
+                onClick={() => navigateToTest(item)}
+                >Take test</Button>
     },
     {
         title: 'Listening',
         dataIndex: 'listening',
         key: 'listening',
         align: 'center',
-        render: (item) => item ? `${item} test` : "-"
+        render: (item) =>  "-"
     },
     {
         title: 'Publish Day',
@@ -61,45 +80,90 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-const data: DataType[] = [
-    {
-        image: "",
-        title: "IELTS Recent mock test 01",
-        reading: { score: 7, total: 9 },
-        listening: 0,
-        publishDay: "11/4/2023",
-    },
-    {
-        image: "",
-        title: "IELTS Recent mock test 02",
-        reading: 0,
-        listening: 0,
-        publishDay: "11/4/2023",
-    },
-    {
-        image: "",
-        title: "IELTS Recent mock test 03",
-        reading: { score: 7.5, total: 9 },
-        listening: 0,
-        publishDay: "11/4/2023",
-    },
-];
+  const fetchTestList = async (pageNumber: number = 1) => {
+    setLoading(true);
+    const res = await getTestList({
+      limit: DEFAULT_SIZE,
+      page: pageNumber,
+    });
 
+    if (res?.code === 0) {
+      const data = res?.data?.tests.map((test: any) => {
+        const testData: DataType = {
+          image: "",
+          title: test?.title,
+          reading: test?.test_id,
+          listening: 0,
+          publishDay: "10/06/2023"
+        };
 
-export function UserTests() {
-    const navigate = useNavigate();
+        console.log(testData)
+        return testData;
+      });
+
+      setTestList(data);
+    }
+
+    if (isFirstRenderRef.current) {
+      setTotal(res?.data?.total);
+      isFirstRenderRef.current = false;
+    }
+
+    setLoading(false);
+  };
+
+  const handlePageNumberChange = (value: number) => {
+    setPageNumber(value);
+    fetchTestList(value);
+  };
+
+  useEffect(() => {
+    fetchTestList();
+  }, []);
+
+  const handleSearchChange = (e: any) => {
+    setSearchText(e.target.value);
+
+    if (e.target.value.length === 0) {
+      fetchTestList();
+    }
+  }
+
+  const handleSearch = () => {
+    const filteredTests = testList?.filter((test) => {
+      return test?.title.includes(searchText);
+    })
+
+    if (filteredTests?.length !== 0) {
+      setTestList(filteredTests);
+    } else {
+      messageApi.open({
+        type: 'error',
+        content: `${searchText} is not found`
+      })
+    }
+  }
+
     return (
         <div style={{ backgroundColor: 'white' }}>
             <AppHeader />
+            {contextHolder}
             <div style={{ width: '100%', backgroundColor: '#f5f5f5' }}>
                 <Row style={{ width: '80%', margin: 'auto', padding: '1rem 0' }}>
                     <Col span={24}>
                         <Input
                             placeholder="Find IELTS test"
                             suffix={
-                                <Image src="search.png" alt="" preview={false} style={{ width: '26px', height: '26px', cursor: 'pointer' }} />
+                                <Image 
+                                    src="search.png" 
+                                    alt="" preview={false} 
+                                    style={{ width: '26px', height: '26px', cursor: 'pointer' }} 
+                                    onClick={handleSearch}
+                                />
                             }
                             style={{ width: '100%' }}
+                            value={searchText}
+                            onChange={handleSearchChange}
                         />
                     </Col>
                 </Row>
@@ -112,8 +176,17 @@ export function UserTests() {
                     </Typography.Text>
                 </div>
                 <StyledTable
-                    columns={columns} dataSource={[...data]} style={{ marginTop: '1rem' }}
-                    pagination={{ defaultPageSize: 5 }}
+                    columns={columns} 
+                    dataSource={testList} 
+                    style={{ marginTop: '1rem' }}
+                    loading={{ spinning: loading, indicator: <Spin indicator={antIcon} />}}
+                    pagination={{
+                      total: total,
+                      defaultPageSize: DEFAULT_SIZE,
+                      current: pageNumber,
+                      defaultCurrent: 1,
+                      onChange: handlePageNumberChange,
+                    }}
                 />
             </div>
         </div>
