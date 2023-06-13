@@ -27,6 +27,7 @@ import { Spin } from "antd";
 import { convertRawQuestion, extractTemplate } from "./helper";
 import TestConfirmModal from "./components/TestConfirmDialog/TestConfirmDialog";
 import QuestionSectionDetail from "./components/QuestionSectionDetail/QuestionSectionDetail";
+import ReadingParagraphDetail from "./components/ReadingParagraphDetail";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -47,7 +48,10 @@ const ReadingPart = () => {
 
 	const [messageApi, contextHolder] = message.useMessage();
 
-	const handleSubmit = async () => {};
+	const handleSubmit = async () => {
+		console.log(questionDetails);
+		console.log(timeRemaining);
+	};
 
 	const [questionSectionKey, setQuestionSectionKey] = useState<number>(1);
 	const [paragraphs, setParagraphs] = useState(generateReadingParagraphs);
@@ -70,7 +74,7 @@ const ReadingPart = () => {
 		}
 	};
 
-	const handleCancelClick = () => {
+	const handleReviewClick = () => {
 		navigate("/tests");
 	};
 
@@ -182,7 +186,7 @@ const ReadingPart = () => {
 			key: "1",
 			label: `Section 1`,
 			children: (
-				<ReadingParagraph
+				<ReadingParagraphDetail
 					sectionKey={1}
 					setReadingParagraphsCallback={setParagraphs}
 					paragraphs={paragraphs}
@@ -193,7 +197,7 @@ const ReadingPart = () => {
 			key: "2",
 			label: `Section 2`,
 			children: (
-				<ReadingParagraph
+				<ReadingParagraphDetail
 					sectionKey={2}
 					setReadingParagraphsCallback={setParagraphs}
 					paragraphs={paragraphs}
@@ -204,7 +208,7 @@ const ReadingPart = () => {
 			key: "3",
 			label: `Section 3`,
 			children: (
-				<ReadingParagraph
+				<ReadingParagraphDetail
 					sectionKey={3}
 					setReadingParagraphsCallback={setParagraphs}
 					paragraphs={paragraphs}
@@ -212,11 +216,9 @@ const ReadingPart = () => {
 			),
 		},
 	];
-
 	return (
 		<div style={{ background: "#FFF" }}>
 			<AppHeader />
-
 			{loading && (
 				<div
 					style={{
@@ -316,7 +318,7 @@ const ReadingPart = () => {
 					</Button>
 				</div>
 
-				<div className={`${styles["footer-children"]}`}>
+				<div className={`${styles["footer-children"]}`} style={{ marginLeft: "3.5rem" }}>
 					<img src="./../alarm.png" alt="" />
 					<div className={styles["countdown"]}>
 						{minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
@@ -326,14 +328,14 @@ const ReadingPart = () => {
 				<div className={`${styles["footer-children"]} ${styles["button-group"]}`}>
 					<Button
 						className={`${styles["button"]} ${styles["cancel"]}`}
-						onClick={handleCancelClick}
-						icon={<img src="./../review.png" />}
+						onClick={handleReviewClick}
+						icon={<img src="../../review.png" />}
 					>
 						Review
 					</Button>
 
 					<Button
-						icon={<img src="./../save_icon.png" />}
+						icon={<img src="../../save_icon.png" />}
 						className={`${styles["button"]} ${styles["primary"]}`}
 						onClick={handleSubmit}
 					>

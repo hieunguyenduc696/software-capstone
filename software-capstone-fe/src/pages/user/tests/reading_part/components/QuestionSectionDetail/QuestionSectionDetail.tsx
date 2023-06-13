@@ -20,6 +20,7 @@ import MappingHeadingTemplate from "components/QuestionTemplate/MappingHeadingTe
 import ReadingTestContext from "context/ReadingTestContext";
 import TrueFalseNotGivenTemplateDetail from "../QuestionTemplateDetail/TrueFalseNotGivenTemplateDetail";
 import ShortAnswerTemplateDetail from "../QuestionTemplateDetail/ShortAnswerTemplateDetail";
+import MultipleChoiceTemplateDetail from "../QuestionTemplateDetail/MultipleChoiceTemplateDetail";
 
 interface QuestionSectionDetailProps {
 	sectionKey: number;
@@ -145,7 +146,7 @@ const QuestionSectionDetail: React.FC<QuestionSectionDetailProps> = ({
 							);
 						else if (item === TYPE_OF_QUESTION[2].type)
 							return (
-								<MultipleChoiceTemplate
+								<MultipleChoiceTemplateDetail
 									initialFrom={questionGroup[index].from}
 									initialTo={questionGroup[index].to}
 									updateQuestionGroupInfoCallback={setQuestionGroupCallback}
