@@ -12,6 +12,7 @@ export const TestLibraryPath: TRoute[] = [
         path: RootPaths.TEST_LIBRARY,
         component: Tests,
         children: [],
+        secured: false,
     },
 ];
 
@@ -20,6 +21,8 @@ export const NewTestPath: TRoute[] = [
         path: RootPaths.NEW_TEST,
         component: NewTest,
         children: [],
+
+        secured: true,
     },
 ]
 

@@ -9,8 +9,14 @@ import { flatten } from "utils";
 // import { PostTestRoutes } from "pages/PostTest";
 // import { AddTestRoutes } from "pages/Create";
 // import { TestRoutes } from "pages/Test";
-import { TestLibraryPath, NewTestPath, NewReadingPath, EditReadingPath } from "pages/admin/tests/route";
+import {
+  TestLibraryPath,
+  NewTestPath,
+  NewReadingPath,
+  EditReadingPath,
+} from "pages/admin/tests/route";
 import EditReadingPart from "pages/admin/tests/detail/reading_part_detail";
+import PrivateRoute from "keycloak-helpers/PrivateRoute";
 
 export const MainLayoutRoutes: TRoute = {
   component: MainLayout,
@@ -22,7 +28,7 @@ export const MainLayoutRoutes: TRoute = {
     ...TestLibraryPath,
     ...NewTestPath,
     ...NewReadingPath,
-    ...EditReadingPath
+    ...EditReadingPath,
   ],
 };
 
@@ -31,34 +37,64 @@ export const routes: TRoute[] = [SignInRoutes, MainLayoutRoutes];
 export const flattenRoutes = flatten(routes);
 
 const renderRoute = (routes: TRoute[]): React.ReactNode[] =>
-  routes.map(({ redirectTo, children, component: Component, path }) => {
-    const CustomComponent = withCustomErrorBoundary(
-      path !== "*" ? /*withAuthorization(Component)*/ Component : Component
-    );
-    if (children && children.length > 0) {
+  routes.map(
+    ({ redirectTo, secured, children, component: Component, path }) => {
+      const CustomComponent = withCustomErrorBoundary(
+        path !== "*" ? /*withAuthorization(Component)*/ Component : Component
+      );
+      if (children && children.length > 0) {
+        if (secured && secured === true) {
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <>
+                  <PrivateRoute>
+                    <CustomComponent />
+                  </PrivateRoute>
+                </>
+              }
+            >
+              {redirectTo && (
+                <Route
+                  index
+                  element={<CustomNavigate to={redirectTo} replace />}
+                />
+              )}
+              {renderRoute(children)}
+            </Route>
+          );
+        }
+
+        return (
+          <Route key={path} path={path} element={<CustomComponent />}>
+            {redirectTo && (
+              <Route
+                index
+                element={<CustomNavigate to={redirectTo} replace />}
+              />
+            )}
+            {renderRoute(children)}
+          </Route>
+        );
+      }
+
       return (
-        <Route key={path} path={path} element={<CustomComponent />}>
-          {redirectTo && (
-            <Route index element={<CustomNavigate to={redirectTo} replace />} />
-          )}
-          {renderRoute(children)}
-        </Route>
+        <Route
+          key={path}
+          path={path}
+          element={
+            redirectTo ? (
+              <CustomNavigate to={redirectTo} replace />
+            ) : (
+              <CustomComponent />
+            )
+          }
+        />
       );
     }
-    return (
-      <Route
-        key={path}
-        path={path}
-        element={
-          redirectTo ? (
-            <CustomNavigate to={redirectTo} replace />
-          ) : (
-            <CustomComponent />
-          )
-        }
-      />
-    );
-  });
+  );
 
 export const AppRoutes = () => {
   return <Routes>{renderRoute(routes)}</Routes>;

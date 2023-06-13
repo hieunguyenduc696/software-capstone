@@ -14,6 +14,7 @@ export type TRoute = {
   showInMenu?: boolean
   menuIcon?: IconType
   menuLabel?: string
+  secured?:boolean
 }
 
 export type TParameters = {

@@ -7,6 +7,46 @@ import { useNavigate } from "react-router";
 import * as styles from "./index.module.css";
 import { styled } from "styled-components";
 
+import { useKeycloak } from "@react-keycloak/web";
+
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+
+const menuItems: MenuProps["items"] = [
+  {
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.antgroup.com"
+      >
+        Login
+      </a>
+    ),
+    key: "0",
+  },
+  {
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.aliyun.com"
+      >
+        Logout
+      </a>
+    ),
+    key: "1",
+  },
+  {
+    type: "divider",
+  },
+  {
+    label: "3rd menu item（disabled）",
+    key: "3",
+    disabled: true,
+  },
+];
+
 const StyledMenu = styled(Menu)`
   .ant-menu-title-content {
     &:hover {
@@ -20,6 +60,7 @@ export const AppHeader = () => {
   const [langDropdownVisible, setLangDropdownVisibleVisible] =
     useState<boolean>(false);
   const { userProfile } = useAuth();
+  const { keycloak, initialized } = useKeycloak();
 
   const username = `${userProfile?.firstName || ""} ${
     userProfile?.lastName || ""
@@ -45,16 +86,26 @@ export const AppHeader = () => {
       ],
     },
     {
-      label: "User Acounts",
+      label: "User Accounts",
       key: "user",
       children: [
         {
-          label: "New Account",
-          key: "account:1",
+          label: "Login",
+          key: "login",
+          onClick: () => {
+            if (!keycloak.authenticated) {
+              keycloak.login();
+            }
+          }
         },
         {
-          label: "User Accounts",
-          key: "account:2",
+          label: "Logout",
+          key: "logout",
+          onClick: () => {
+            if (!!keycloak.authenticated) {
+              keycloak.logout();
+            }
+          }
         },
       ],
     },
@@ -66,6 +117,10 @@ export const AppHeader = () => {
     console.log("click ", e);
     setCurrent(e.key);
   };
+
+  const handleLogin = () => {};
+
+  const handleLogout = () => {};
 
   return (
     <>
@@ -144,7 +199,8 @@ export const AppHeader = () => {
               />
             </div>
           </Col>
-          <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 3 }}>
+
+          <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 4 }}>
             <div
               style={{
                 display: "flex",
@@ -154,11 +210,36 @@ export const AppHeader = () => {
                 justifyContent: "flex-end",
               }}
             >
-              <Avatar src={"avatar.png"} size={50} />
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ color: "white", fontSize: "15px" }}>Nam Pham</div>
-                <div style={{ color: "white", fontSize: "15px" }}>Admin</div>
-              </div>
+                <Avatar src={"/avatar.png"} size={50} />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{ color: "white", fontSize: "15px" }}>
+                    Nam Pham
+                  </div>
+                  <div style={{ color: "white", fontSize: "15px" }}>Admin</div>
+                </div>
+                {/* {!keycloak.authenticated && (
+                  <Menu.Item>
+                    <a
+                      onClick={(e: any) => {
+                        e.preventDefault();
+                        keycloak.login();
+                      }}
+                    >
+                      <Space>Login</Space>
+                    </a>
+                  </Menu.Item>
+                )}
+
+                {!!keycloak.authenticated && (
+                  <Menu.Item>
+                    <a onClick={(e: any) => {
+                        e.preventDefault();
+                        keycloak.logout();
+                      }}>
+                      <Space>Logout</Space>
+                    </a>
+                  </Menu.Item>
+                )} */}
             </div>
           </Col>
         </Row>
