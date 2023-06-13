@@ -217,29 +217,6 @@ export const AppHeader = () => {
                   </div>
                   <div style={{ color: "white", fontSize: "15px" }}>Admin</div>
                 </div>
-                {/* {!keycloak.authenticated && (
-                  <Menu.Item>
-                    <a
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        keycloak.login();
-                      }}
-                    >
-                      <Space>Login</Space>
-                    </a>
-                  </Menu.Item>
-                )}
-
-                {!!keycloak.authenticated && (
-                  <Menu.Item>
-                    <a onClick={(e: any) => {
-                        e.preventDefault();
-                        keycloak.logout();
-                      }}>
-                      <Space>Logout</Space>
-                    </a>
-                  </Menu.Item>
-                )} */}
             </div>
           </Col>
         </Row>
