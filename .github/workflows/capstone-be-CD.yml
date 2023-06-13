@@ -37,5 +37,5 @@ jobs:
          cd -
          sudo docker stop be_nodejs_production || true 
          sudo docker rm be_nodejs_production || true
-         sudo docker run -m=4g -t -d -p ${{ secrets.APP_PORT_1 }}:${{ secrets.APP_PORT_1 }} --name be_nodejs_production --env APP_PORT=8080 --env DB_PORT=3306 --env DB_HOST=api.ieltswarrior.me --env DB_USER=root --env DB_PASSWORD=xecnyw-xevbiK-gazsi6 --env DB_NAME=warrior --env DB_CONNECTION_LIMIT=10 namphamhcmus1906/capstone:be.production
+         sudo docker run -m=4g -t -d -p ${{ secrets.APP_PORT_1 }}:${{ secrets.APP_PORT_1 }} --name be_nodejs_production --env APP_PORT=${{ secrets.APP_PORT_1 }} --env DB_PORT=3306 --env DB_HOST=api.ieltswarrior.me --env DB_USER=root --env DB_PASSWORD=xecnyw-xevbiK-gazsi6 --env DB_NAME=warrior --env DB_CONNECTION_LIMIT=10 namphamhcmus1906/capstone:be.production
    
