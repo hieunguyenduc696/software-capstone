@@ -20,6 +20,17 @@ const corsOptions = {
 
 // app.use(myCors(corsOptions));
 //Middlewares registrations
+app.use(express.json());
+
+const myCors = (arrayOfOrigin: any) => {
+    if (!arrayOfOrigin) {
+        return cors();
+    }
+    return cors({
+        origin: arrayOfOrigin || [],
+        optionsSuccessStatus: 200,
+    });
+};
 app.use(cors());
 app.use(express.json());
 

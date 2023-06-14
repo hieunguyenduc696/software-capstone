@@ -14,7 +14,7 @@ import { AppHeader } from "components";
 import StyledTable, { DataType, TestField } from "components/TestsTable";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { getTestList, getTestWithID } from "services/AdminService";
+import { getTestList } from "services/AdminService";
 
 const DEFAULT_SIZE = 5;
 

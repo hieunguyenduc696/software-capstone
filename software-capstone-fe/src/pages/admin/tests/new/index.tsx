@@ -3,16 +3,9 @@ import { AppHeader, UploadImage } from "components";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import styles from "./PostTest.module.css";
-
 import { BackNavigateBox } from "./helper";
-
-import { Typography } from "antd";
 import NewTestTable from "components/NewTestTable";
-import ReactJson from "react-json-view";
-import { getTestWithID } from "services/AdminService";
-import { HTTP_METHOD } from "config/common";
 
-const { Text } = Typography;
 
 export const NewTest = () => {
   const titleRef = useRef(null);
@@ -224,7 +217,7 @@ export const NewTest = () => {
               src="listen_group_icon.png"
               preview={false}
               style={{ width: "162px", height: "172px", cursor: "pointer" }}
-              onClick={() => {}}
+              onClick={() => { }}
             />
           </div>
           <Button
