@@ -184,19 +184,19 @@ const NewReadingPart = () => {
 
     console.log('DATA TEST: ',{ data: data });
 
-    // setUploading(true);
-    // const res = await createTest({ data: data });
-    // console.log(res);
+    setUploading(true);
+    const res = await createTest({ data: data });
+    console.log(res);
 
-    // if (res?.code === 0) {
-    //   testCreatedToast();
-    // };
+    if (res?.code === 0) {
+      testCreatedToast();
+    };
 
-    // setUploading(false);
+    setUploading(false);
 
-    // if (!uploading && res?.code === 0) {
-    //   navigate("/new-test", { state: { title: title } })
-    // }
+    if (!uploading && res?.code === 0) {
+      navigate("/new-test", { state: { title: title } })
+    }
   };
 
   useEffect(() => {
