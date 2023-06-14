@@ -1,7 +1,7 @@
 import { API_STATUS, HTTP_METHOD } from "../config/common";
 import queryString from "query-string";
 
-const API_HOST = 'http://localhost:8090';
+const API_HOST = process.env.REACT_APP_API_URL;
 
 
 export const makeRequest = async (
