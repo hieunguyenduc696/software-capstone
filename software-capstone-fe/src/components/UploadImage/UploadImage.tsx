@@ -33,7 +33,7 @@ const UploadImage = () => {
                 borderRadius: '10px',
                 overflow: 'hidden'
             }}>
-                <Image src={selectedFile ? preview : 'default.png'} alt='' style={{ width: 140, height: 120 }} preview={false} />
+                <Image src={selectedFile ? preview : '/default.png'} alt='' style={{ width: 140, height: 120 }} preview={false} />
                 <button
                     style={{
                         position: 'absolute',
@@ -48,7 +48,7 @@ const UploadImage = () => {
                         const ele = document.querySelector("#upload-image") as HTMLInputElement | null;
                         if (ele) { ele.click() }
                     }}>
-                    <Image src='upload.png' style={{ width: 30, cursor: 'pointer' }} preview={false} />
+                    <Image src='/upload.png' style={{ width: 30, cursor: 'pointer' }} preview={false} />
                 </button>
             </div>
         </div>

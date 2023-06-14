@@ -107,7 +107,7 @@ const TrueFalseType: React.FC<TrueFalseTypeProps> = ({
         <Icon
           component={() => (
             <Tooltip title="Add explanation">
-              <img style={{ width: "13px" }} src="quotation.png" />
+              <img style={{ width: "13px" }} src="/quotation.png" />
             </Tooltip>
           )}
         />
