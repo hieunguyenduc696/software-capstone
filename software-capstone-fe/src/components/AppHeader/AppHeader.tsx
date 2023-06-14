@@ -7,6 +7,9 @@ import { useNavigate } from "react-router";
 import * as styles from "./index.module.css";
 import { styled } from "styled-components";
 
+import { useKeycloak } from "@react-keycloak/web";
+import type { KeycloakInstance, KeycloakTokenParsed } from "keycloak-js";
+
 const StyledMenu = styled(Menu)`
   .ant-menu-title-content {
     &:hover {
@@ -16,14 +19,32 @@ const StyledMenu = styled(Menu)`
   }
 `;
 
+type ParsedToken = KeycloakTokenParsed & {
+  email?: string;
+
+  preferred_username?: string;
+
+  given_name?: string;
+
+  family_name?: string;
+};
+
 export const AppHeader = () => {
   const [langDropdownVisible, setLangDropdownVisibleVisible] =
     useState<boolean>(false);
   const { userProfile } = useAuth();
+  const { keycloak, initialized } = useKeycloak();
+  const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
 
-  const username = `${userProfile?.firstName || ""} ${
-    userProfile?.lastName || ""
+  const username = `${parsedToken?.given_name ?? ""} ${
+    parsedToken?.family_name ?? ""
   }`;
+
+
+
+  const role = parsedToken?.realm_access?.roles?.includes("USER") === true ? "USER" : "ADMINISTRATOR";
+
+
 
   const navigate = useNavigate();
 
@@ -45,16 +66,28 @@ export const AppHeader = () => {
       ],
     },
     {
-      label: "User Acounts",
+      label: "User Accounts",
       key: "user",
       children: [
         {
-          label: "New Account",
-          key: "account:1",
+          label: "Login",
+          key: "login",
+          onClick: () => {
+            if (!keycloak.authenticated) {
+              keycloak.login();
+            }
+          },
+          disabled: keycloak.authenticated === true,
         },
         {
-          label: "User Accounts",
-          key: "account:2",
+          label: "Logout",
+          key: "logout",
+          onClick: () => {
+            if (!!keycloak.authenticated) {
+              keycloak.logout();
+            }
+          },
+          disabled: keycloak.authenticated !== true,
         },
       ],
     },
@@ -66,6 +99,8 @@ export const AppHeader = () => {
     console.log("click ", e);
     setCurrent(e.key);
   };
+
+
 
   return (
     <>
@@ -144,7 +179,8 @@ export const AppHeader = () => {
               />
             </div>
           </Col>
-          <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 3 }}>
+
+          <Col xs={{ span: 11, order: 3 }} lg={{ span: 3, order: 4 }}>
             <div
               style={{
                 display: "flex",
@@ -154,14 +190,23 @@ export const AppHeader = () => {
                 justifyContent: "flex-end",
               }}
             >
-              <Avatar src={"avatar.png"} size={50} />
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ color: "white", fontSize: "15px" }}>Nam Pham</div>
-                <div style={{ color: "white", fontSize: "15px" }}>Admin</div>
-              </div>
+              {!!keycloak.authenticated && (
+                <>
+                  <Avatar src={"/avatar.png"} size={50} />
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ color: "white", fontSize: "15px" }}>
+                      {username}
+                    </div>
+                    <div style={{ color: "white", fontSize: "15px" }}>
+                      {role}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </Col>
         </Row>
+        
       </Layout.Header>
     </>
   );
