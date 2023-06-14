@@ -8,6 +8,7 @@ import { styled } from "styled-components";
 
 import { useKeycloak } from "@react-keycloak/web";
 import type { KeycloakTokenParsed } from "keycloak-js";
+import ROLE from "constant/role";
 
 const StyledMenu = styled(Menu)`
 	.ant-menu-title-content {
@@ -168,6 +169,10 @@ export const AppHeader = () => {
 								display: "flex",
 								gap: 5,
 								marginRight: "3rem",
+								cursor: "pointer",
+							}}
+							onClick={() => {
+								navigate("/");
 							}}
 						>
 							<span

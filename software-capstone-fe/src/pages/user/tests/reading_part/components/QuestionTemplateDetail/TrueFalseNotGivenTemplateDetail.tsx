@@ -52,7 +52,7 @@ const TrueFalseNotGivenTemplateDetail: React.FC<TemplateProps> = ({
 
 	return (
 		<Col span={24}>
-			<Typography.Title level={3} style={{ marginLeft: ".5rem" }}>
+			<Typography.Title level={3} style={{ marginLeft: ".5rem", marginBottom: 0 }}>
 				Question {initialFrom} - {initialTo}
 			</Typography.Title>
 			<TrueFalseInstruction from={initialFrom} to={initialTo} collapsed={collapse} />

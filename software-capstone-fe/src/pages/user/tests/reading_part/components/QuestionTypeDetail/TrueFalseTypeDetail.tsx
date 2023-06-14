@@ -93,6 +93,7 @@ const TrueFalseTypeDetail: React.FC<TrueFalseTypeProps> = ({ order }: TrueFalseT
 					backgroundColor: "transparent",
 					marginRight: "0.5rem",
 					display: "inline",
+					width: "100%",
 				}}
 				className={`${styles["ip-title"]} ${styles.paragraph}`}
 			>
