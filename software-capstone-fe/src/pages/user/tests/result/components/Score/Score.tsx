@@ -1,7 +1,25 @@
 import { Typography } from "antd";
 import React from "react";
+import type { KeycloakTokenParsed } from "keycloak-js";
+
+import { useKeycloak } from "@react-keycloak/web";
+
+type ParsedToken = KeycloakTokenParsed & {
+	email?: string;
+
+	preferred_username?: string;
+
+	given_name?: string;
+
+	family_name?: string;
+};
 
 function Score({ time, answersKey, userAnswers }: any) {
+	const { keycloak } = useKeycloak();
+	const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
+
+	const username = `${parsedToken?.given_name ?? ""} ${parsedToken?.family_name ?? ""}`;
+
 	const correctNumber = (() => {
 		let count = 0;
 		for (let i = 0; i < answersKey.length; i++) {
@@ -35,7 +53,7 @@ function Score({ time, answersKey, userAnswers }: any) {
 						display: "block",
 					}}
 				/>
-				<p style={{ color: "#9A9494", textAlign: "center" }}>Nam Pham Son</p>
+				<p style={{ color: "#9A9494", textAlign: "center" }}>{username || "-"}</p>
 				<Typography.Title
 					level={2}
 					style={{
@@ -96,7 +114,9 @@ function Score({ time, answersKey, userAnswers }: any) {
 									fontSize: "3.5rem",
 								}}
 							>
-								{`${(correctNumber / answersKey.length) * 9}`}
+								{`${(
+									Math.round((correctNumber / answersKey.length) * 2 * 9) / 2
+								).toFixed(1)}`}
 							</Typography.Title>
 						</div>
 					</div>

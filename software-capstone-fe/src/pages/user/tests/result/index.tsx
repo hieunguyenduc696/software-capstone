@@ -5,6 +5,7 @@ import Score from "./components/Score/Score";
 import AnswersKeys from "./components/AnswersKeys/AnswersKeys";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import Footer from "components/Footer";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 function TestResult() {
@@ -46,6 +47,7 @@ function TestResult() {
 							setUserAnswers={setUserAnswers}
 						/>
 					</div>
+					<Footer />
 				</>
 			)}
 			{loading && (
